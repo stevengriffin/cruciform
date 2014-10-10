@@ -17,6 +17,7 @@ import com.cruciform.weapons.Weapon;
 
 public class InputSystem extends IteratingSystem {
 
+	private static final float ACCEL_CONSTANT = 0.1f;
 	private Vector3 mousePos;
 	private OrthographicCamera camera;
 	
@@ -33,13 +34,23 @@ public class InputSystem extends IteratingSystem {
 		Shooter shooter = Mappers.shooter.get(entity);
 		Weapon weapon = shooter.weapon;
 		weapon.update(deltaTime, position);
-		mousePos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-		camera.unproject(mousePos);
-		position.rect.x = MathUtils.clamp(mousePos.x, 0, Conf.screenWidth);
-		position.rect.y = MathUtils.clamp(mousePos.y, 0, Conf.screenHeight);
+		position.rect.x += calculateMovement(Gdx.input.getDeltaX());
+		position.rect.y -= calculateMovement(Gdx.input.getDeltaY());
+		position.rect.x = MathUtils.clamp(position.rect.x, 0, Conf.screenWidth - position.rect.width);
+		position.rect.y = MathUtils.clamp(position.rect.y, 0, Conf.screenHeight - position.rect.height);
 		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			weapon.fire(position);
         }
+	}
+
+	private float calculateMovement(int deltaPos) {
+		float accel = 0.0f;
+		if (deltaPos > 0) {
+			accel = ACCEL_CONSTANT*deltaPos*deltaPos;
+		} else {
+			accel = -ACCEL_CONSTANT*deltaPos*deltaPos;
+		}
+		return deltaPos + accel;
 	}
 	
 }

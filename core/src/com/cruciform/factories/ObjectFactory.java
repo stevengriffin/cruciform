@@ -25,7 +25,7 @@ public class ObjectFactory {
 		entity.add(position);
 		
 		Renderer renderer = new Renderer();
-		renderer.image = new Texture("cruciform_weapon1.png");
+		renderer.image = new Texture("player_ship2.png");
 		entity.add(renderer);
 		
 		PlayerInput playerInput = new PlayerInput();

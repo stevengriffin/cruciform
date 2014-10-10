@@ -1,7 +1,5 @@
 package com.cruciform;
 
-import java.io.Console;
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -28,8 +26,9 @@ public class Cruciform extends Game {
 	public void create () {
 		Gdx.graphics.setDisplayMode(Conf.screenWidth, Conf.screenHeight, true);
 		Gdx.graphics.setVSync(false);
-		pixmap = new Pixmap(Gdx.files.local("player_ship2.png"));
-		Gdx.input.setCursorImage(pixmap, 0, 0);
+		//pixmap = new Pixmap(Gdx.files.local("player_ship2.png"));
+		//Gdx.input.setCursorImage(pixmap, 0, 0);
+		Gdx.input.setCursorCatched(true);
 		font = new BitmapFont();
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
