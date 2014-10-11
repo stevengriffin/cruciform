@@ -8,10 +8,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.cruciform.factories.ObjectFactory;
+import com.cruciform.factories.ExplosionFactory;
+import com.cruciform.factories.ShipFactory;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.systems.InputSystem;
+import com.cruciform.systems.LineMoverSystem;
+import com.cruciform.systems.MovementSystem;
 import com.cruciform.systems.RenderSystem;
+import com.cruciform.systems.ShooterSystem;
 import com.cruciform.utils.Conf;
 
 public class Cruciform extends Game {
@@ -20,14 +24,13 @@ public class Cruciform extends Game {
 	public OrthographicCamera camera;
 	public Pixmap pixmap;
 	public Engine engine;
-	public ObjectFactory objectFactory;
+	public ShipFactory shipFactory;
+	public ExplosionFactory explosionFactory;
 	
 	@Override
-	public void create () {
+	public void create() {
 		Gdx.graphics.setDisplayMode(Conf.screenWidth, Conf.screenHeight, true);
 		Gdx.graphics.setVSync(false);
-		//pixmap = new Pixmap(Gdx.files.local("player_ship2.png"));
-		//Gdx.input.setCursorImage(pixmap, 0, 0);
 		Gdx.input.setCursorCatched(true);
 		font = new BitmapFont();
 		batch = new SpriteBatch();
@@ -35,13 +38,17 @@ public class Cruciform extends Game {
 		camera.setToOrtho(false, Conf.screenWidth, Conf.screenHeight);
 		engine = new Engine();
 		engine.addSystem(new RenderSystem(batch));
-		engine.addSystem(new InputSystem(camera));
-		objectFactory = new ObjectFactory(engine);
+		engine.addSystem(new InputSystem());
+		engine.addSystem(new LineMoverSystem());
+		engine.addSystem(new ShooterSystem());
+		engine.addSystem(new MovementSystem());
+		explosionFactory = new ExplosionFactory(engine);
+		shipFactory = new ShipFactory(engine, explosionFactory);
 		this.setScreen(new MainMenuState(this));
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
@@ -52,4 +59,5 @@ public class Cruciform extends Game {
 				Conf.screenWidth*0.9f, Conf.screenHeight*0.9f);
 		batch.end();
 	}
+	
 }

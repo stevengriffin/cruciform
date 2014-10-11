@@ -6,7 +6,7 @@ public class GameState extends State {
 
 	public GameState(Cruciform game) {
 		super(game);
-		game.objectFactory.player(500, 500);
+		game.shipFactory.createPlayer(500, 500);
 		// TODO Auto-generated constructor stub
 	}
 

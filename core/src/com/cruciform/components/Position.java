@@ -1,10 +1,10 @@
 package com.cruciform.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.gdx.math.Polygon;
 
 public class Position extends Component {
-	public Rectangle rect = new Rectangle(0, 0, 0, 0);
-	public Vector2 rotation = new Vector2(0, 0);
+    public static final ComponentMapper<Position> mapper = ComponentMapper.getFor(Position.class);
+	public Polygon bounds;
 }

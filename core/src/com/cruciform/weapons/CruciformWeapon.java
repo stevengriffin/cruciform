@@ -3,9 +3,9 @@ package com.cruciform.weapons;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
+import com.cruciform.utils.Geometry;
 
 public class CruciformWeapon extends Weapon {
 
@@ -22,12 +22,16 @@ public class CruciformWeapon extends Weapon {
 
 	@Override
 	void handleFire(Position firerPos) {
+		System.out.println("cruc handle fire");
 		Entity entity = new Entity();
 		
 		Position position = new Position();
-		position.rect = new Rectangle(firerPos.rect.x + firerPos.rect.width / 2, firerPos.rect.y, 8, 2000);
+		position.bounds = Geometry.polyRect(
+				firerPos.bounds.getX(), 
+				firerPos.bounds.getY(), 
+				8, 
+				2000);
 		entity.add(position);
-		
 		Renderer renderer = new Renderer();
 		renderer.image = new Texture("cruciform_weapon1.png");
 		entity.add(renderer);

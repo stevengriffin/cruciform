@@ -35,12 +35,12 @@ public class CoolDownMetro {
 	}
 
 	public void forceFire() {
-		//Goes to the fired state.
+		// Goes to the fired state.
 		this.hasFired = true;
 	}
 	
 	public void fizzle() {
-		//Goes back to the unfired state prematurely.
+		// Goes back to the unfired state prematurely.
 		this.hasFired = false;
 	}
 
