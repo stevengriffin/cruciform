@@ -7,4 +7,5 @@ import com.badlogic.gdx.math.Polygon;
 public class Position extends Component {
     public static final ComponentMapper<Position> mapper = ComponentMapper.getFor(Position.class);
 	public Polygon bounds;
+	public boolean isProjectile;
 }

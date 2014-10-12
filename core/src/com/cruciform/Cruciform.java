@@ -9,11 +9,12 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.factories.ShipFactory;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.systems.CollisionSystem;
+import com.cruciform.systems.DebugRenderSystem;
+import com.cruciform.systems.HealthSystem;
 import com.cruciform.systems.InputSystem;
 import com.cruciform.systems.LifetimeSystem;
 import com.cruciform.systems.LineMoverSystem;
@@ -36,6 +37,8 @@ public class Cruciform extends Game {
 	
 	@Override
 	public void create() {
+		
+		// Graphics
 		Gdx.graphics.setDisplayMode(Conf.screenWidth, Conf.screenHeight, true);
 		Gdx.graphics.setVSync(false);
 		Gdx.input.setCursorCatched(true);
@@ -44,17 +47,26 @@ public class Cruciform extends Game {
 		shapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Conf.screenWidth, Conf.screenHeight);
+
+		// Entity engine
 		engine = new Engine();
+		
+		// Factories
 		deferrer = new Deferrer(engine);
-		engine.addSystem(new RenderSystem(batch, shapeRenderer));
+		explosionFactory = new ExplosionFactory(engine);
+		shipFactory = new ShipFactory(engine, explosionFactory);
+		
+		// Systems
+		engine.addSystem(new RenderSystem(batch, font));
+		engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
 		engine.addSystem(new InputSystem());
 		engine.addSystem(new LineMoverSystem());
 		engine.addSystem(new ShooterSystem());
-		engine.addSystem(new MovementSystem());
+		engine.addSystem(new MovementSystem(deferrer));
 		engine.addSystem(new LifetimeSystem(deferrer));
-		explosionFactory = new ExplosionFactory(engine);
-		engine.addSystem(new CollisionSystem(engine, explosionFactory, deferrer));
-		shipFactory = new ShipFactory(engine, explosionFactory);
+		engine.addSystem(new CollisionSystem(engine, deferrer));
+		engine.addSystem(new HealthSystem(explosionFactory, deferrer));
+		
 		this.setScreen(new MainMenuState(this));
 	}
 
@@ -63,14 +75,7 @@ public class Cruciform extends Game {
 		Gdx.gl.glClearColor(0, 0, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		shapeRenderer.begin(ShapeType.Line);
 		super.render();
-		
-		font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(),
-				Conf.screenWidth*0.9f, Conf.screenHeight*0.9f);
-		shapeRenderer.end();
-		batch.end();
 		deferrer.clear();
 	}
 	

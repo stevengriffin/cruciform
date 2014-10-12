@@ -12,8 +12,10 @@ public class MainMenuState extends State {
 
 	@Override
 	public void render(float delta) {
+		game.batch.begin();
 		game.font.draw(game.batch, "Cruciform", 100, 150);
         game.font.draw(game.batch, "Click to begin", 100, 100);
+        game.batch.end();
 		if (Gdx.input.isTouched()) {
             game.setScreen(new GameState(game));
             dispose();

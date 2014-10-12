@@ -3,6 +3,7 @@ package com.cruciform.factories;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Lifetime;
@@ -22,8 +23,9 @@ public class ExplosionFactory {
 	
 	public Entity createRocketExplosion(final Entity lastRocketFired) {
 		final Position oldPos = Position.mapper.get(lastRocketFired);
-		final float x = oldPos.bounds.getX();
-		final float y = oldPos.bounds.getY();
+		Rectangle rect = oldPos.bounds.getBoundingRectangle();
+		final float x = rect.x + rect.width/2;
+		final float y = rect.y + rect.height;
 		
 		final Entity entity = new Entity();
 		

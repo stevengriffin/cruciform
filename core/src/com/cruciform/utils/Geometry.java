@@ -6,7 +6,7 @@ public class Geometry {
 	
 	// Constructs a rectangular polygon using the Rectangle constructor format.
 	public static Polygon polyRect(float x, float y, float width, float height) {
-		Polygon poly = new Polygon(new float[] { 0, 0, width, 0, width, height, 0, height });
+		Polygon poly = new Polygon(new float[] { -width/2, -height/2, width/2, -height/2, width/2, height/2, -width/2, height/2 });
 		poly.setPosition(x, y);
 		return poly;
 	}

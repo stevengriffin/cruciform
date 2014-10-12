@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.components.Collider;
+import com.cruciform.components.Health;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
@@ -20,7 +21,7 @@ public class RocketWeapon extends Weapon {
 	private final Texture fastRocketImage = new Texture("rocket_fast.png");
 	private final ExplosionFactory explosionFactory;
 	private Entity lastRocketFired;
-	private int timesFired = 0;
+	private int timesFired = -1;
 	
 	public RocketWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory) {
 		super(coolDownTime, engine);
@@ -67,6 +68,7 @@ public class RocketWeapon extends Weapon {
 				originY, 
 				renderer.image.getWidth(),
 				renderer.image.getHeight());
+		position.isProjectile = true;
 		entity.add(position);
 		
 		Velocity velocity = new Velocity();
@@ -83,6 +85,11 @@ public class RocketWeapon extends Weapon {
 	
 		TeamRocket team = new TeamRocket();
 		entity.add(team);
+		
+		Health health = new Health();
+		health.currentHealth = 1;
+		health.maxHealth = 1;
+		entity.add(health);
 		
 		engine.addEntity(entity);
 		lastRocketFired = entity;
