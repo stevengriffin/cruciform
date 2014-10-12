@@ -4,11 +4,12 @@ public class Metro {
 
 	/**A metronome object for abstracting time flow.**/
 
-	private float redTime, greenTime, time, tickTime;
+	private final float redTime, greenTime;
+	private float time, tickTime;
 	private boolean state;
 
-	public Metro(float redTime, float greenTime,
-			float delay, boolean initState) {
+	public Metro(final float redTime, final float greenTime,
+			final float delay, final boolean initState) {
 		// How many millis the metro will be in a "false" state.
 		this.redTime = redTime;
 		// How many millis the metro will be in a "true" state.
@@ -18,7 +19,7 @@ public class Metro {
 		assignTickTime();
 	}
 
-	public boolean tick(float dt) {
+	public boolean tick(final float dt) {
 		//Updates by a millisecond argument and returns its current state.//
 		this.time = this.time + dt;
 		if (this.time > this.tickTime) {

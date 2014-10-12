@@ -4,14 +4,20 @@ public class CoolDownMetro {
 
 	/**Handles a timer that fires, then can't fire for awhile.**/
 
-	private Metro metro;
+	private final Metro metro;
 	private boolean hasFired = false;
 
-	public CoolDownMetro(float coolDown) {
+	public static CoolDownMetro asPrefired(final float lifetime) {
+		CoolDownMetro life = new CoolDownMetro(lifetime);
+		life.fire();
+		return life;
+	}
+	
+	public CoolDownMetro(final float coolDown) {
 		this.metro = new Metro(0, coolDown, 0, false);
 	}
 
-	public boolean tick(float dt) {
+	public boolean tick(final float dt) {
 		/*
             Updates the internal metro by the passed milliseconds and sets the
             state.

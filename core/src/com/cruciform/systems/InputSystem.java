@@ -96,7 +96,6 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 		}
 		InputAction action = playerInput.actions.get(code);
 		if (action != null) {
-			System.out.println(down);
 			action.setFiring(down);
 		}
 		return false;

@@ -9,6 +9,7 @@ import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.Velocity;
+import com.cruciform.components.team.TeamRocket;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
@@ -39,18 +40,15 @@ public class RocketWeapon extends Weapon {
 		float maxSpeed;
 		if (isFastRocket()) {
 			maxSpeed = 40.0f;
-			coolDown = new CoolDownMetro(1.0f);
-			coolDown.fire();
+			coolDown = CoolDownMetro.asPrefired(1.0f);
 			image = fastRocketImage;
 		} else if (timesFired % 4 == 2) {
 			maxSpeed = 10.0f;
-			coolDown = new CoolDownMetro(0.3f);
-			coolDown.fire();
+			coolDown = CoolDownMetro.asPrefired(0.3f);
 			image = rocketImage;
 		} else {
 			maxSpeed = 10.0f;
-			coolDown = new CoolDownMetro(0.1f);
-			coolDown.fire();
+			coolDown = CoolDownMetro.asPrefired(0.1f);
 			image = rocketImage;
 		}
 		createRocket(firerPos.bounds.getX(), firerPos.bounds.getY(), maxSpeed, image);
@@ -81,10 +79,10 @@ public class RocketWeapon extends Weapon {
 		entity.add(lineMover);
 	
 		Collider collider = new Collider();
-		collider.teamMember = Collider.Team.ROCKET;
-		collider.teamsToCollide.add(Collider.Team.ROCKET);
-		collider.teamsToCollide.add(Collider.Team.ENEMY);
 		entity.add(collider);
+	
+		TeamRocket team = new TeamRocket();
+		entity.add(team);
 		
 		engine.addEntity(entity);
 		lastRocketFired = entity;
@@ -99,6 +97,7 @@ public class RocketWeapon extends Weapon {
 		super.setFiring(shouldFire);
 		if (!shouldFire && isFastRocket()) {
 			explosionFactory.createRocketExplosion(lastRocketFired);
+			engine.removeEntity(lastRocketFired);
 		}
 	}
 	
