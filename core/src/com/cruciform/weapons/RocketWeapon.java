@@ -4,21 +4,25 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.cruciform.audio.AudioManager;
+import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Health;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
+import com.cruciform.components.SoundEffect;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.TeamRocket;
 import com.cruciform.factories.ExplosionFactory;
+import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
 
 public class RocketWeapon extends Weapon {
 
-	private final Texture rocketImage = new Texture("rocket.png");
-	private final Texture fastRocketImage = new Texture("rocket_fast.png");
+	private static final Texture ROCKET_IMAGE = new Texture("rocket.png");
+	private static final Texture FAST_ROCKET_IMAGE = new Texture("rocket_fast.png");
 	private final ExplosionFactory explosionFactory;
 	private Entity lastRocketFired;
 	private int timesFired = -1;
@@ -42,15 +46,15 @@ public class RocketWeapon extends Weapon {
 		if (isFastRocket()) {
 			maxSpeed = 40.0f;
 			coolDown = CoolDownMetro.asPrefired(1.0f);
-			image = fastRocketImage;
+			image = FAST_ROCKET_IMAGE;
 		} else if (timesFired % 4 == 2) {
 			maxSpeed = 10.0f;
 			coolDown = CoolDownMetro.asPrefired(0.3f);
-			image = rocketImage;
+			image = ROCKET_IMAGE;
 		} else {
 			maxSpeed = 10.0f;
 			coolDown = CoolDownMetro.asPrefired(0.1f);
-			image = rocketImage;
+			image = ROCKET_IMAGE;
 		}
 		createRocket(firerPos.bounds.getX(), firerPos.bounds.getY(), maxSpeed, image);
 	}
@@ -90,6 +94,11 @@ public class RocketWeapon extends Weapon {
 		health.currentHealth = 1;
 		health.maxHealth = 1;
 		entity.add(health);
+	
+		SoundEffect soundEffect = new SoundEffect();
+		soundEffect.sound = AudioManager.get(Noise.ROCKET_ZOOM);
+		soundEffect.id = soundEffect.sound.play(0.2f * Conf.volume);
+		entity.add(soundEffect);
 		
 		engine.addEntity(entity);
 		lastRocketFired = entity;

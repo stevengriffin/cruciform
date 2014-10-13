@@ -4,12 +4,16 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.cruciform.audio.AudioManager;
+import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Lifetime;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
+import com.cruciform.components.SoundEffect;
 import com.cruciform.components.team.TeamRocket;
+import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
 
@@ -48,6 +52,11 @@ public class ExplosionFactory {
 		final Damager damager = new Damager();
 		damager.damage = 10.0f;
 		entity.add(damager);
+		
+		SoundEffect soundEffect = new SoundEffect();
+		soundEffect.sound = AudioManager.get(Noise.ROCKET_EXPLOSION);
+		soundEffect.id = soundEffect.sound.play(1.0f * Conf.volume);
+		entity.add(soundEffect);
 		
 		engine.addEntity(entity);
 		return entity;
