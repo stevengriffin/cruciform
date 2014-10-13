@@ -2,12 +2,13 @@ package com.cruciform.weapons;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.Texture;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.SoundEffect;
+import com.cruciform.images.ImageManager;
+import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Geometry;
 
@@ -37,7 +38,7 @@ public class CruciformWeapon extends Weapon {
 		entity.add(position);
 		
 		Renderer renderer = new Renderer();
-		renderer.image = new Texture("cruciform_weapon1.png");
+		renderer.image = ImageManager.get(Picture.CRUCIFORM_1);
 		entity.add(renderer);
 		
 		SoundEffect soundEffect = new SoundEffect();

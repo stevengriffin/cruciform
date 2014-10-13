@@ -2,7 +2,6 @@ package com.cruciform.factories;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
@@ -13,6 +12,8 @@ import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.SoundEffect;
 import com.cruciform.components.team.TeamRocket;
+import com.cruciform.images.ImageManager;
+import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
@@ -34,7 +35,7 @@ public class ExplosionFactory {
 		final Entity entity = new Entity();
 		
 		final Renderer renderer = new Renderer();
-		renderer.image = new Texture("rocket_explosion.png");
+		renderer.image = ImageManager.get(Picture.ROCKET_EXPLOSION);
 		entity.add(renderer);
 
 		final Position position = new Position();
