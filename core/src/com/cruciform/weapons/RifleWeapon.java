@@ -3,24 +3,35 @@ package com.cruciform.weapons;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.cruciform.audio.AudioManager;
+import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;
-import com.cruciform.components.Health;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
+import com.cruciform.components.SoundEffect;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.TeamEnemy;
-import com.cruciform.components.team.TeamRocket;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
+import com.cruciform.utils.Conf;
+import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
 
 public class RifleWeapon extends Weapon {
 
 	private static final Texture RIFLE_BULLET_IMAGE = ImageManager.get(Picture.RIFLE_BULLET);
 	private final ExplosionFactory explosionFactory;
+	private float currentRecoil = 0.0f;
+	private static final float BULLET_SPEED = 40.0f;
+	private static final float RECOIL_PER_BULLET = 0.5f;
+	private static final float RECOIL_RESET_RATE = 20.0f;
+	private static final float MAX_RECOIL = 20.0f;
+	private static final float RECOIL_GAP_TIME = 0.2f;
+	private CoolDownMetro recoilGap = new CoolDownMetro(RECOIL_GAP_TIME);
 	
 	public RifleWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory) {
 		super(coolDownTime, engine);
@@ -29,17 +40,21 @@ public class RifleWeapon extends Weapon {
 
 	@Override
 	void handleUpdate(float dt, Position firerPos) {
-		// TODO Auto-generated method stub
-		
+		if (!recoilGap.tick(dt)) {
+			currentRecoil -= RECOIL_RESET_RATE*dt;
+		}
+		currentRecoil = MathUtils.clamp(currentRecoil, 0, MAX_RECOIL);
 	}
 
 	@Override
 	void handleFire(Position firerPos) {
-		createBullet(firerPos.bounds.getX(), firerPos.bounds.getY());
+		currentRecoil += RECOIL_PER_BULLET;
+		recoilGap = CoolDownMetro.asPrefired(RECOIL_GAP_TIME);
+		createBullet(firerPos.bounds.getX() - 5, firerPos.bounds.getY(), 1, 1);
+		createBullet(firerPos.bounds.getX() + 5, firerPos.bounds.getY(), -1, 1);
 	}
 
-	private void createBullet(float originX, float originY) {
-		System.out.println("Bullet created");
+	private void createBullet(float originX, float originY, int directionX, int directionY) {
 		Entity entity = new Entity();
 
 		Renderer renderer = new Renderer();
@@ -59,7 +74,8 @@ public class RifleWeapon extends Weapon {
 		entity.add(velocity);
 		
 		LineMover lineMover = new LineMover();
-		lineMover.maxVelocity = new Vector2(0, 10.0f);
+		lineMover.maxVelocity = new Vector2(BULLET_SPEED*MathUtils.sinDeg(currentRecoil)*directionX,
+				BULLET_SPEED*MathUtils.cosDeg(currentRecoil)*directionY);
 		lineMover.accelerates = false;
 		entity.add(lineMover);
 	
@@ -67,10 +83,10 @@ public class RifleWeapon extends Weapon {
 		collider.teamsToCollide.add(TeamEnemy.class);
 		entity.add(collider);
 	
-		/*SoundEffect soundEffect = new SoundEffect();
-		soundEffect.sound = AudioManager.get(Noise.ROCKET_ZOOM);
-		soundEffect.id = soundEffect.sound.play(0.2f * Conf.volume);
-		entity.add(soundEffect);*/
+		SoundEffect soundEffect = new SoundEffect();
+		soundEffect.sound = AudioManager.get(Noise.RIFLE_BULLET);
+		soundEffect.id = soundEffect.sound.play(Conf.volume);
+		entity.add(soundEffect);
 		
 		engine.addEntity(entity);
 	}

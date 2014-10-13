@@ -4,4 +4,5 @@ public enum Noise {
 	ROCKET_ZOOM,
 	ROCKET_EXPLOSION,
 	CRUCIFORM,
+	RIFLE_BULLET
 }
