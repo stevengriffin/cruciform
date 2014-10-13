@@ -1,6 +1,10 @@
 Music
 
-
+tracks1-13 are from The Resilience
+Author: Frederick Klingwall
+License: http://creativecommons.org/licenses/by/3.0/
+Link: http://music.klingwall.se/album/the-resilience
+Changes: None.
 
 Sound Effects
 

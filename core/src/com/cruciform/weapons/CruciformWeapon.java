@@ -26,7 +26,6 @@ public class CruciformWeapon extends Weapon {
 
 	@Override
 	void handleFire(Position firerPos) {
-		System.out.println("cruc handle fire");
 		Entity entity = new Entity();
 		
 		Position position = new Position();

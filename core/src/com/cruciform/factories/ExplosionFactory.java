@@ -55,7 +55,7 @@ public class ExplosionFactory {
 		
 		SoundEffect soundEffect = new SoundEffect();
 		soundEffect.sound = AudioManager.get(Noise.ROCKET_EXPLOSION);
-		soundEffect.id = soundEffect.sound.play(1.0f * Conf.volume);
+		soundEffect.id = soundEffect.sound.play(.5f * Conf.volume);
 		entity.add(soundEffect);
 		
 		engine.addEntity(entity);

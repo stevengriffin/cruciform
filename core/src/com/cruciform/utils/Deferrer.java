@@ -5,8 +5,6 @@ import java.util.List;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.components.SoundEffect;
 
 public class Deferrer {
@@ -21,13 +19,6 @@ public class Deferrer {
 	public void remove(Entity entity) {
 		SoundEffect soundEffect = SoundEffect.mapper.get(entity);
 		if (soundEffect != null) {
-			System.out.println("stopping: " + soundEffect.id);
-			/*Timer.schedule(new Task(){
-			   @Override
-			   public void run(){
-				   soundEffect.sound.stop(soundEffect.id);
-			      }
-			   } , 0.1f);*/
 			soundEffect.sound.stop(soundEffect.id);
 		}
 		entitiesToRemove.add(entity);

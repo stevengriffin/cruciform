@@ -1,13 +1,14 @@
 package com.cruciform.states;
 
 import com.cruciform.Cruciform;
+import com.cruciform.audio.AudioManager;
 
 public class GameState extends State {
 
 	public GameState(Cruciform game) {
 		super(game);
 		game.shipFactory.createPlayer(500, 500);
-		// TODO Auto-generated constructor stub
+		AudioManager.initMusic(GameState.class);
 	}
 
 	@Override
