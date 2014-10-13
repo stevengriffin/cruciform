@@ -13,6 +13,7 @@ public class AudioManager {
 	static {
 		map.put(Noise.ROCKET_ZOOM, newSound("rocket_zoom_short.mp3"));
 		map.put(Noise.ROCKET_EXPLOSION, newSound("rocket_explosion.mp3"));
+		map.put(Noise.CRUCIFORM, newSound("cruciform.mp3"));
 	}
 	
 	private static Sound newSound(String name) {
