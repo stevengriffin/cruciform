@@ -3,9 +3,9 @@ package com.cruciform.states;
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
 
-public class MainMenuState extends MenuState {
+public class InsertCreditState extends MenuState {
 
-	public MainMenuState(Cruciform game) {
+	public InsertCreditState(Cruciform game) {
 		super(game);
 		// TODO Auto-generated constructor stub
 	}
@@ -14,7 +14,7 @@ public class MainMenuState extends MenuState {
 	public void render(float delta) {
 		game.batch.begin();
 		game.font.draw(game.batch, "Cruciform", 100, 150);
-        game.font.draw(game.batch, "[ENTER] to begin", 100, 100);
+        game.font.draw(game.batch, "Insert Credit [ENTER]", 100, 100);
         game.batch.end();
 	}
 
@@ -27,9 +27,9 @@ public class MainMenuState extends MenuState {
 	@Override
 	public void show() {
 		super.show();
-		System.out.println("MainMenu");
+		System.out.println("InsertCredit");
 	}
-	
+
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub

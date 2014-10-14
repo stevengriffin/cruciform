@@ -1,8 +1,12 @@
 package com.cruciform.states;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
+import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
 import com.cruciform.audio.AudioManager;
+import com.cruciform.components.Health;
+import com.cruciform.components.team.TeamPlayer;
 
 public class GameState extends State {
 
@@ -37,13 +41,18 @@ public class GameState extends State {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Game");
+		Gdx.input.setInputProcessor(game.inputSystem);
+		if (game.engine.getEntitiesFor(Family.getFor(TeamPlayer.class)).size() == 0) {
+			game.engine.addEntity(player);
+			Health health = Health.mapper.get(player);
+			health.currentHealth = health.maxHealth;
+			game.deferrer.shieldAndBlink(player, 3.0f);
+		}
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
 		
 	}
 

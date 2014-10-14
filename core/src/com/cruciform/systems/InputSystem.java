@@ -21,7 +21,6 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 	
 	public InputSystem() {
 		super(Family.getFor(PlayerInput.class, Position.class));
-		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override

@@ -37,6 +37,7 @@ public class Cruciform extends Game {
 	public UIFactory uiFactory;
 	public ShapeRenderer shapeRenderer;
 	public Deferrer deferrer;
+	public InputSystem inputSystem;
 	
 	@Override
 	public void create() {
@@ -55,7 +56,7 @@ public class Cruciform extends Game {
 		engine = new Engine();
 		
 		// Factories
-		deferrer = new Deferrer(engine);
+		deferrer = new Deferrer(engine, this);
 		uiFactory = new UIFactory(engine);
 		explosionFactory = new ExplosionFactory(engine);
 		shipFactory = new ShipFactory(engine, explosionFactory);
@@ -65,7 +66,8 @@ public class Cruciform extends Game {
 		engine.addSystem(renderSystem);
 		engine.addEntityListener(renderSystem);
 		engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
-		engine.addSystem(new InputSystem());
+		inputSystem = new InputSystem();
+		engine.addSystem(inputSystem);
 		engine.addSystem(new LineMoverSystem());
 		engine.addSystem(new ShooterSystem());
 		engine.addSystem(new AISystem());
