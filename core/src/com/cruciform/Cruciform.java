@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -64,7 +63,7 @@ public class Cruciform extends Game {
 		// Systems
 		RenderSystem renderSystem = new RenderSystem(batch, font);
 		engine.addSystem(renderSystem);
-		engine.addEntityListener(renderSystem.family, renderSystem);
+		engine.addEntityListener(renderSystem);
 		engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
 		engine.addSystem(new InputSystem());
 		engine.addSystem(new LineMoverSystem());

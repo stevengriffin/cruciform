@@ -8,6 +8,7 @@ import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Geometry;
+import com.cruciform.utils.Priority;
 
 public class UIFactory {
 	private final Engine engine;
@@ -21,6 +22,7 @@ public class UIFactory {
 		final Renderer renderer = new Renderer();
 		renderer.image = ImageManager.get(Picture.SIDE_PANEL);
 		renderer.customOffset = true;
+		renderer.priority = new Priority(6);
 		entity.add(renderer);
 		
 		final Position position = new Position();

@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
-import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
@@ -15,7 +14,6 @@ import com.cruciform.components.Renderer;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
-import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
@@ -23,6 +21,7 @@ import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
+import com.cruciform.utils.Priority;
 
 public class RifleWeapon extends Weapon {
 
@@ -83,6 +82,9 @@ public class RifleWeapon extends Weapon {
 
 		Renderer renderer = new Renderer();
 		renderer.image = RIFLE_BULLET_IMAGE;
+		if (team == TeamEnemy.class) {
+			renderer.priority = new Priority(5);
+		}
 		entity.add(renderer);
 		
 		Position position = new Position();
