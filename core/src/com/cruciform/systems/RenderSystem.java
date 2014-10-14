@@ -35,7 +35,12 @@ public class RenderSystem extends IteratingSystem {
 		Position position = Position.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);
 		Rectangle rect = position.bounds.getBoundingRectangle();
-		batch.draw(renderer.image, position.bounds.getX() - rect.width/2,
+		if (renderer.customOffset) {
+			batch.draw(renderer.image, position.bounds.getX() + renderer.customXOffset,
+				position.bounds.getY() + renderer.customYOffset);
+		} else {
+			batch.draw(renderer.image, position.bounds.getX() - rect.width/2,
 				position.bounds.getY() - rect.height/2);
+		}
 	}
 }

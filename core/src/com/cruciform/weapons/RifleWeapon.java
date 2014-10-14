@@ -8,12 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;
+import com.cruciform.components.Damager;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
-import com.cruciform.components.SoundEffect;
 import com.cruciform.components.Velocity;
+import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
+import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
@@ -27,15 +29,27 @@ public class RifleWeapon extends Weapon {
 	private static final Texture RIFLE_BULLET_IMAGE = ImageManager.get(Picture.RIFLE_BULLET);
 	private final ExplosionFactory explosionFactory;
 	private float currentRecoil = 0.0f;
-	private static final float BULLET_SPEED = 40.0f;
+	public float volume = 0.2f;
+	public float bulletSpeed = 40.0f;
 	private static final float RECOIL_PER_BULLET = 0.5f;
 	private static final float RECOIL_RESET_RATE = 20.0f;
 	private static final float MAX_RECOIL = 20.0f;
-	private static final float RECOIL_GAP_TIME = 0.2f;
-	private CoolDownMetro recoilGap = new CoolDownMetro(RECOIL_GAP_TIME);
+	public float damagePerBullet = 5.0f;
+	public float reloadTime = 5.0f;
+	/*
+	 * Setting bullets per clip to 0 will give unlimited clip size.
+	 */
+	public int bulletsPerClip = 30;
+	private int bulletsFired = 0;
+	private float recoilGapTime;
+	private final float coolDownTime;
+	private CoolDownMetro recoilGap = new CoolDownMetro(recoilGapTime);
 	
-	public RifleWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory) {
-		super(coolDownTime, engine);
+	public RifleWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory,
+			Class<? extends Team> team) {
+		super(coolDownTime, engine, team);
+		this.coolDownTime = coolDownTime;
+		this.recoilGapTime = coolDownTime*4;
 		this.explosionFactory = explosionFactory;
 	}
 
@@ -50,8 +64,16 @@ public class RifleWeapon extends Weapon {
 	@Override
 	void handleFire(Position firerPos) {
 		currentRecoil += RECOIL_PER_BULLET;
-		recoilGap = CoolDownMetro.asPrefired(RECOIL_GAP_TIME);
-		AudioManager.get(Noise.RIFLE_FIRE).play(Conf.volume*0.2f);
+		bulletsFired++;
+		if (bulletsPerClip > 0) {
+			if (bulletsFired % bulletsPerClip == 0) {
+				this.coolDown = CoolDownMetro.asPrefired(reloadTime);
+			} else if (bulletsFired % bulletsPerClip == 1) {
+				this.coolDown = CoolDownMetro.asPrefired(coolDownTime);
+			}
+		}
+		recoilGap = CoolDownMetro.asPrefired(recoilGapTime);
+		AudioManager.get(Noise.RIFLE_FIRE).play(Conf.volume*volume);
 		createBullet(firerPos.bounds.getX() - 5, firerPos.bounds.getY(), 1, firerPos.yDirection);
 		createBullet(firerPos.bounds.getX() + 5, firerPos.bounds.getY(), -1, firerPos.yDirection);
 	}
@@ -76,14 +98,16 @@ public class RifleWeapon extends Weapon {
 		entity.add(velocity);
 		
 		LineMover lineMover = new LineMover();
-		lineMover.maxVelocity = new Vector2(BULLET_SPEED*MathUtils.sinDeg(currentRecoil)*directionX,
-				BULLET_SPEED*MathUtils.cosDeg(currentRecoil)*directionY);
+		lineMover.maxVelocity = new Vector2(bulletSpeed*MathUtils.sinDeg(currentRecoil)*directionX,
+				bulletSpeed*MathUtils.cosDeg(currentRecoil)*directionY);
 		lineMover.accelerates = false;
 		entity.add(lineMover);
-	
-		Collider collider = new Collider();
-		collider.teamsToCollide.add(TeamEnemy.class);
-		entity.add(collider);
+
+		addColliderComponent(entity);
+		
+		Damager damager = new Damager();
+		damager.damage = damagePerBullet;
+		entity.add(damager);
 		
 		engine.addEntity(entity);
 	}

@@ -17,6 +17,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	private static final float ACCEL_CONSTANT = 0.1f;
 	private PlayerInput playerInput = null;
+	private float sensitivity = 0.5f;
 	
 	public InputSystem() {
 		super(Family.getFor(PlayerInput.class, Position.class));
@@ -32,7 +33,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 		float y = position.bounds.getY();
 		x += calculateMovement(Gdx.input.getDeltaX());
 		y -= calculateMovement(Gdx.input.getDeltaY());
-		x = MathUtils.clamp(x, 0, Conf.screenWidth - rect.width);
+		x = MathUtils.clamp(x, Conf.playLeft, Conf.playRight - rect.width);
 		y = MathUtils.clamp(y, 0, Conf.screenHeight - rect.height);
 		position.bounds.setPosition(x, y);
 		/*if (Gdx.input.isKeyJustPressed(Keys.ALT_LEFT)) {
@@ -43,11 +44,11 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 	private float calculateMovement(int deltaPos) {
 		float accel = 0.0f;
 		if (deltaPos > 0) {
-			accel = ACCEL_CONSTANT*deltaPos*deltaPos;
+			accel = ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity;
 		} else {
-			accel = -ACCEL_CONSTANT*deltaPos*deltaPos;
+			accel = -ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity;
 		}
-		return deltaPos + accel;
+		return deltaPos*sensitivity + accel;
 	}
 
 	@Override

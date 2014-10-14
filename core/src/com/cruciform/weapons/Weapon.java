@@ -1,18 +1,25 @@
 package com.cruciform.weapons;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.cruciform.components.Collider;
 import com.cruciform.components.Position;
+import com.cruciform.components.team.Team;
+import com.cruciform.components.team.TeamEnemy;
+import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.input.InputAction;
 import com.cruciform.utils.CoolDownMetro;
 
 public abstract class Weapon implements InputAction {
 	CoolDownMetro coolDown;
 	Engine engine;
+	final Class<? extends Team> team;
 	private boolean shouldFire = false;
 	
-	public Weapon(float coolDownTime, Engine engine) {
+	public Weapon(final float coolDownTime, final Engine engine, final Class<? extends Team> team) {
 		coolDown = new CoolDownMetro(coolDownTime);
 		this.engine = engine;
+		this.team = team;
 	}
 	
 	public boolean update(float dt, Position firerPos) {
@@ -45,5 +52,15 @@ public abstract class Weapon implements InputAction {
 	public float getPercentReady() {
 		return coolDown.getPercent();
 	}
-	
+
+	Collider addColliderComponent(Entity entity) {
+		Collider collider = new Collider();
+		if (team == TeamEnemy.class) {
+			collider.teamsToCollide.add(TeamPlayer.class);
+		} else {
+			collider.teamsToCollide.add(TeamEnemy.class);
+		}
+		entity.add(collider);
+		return collider;
+	}	
 }

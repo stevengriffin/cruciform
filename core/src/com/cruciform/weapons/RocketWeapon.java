@@ -7,12 +7,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;
+import com.cruciform.components.Damager;
 import com.cruciform.components.Health;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.SoundEffect;
 import com.cruciform.components.Velocity;
+import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamRocket;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.images.ImageManager;
@@ -30,8 +32,9 @@ public class RocketWeapon extends Weapon {
 	private Entity lastRocketFired;
 	private int timesFired = -1;
 	
-	public RocketWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory) {
-		super(coolDownTime, engine);
+	public RocketWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory,
+			Class<? extends Team> team) {
+		super(coolDownTime, engine, team);
 		this.explosionFactory = explosionFactory;
 	}
 
@@ -87,11 +90,8 @@ public class RocketWeapon extends Weapon {
 		lineMover.accelerates = true;
 		entity.add(lineMover);
 	
-		Collider collider = new Collider();
-		entity.add(collider);
-	
-		TeamRocket team = new TeamRocket();
-		entity.add(team);
+		TeamRocket teamRocket = new TeamRocket();
+		entity.add(teamRocket);
 		
 		Health health = new Health();
 		health.currentHealth = 1;
@@ -102,6 +102,12 @@ public class RocketWeapon extends Weapon {
 		soundEffect.sound = AudioManager.get(Noise.ROCKET_ZOOM);
 		soundEffect.id = soundEffect.sound.play(0.2f * Conf.volume);
 		entity.add(soundEffect);
+
+		addColliderComponent(entity);
+		
+		Damager damager = new Damager();
+		damager.damage = 25.0f;
+		entity.add(damager);
 		
 		engine.addEntity(entity);
 		lastRocketFired = entity;

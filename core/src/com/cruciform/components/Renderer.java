@@ -7,4 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Renderer extends Component {
     public static final ComponentMapper<Renderer> mapper = ComponentMapper.getFor(Renderer.class);
 	public Texture image;
+	public float customXOffset = 0;
+	public float customYOffset = 0;
+	public boolean customOffset = false;
 }

@@ -8,4 +8,5 @@ public enum Picture {
 	ROCKET,
 	ROCKET_FAST,
 	ROCKET_EXPLOSION,
+	SIDE_PANEL
 }

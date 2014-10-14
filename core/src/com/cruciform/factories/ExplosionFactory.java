@@ -11,6 +11,7 @@ import com.cruciform.components.Lifetime;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.SoundEffect;
+import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.components.team.TeamRocket;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
@@ -48,6 +49,7 @@ public class ExplosionFactory {
 		
 		final Collider collider = new Collider();
 		collider.teamsToCollide.add(TeamRocket.class);
+		collider.teamsToCollide.add(TeamEnemy.class);
 		entity.add(collider);
 	
 		final Damager damager = new Damager();

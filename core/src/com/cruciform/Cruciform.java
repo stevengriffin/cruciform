@@ -6,11 +6,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.factories.ShipFactory;
+import com.cruciform.factories.UIFactory;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.systems.AISystem;
 import com.cruciform.systems.CollisionSystem;
@@ -33,6 +35,7 @@ public class Cruciform extends Game {
 	public Engine engine;
 	public ShipFactory shipFactory;
 	public ExplosionFactory explosionFactory;
+	public UIFactory uiFactory;
 	public ShapeRenderer shapeRenderer;
 	public Deferrer deferrer;
 	
@@ -54,6 +57,7 @@ public class Cruciform extends Game {
 		
 		// Factories
 		deferrer = new Deferrer(engine);
+		uiFactory = new UIFactory(engine);
 		explosionFactory = new ExplosionFactory(engine);
 		shipFactory = new ShipFactory(engine, explosionFactory);
 		

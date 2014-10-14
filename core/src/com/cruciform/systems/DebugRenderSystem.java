@@ -32,7 +32,10 @@ public class DebugRenderSystem extends IteratingSystem {
 	
 	public void processEntity(Entity entity, float deltaTime) {
 		Position position = Position.mapper.get(entity);
-		shapeRenderer.setColor(debugColor);
-		shapeRenderer.polygon(position.bounds.getTransformedVertices());
+		Renderer renderer = Renderer.mapper.get(entity);
+		if (!renderer.customOffset) {
+			shapeRenderer.setColor(debugColor);
+			shapeRenderer.polygon(position.bounds.getTransformedVertices());
+		}
 	}
 }
