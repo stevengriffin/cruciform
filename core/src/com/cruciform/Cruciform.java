@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.factories.ShipFactory;
 import com.cruciform.states.MainMenuState;
+import com.cruciform.systems.AISystem;
 import com.cruciform.systems.CollisionSystem;
 import com.cruciform.systems.DebugRenderSystem;
 import com.cruciform.systems.HealthSystem;
@@ -62,6 +63,7 @@ public class Cruciform extends Game {
 		engine.addSystem(new InputSystem());
 		engine.addSystem(new LineMoverSystem());
 		engine.addSystem(new ShooterSystem());
+		engine.addSystem(new AISystem());
 		engine.addSystem(new MovementSystem(deferrer));
 		engine.addSystem(new LifetimeSystem(deferrer));
 		engine.addSystem(new CollisionSystem(engine, deferrer));

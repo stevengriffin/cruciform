@@ -3,14 +3,19 @@ package com.cruciform.factories;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector2;
+import com.cruciform.components.AI;
+import com.cruciform.components.LineMover;
 import com.cruciform.components.PlayerInput;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.Shooter;
+import com.cruciform.components.Velocity;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
 import com.cruciform.input.InputCode;
 import com.cruciform.utils.Geometry;
+import com.cruciform.utils.OutOfBoundsHandler;
 import com.cruciform.weapons.CruciformWeapon;
 import com.cruciform.weapons.RifleWeapon;
 import com.cruciform.weapons.RocketWeapon;
@@ -29,6 +34,7 @@ public class ShipFactory {
 		
 		Position position = new Position();
 		position.bounds = Geometry.polyRect(x, y, 20, 20);
+		position.yDirection = 1;
 		entity.add(position);
 		
 		Renderer renderer = new Renderer();
@@ -56,22 +62,34 @@ public class ShipFactory {
 	}
 	
 	public Entity createEnemy(float x, float y) {
-		// TODO incomplete
 		Entity entity = new Entity();
-		
-		Position position = new Position();
-		position.bounds = Geometry.polyRect(x, y, 20, 20);
-		entity.add(position);
 		
 		Renderer renderer = new Renderer();
 		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_1);
 		entity.add(renderer);
+		
+		Position position = new Position();
+		position.bounds = Geometry.polyRect(x, y, 20, 20);
+		position.yDirection = -1;
+		position.outOfBoundsHandler = OutOfBoundsHandler.south();
+		entity.add(position);
+		
+		LineMover lineMover = new LineMover();
+		lineMover.maxVelocity = new Vector2(0.0f, -1.0f);
+		lineMover.accelerates = false;
+		entity.add(lineMover);
+	
+		Velocity velocity = new Velocity();
+		entity.add(velocity);
 		
 		RifleWeapon rifle = new RifleWeapon(0.05f, engine, explosionFactory);
 		
 		Shooter shooter = new Shooter();
 		shooter.weapons.add(rifle);
 		entity.add(shooter);
+	
+		AI ai = new AI();
+		entity.add(ai);
 		
 		engine.addEntity(entity);
 		return entity;

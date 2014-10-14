@@ -20,6 +20,7 @@ import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
+import com.cruciform.utils.OutOfBoundsHandler;
 
 public class RocketWeapon extends Weapon {
 
@@ -74,7 +75,7 @@ public class RocketWeapon extends Weapon {
 				originY, 
 				renderer.image.getWidth(),
 				renderer.image.getHeight());
-		position.isProjectile = true;
+		position.outOfBoundsHandler = OutOfBoundsHandler.all();
 		entity.add(position);
 		
 		Velocity velocity = new Velocity();

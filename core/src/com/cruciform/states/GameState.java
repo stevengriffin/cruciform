@@ -8,6 +8,7 @@ public class GameState extends State {
 	public GameState(Cruciform game) {
 		super(game);
 		game.shipFactory.createPlayer(500, 500);
+		game.shipFactory.createEnemy(800, 800);
 		AudioManager.initMusic(GameState.class);
 	}
 

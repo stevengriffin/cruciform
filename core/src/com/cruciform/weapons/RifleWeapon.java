@@ -20,6 +20,7 @@ import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
+import com.cruciform.utils.OutOfBoundsHandler;
 
 public class RifleWeapon extends Weapon {
 
@@ -51,8 +52,8 @@ public class RifleWeapon extends Weapon {
 		currentRecoil += RECOIL_PER_BULLET;
 		recoilGap = CoolDownMetro.asPrefired(RECOIL_GAP_TIME);
 		AudioManager.get(Noise.RIFLE_FIRE).play(Conf.volume*0.2f);
-		createBullet(firerPos.bounds.getX() - 5, firerPos.bounds.getY(), 1, 1);
-		createBullet(firerPos.bounds.getX() + 5, firerPos.bounds.getY(), -1, 1);
+		createBullet(firerPos.bounds.getX() - 5, firerPos.bounds.getY(), 1, firerPos.yDirection);
+		createBullet(firerPos.bounds.getX() + 5, firerPos.bounds.getY(), -1, firerPos.yDirection);
 	}
 
 	private void createBullet(float originX, float originY, int directionX, int directionY) {
@@ -68,7 +69,7 @@ public class RifleWeapon extends Weapon {
 				originY, 
 				renderer.image.getWidth(),
 				renderer.image.getHeight());
-		position.isProjectile = true;
+		position.outOfBoundsHandler = OutOfBoundsHandler.all();
 		entity.add(position);
 		
 		Velocity velocity = new Velocity();
