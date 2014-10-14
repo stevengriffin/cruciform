@@ -50,6 +50,7 @@ public class RifleWeapon extends Weapon {
 	void handleFire(Position firerPos) {
 		currentRecoil += RECOIL_PER_BULLET;
 		recoilGap = CoolDownMetro.asPrefired(RECOIL_GAP_TIME);
+		AudioManager.get(Noise.RIFLE_FIRE).play(Conf.volume*0.2f);
 		createBullet(firerPos.bounds.getX() - 5, firerPos.bounds.getY(), 1, 1);
 		createBullet(firerPos.bounds.getX() + 5, firerPos.bounds.getY(), -1, 1);
 	}
@@ -82,11 +83,6 @@ public class RifleWeapon extends Weapon {
 		Collider collider = new Collider();
 		collider.teamsToCollide.add(TeamEnemy.class);
 		entity.add(collider);
-	
-		SoundEffect soundEffect = new SoundEffect();
-		soundEffect.sound = AudioManager.get(Noise.RIFLE_BULLET);
-		soundEffect.id = soundEffect.sound.play(Conf.volume);
-		entity.add(soundEffect);
 		
 		engine.addEntity(entity);
 	}

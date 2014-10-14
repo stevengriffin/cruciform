@@ -37,6 +37,7 @@ public class AudioManager {
 		map.put(Noise.ROCKET_EXPLOSION, newSound("rocket_explosion.mp3"));
 		map.put(Noise.CRUCIFORM, newSound("cruciform.mp3"));
 		map.put(Noise.RIFLE_BULLET, newSound("rifle_bullet.mp3"));
+		map.put(Noise.RIFLE_FIRE, newSound("rifle_fire_single_deep.mp3"));
 		Collections.shuffle(tracks);
 	}
 	
