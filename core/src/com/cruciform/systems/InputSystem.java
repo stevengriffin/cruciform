@@ -27,8 +27,8 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 		playerInput = PlayerInput.mapper.get(entity);
-		Position position = Position.mapper.get(entity);
-		Rectangle rect = position.bounds.getBoundingRectangle();
+		final Position position = Position.mapper.get(entity);
+		final Rectangle rect = position.bounds.getBoundingRectangle();
 		float x = position.bounds.getX();
 		float y = position.bounds.getY();
 		x += calculateMovement(Gdx.input.getDeltaX());
@@ -42,12 +42,9 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 	}
 
 	private float calculateMovement(int deltaPos) {
-		float accel = 0.0f;
-		if (deltaPos > 0) {
-			accel = ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity;
-		} else {
-			accel = -ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity;
-		}
+		final float accel = deltaPos > 0 ?
+			ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity
+		    : -ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity;
 		return deltaPos*sensitivity + accel;
 	}
 
