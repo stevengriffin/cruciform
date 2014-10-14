@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.components.AI;
+import com.cruciform.components.Collider;
 import com.cruciform.components.Health;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.PlayerInput;
@@ -67,6 +68,9 @@ public class ShipFactory {
 		health.maxHealth = 1;
 		health.currentHealth = 1;
 		entity.add(health);
+	
+		Collider collider = new Collider();
+		entity.add(collider);
 		
 		engine.addEntity(entity);
 		return entity;
@@ -90,9 +94,11 @@ public class ShipFactory {
 		lineMover.accelerates = false;
 		entity.add(lineMover);
 	
-		Velocity velocity = new Velocity();
-		entity.add(velocity);
-		
+		entity.add(new Velocity());
+
+		Collider collider = new Collider();
+		entity.add(collider);
+	
 		TeamEnemy team = new TeamEnemy();
 		entity.add(team);
 		

@@ -42,7 +42,10 @@ public class CollisionSystem extends EntitySystem {
 						Health otherHealth = Health.mapper.get(other);
 						Damager damager = Damager.mapper.get(entity);
 						if (otherHealth != null && damager != null) {
+							System.out.println("Damaging " + otherHealth.currentHealth + " for " + damager.damage + " damage.");
 							otherHealth.currentHealth -= damager.damage;
+						} else {
+							System.out.println("Damaging");
 						}
 						deferrer.run(() -> entity.remove(Collider.class));
 					}

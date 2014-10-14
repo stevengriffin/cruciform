@@ -1,15 +1,18 @@
 package com.cruciform.states;
 
+import com.badlogic.ashley.core.Entity;
 import com.cruciform.Cruciform;
 import com.cruciform.audio.AudioManager;
 
 public class GameState extends State {
 
+	private Entity player;
+	
 	public GameState(Cruciform game) {
 		super(game);
 		game.uiFactory.createSidePanel(true);
 		game.uiFactory.createSidePanel(false);
-		game.shipFactory.createPlayer(500, 500);
+		player = game.shipFactory.createPlayer(500, 500);
 		game.shipFactory.createEnemy(800, 800);
 		game.shipFactory.createEnemy(600, 800);
 		game.shipFactory.createEnemy(400, 800);

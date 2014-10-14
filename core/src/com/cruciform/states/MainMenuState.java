@@ -2,6 +2,7 @@ package com.cruciform.states;
 
 import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
+import com.cruciform.factories.StateFactory;
 
 public class MainMenuState extends State {
 
@@ -17,7 +18,7 @@ public class MainMenuState extends State {
         game.font.draw(game.batch, "Click to begin", 100, 100);
         game.batch.end();
 		if (Gdx.input.isTouched()) {
-            game.setScreen(new GameState(game));
+            game.setScreen(StateFactory.getOrCreate(GameState.class, game));
             dispose();
         }
 	}
