@@ -62,7 +62,9 @@ public class Cruciform extends Game {
 		shipFactory = new ShipFactory(engine, explosionFactory);
 		
 		// Systems
-		engine.addSystem(new RenderSystem(batch, font));
+		RenderSystem renderSystem = new RenderSystem(batch, font);
+		engine.addSystem(renderSystem);
+		engine.addEntityListener(renderSystem.family, renderSystem);
 		engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
 		engine.addSystem(new InputSystem());
 		engine.addSystem(new LineMoverSystem());

@@ -10,4 +10,8 @@ public class Renderer extends Component {
 	public float customXOffset = 0;
 	public float customYOffset = 0;
 	public boolean customOffset = false;
+	/**
+	 * What layer of the screen the entity will be drawn in. Higher is better.
+	 */
+	public int priority = 0; 
 }
