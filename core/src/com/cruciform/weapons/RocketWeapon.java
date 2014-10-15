@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
-import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Health;
 import com.cruciform.components.LineMover;
@@ -50,15 +49,15 @@ public class RocketWeapon extends Weapon {
 		timesFired++;
 		float maxSpeed;
 		if (isFastRocket()) {
-			maxSpeed = 40.0f;
+			maxSpeed = 24000.0f;
 			coolDown = CoolDownMetro.asPrefired(1.0f);
 			image = FAST_ROCKET_IMAGE;
 		} else if (timesFired % 4 == 2) {
-			maxSpeed = 10.0f;
+			maxSpeed = 6000.0f;
 			coolDown = CoolDownMetro.asPrefired(0.3f);
 			image = ROCKET_IMAGE;
 		} else {
-			maxSpeed = 10.0f;
+			maxSpeed = 6000.0f;
 			coolDown = CoolDownMetro.asPrefired(0.1f);
 			image = ROCKET_IMAGE;
 		}
@@ -86,7 +85,7 @@ public class RocketWeapon extends Weapon {
 		
 		LineMover lineMover = new LineMover();
 		lineMover.absMaxVelocity = new Vector2(0, maxSpeed);
-		lineMover.accel = new Vector2(0, maxSpeed/50);
+		lineMover.accel = new Vector2(0, maxSpeed/20);
 		lineMover.accelerates = true;
 		entity.add(lineMover);
 	

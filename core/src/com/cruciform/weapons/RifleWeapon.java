@@ -29,7 +29,7 @@ public class RifleWeapon extends Weapon {
 	private final ExplosionFactory explosionFactory;
 	private float currentRecoil = 0.0f;
 	public float volume = 0.2f;
-	public float bulletSpeed = 40.0f;
+	public float bulletSpeed = 2400.0f;
 	private static final float RECOIL_PER_BULLET = 0.5f;
 	private static final float RECOIL_RESET_RATE = 20.0f;
 	private static final float MAX_RECOIL = 20.0f;

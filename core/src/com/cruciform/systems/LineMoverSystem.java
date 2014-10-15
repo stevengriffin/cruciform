@@ -18,9 +18,9 @@ public class LineMoverSystem extends IteratingSystem {
 		LineMover lineMover = LineMover.mapper.get(entity);
 		Velocity velocity = Velocity.mapper.get(entity);
 		if (lineMover.accelerates) {
-			velocity.linear.x = MathUtils.clamp(velocity.linear.x + lineMover.accel.x,
+			velocity.linear.x = MathUtils.clamp(velocity.linear.x + lineMover.accel.x*deltaTime,
 					-lineMover.absMaxVelocity.x, lineMover.absMaxVelocity.x);
-			velocity.linear.y = MathUtils.clamp(velocity.linear.y + lineMover.accel.y,
+			velocity.linear.y = MathUtils.clamp(velocity.linear.y + lineMover.accel.y*deltaTime,
 					-lineMover.absMaxVelocity.y, lineMover.absMaxVelocity.y);
 		} else {
 			velocity.linear = lineMover.maxVelocity;

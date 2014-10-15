@@ -90,7 +90,7 @@ public class ShipFactory {
 		entity.add(position);
 		
 		LineMover lineMover = new LineMover();
-		lineMover.maxVelocity = new Vector2(0.0f, -0.2f);
+		lineMover.maxVelocity = new Vector2(0.0f, -12.0f);
 		lineMover.accelerates = false;
 		entity.add(lineMover);
 	
@@ -104,7 +104,7 @@ public class ShipFactory {
 		
 		RifleWeapon rifle = new RifleWeapon(0.4f, engine, explosionFactory, team.getClass());
 		rifle.volume = 0.0f;
-		rifle.bulletSpeed = 1.0f;
+		rifle.bulletSpeed = 60.0f;
 		rifle.bulletsPerClip = 10;
 		rifle.reloadTime = 2.0f;
 		
