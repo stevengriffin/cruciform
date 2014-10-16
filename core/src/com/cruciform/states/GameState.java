@@ -7,6 +7,7 @@ import com.cruciform.Cruciform;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.components.Health;
 import com.cruciform.components.team.TeamPlayer;
+import com.cruciform.utils.Conf;
 
 public class GameState extends State {
 
@@ -17,14 +18,14 @@ public class GameState extends State {
 		game.uiFactory.createSidePanel(true);
 		game.uiFactory.createSidePanel(false);
 		player = game.shipFactory.createPlayer(500, 500);
-		game.shipFactory.createEnemy(800, 800);
-		game.shipFactory.createEnemy(600, 800);
-		game.shipFactory.createEnemy(400, 800);
-		game.shipFactory.createEnemy(200, 800);
-		game.shipFactory.createEnemy(700, 900);
-		game.shipFactory.createEnemy(500, 900);
-		game.shipFactory.createEnemy(300, 900);
-		game.shipFactory.createEnemy(100, 900);
+		game.shipFactory.createEnemy(Conf.playLeft + 25, 800);
+		game.shipFactory.createEnemy(Conf.playLeft + 225, 800);
+		game.shipFactory.createEnemy(Conf.playLeft + 425, 800);
+		game.shipFactory.createEnemy(Conf.playLeft + 625, 800);
+		game.shipFactory.createEnemy(Conf.playLeft + 125, 900);
+		game.shipFactory.createEnemy(Conf.playLeft + 325, 900);
+		game.shipFactory.createEnemy(Conf.playLeft + 525, 900);
+		game.shipFactory.createEnemy(Conf.playLeft + 725, 900);
 		AudioManager.initMusic(GameState.class);
 	}
 

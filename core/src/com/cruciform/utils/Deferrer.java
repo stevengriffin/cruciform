@@ -38,7 +38,7 @@ public class Deferrer {
 				public void run() {
 					StateFactory.setState(InsertCreditState.class, game);
 				}
-			}, 2.0f);
+			}, 1.0f);
 		}
 		entitiesToRemove.add(entity);
 	}

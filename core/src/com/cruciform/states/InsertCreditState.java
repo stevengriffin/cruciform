@@ -13,8 +13,11 @@ public class InsertCreditState extends MenuState {
 	@Override
 	public void render(float delta) {
 		game.batch.begin();
-		game.font.draw(game.batch, "Cruciform", 100, 150);
-        game.font.draw(game.batch, "Insert Credit [ENTER]", 100, 100);
+		String insertCredit = "Insert Credit [ENTER]";
+		String exitGame = "Exit Game [ESCAPE]";
+        game.font.draw(game.batch, insertCredit, 
+        		100, 100);
+        game.font.draw(game.batch, exitGame, 100, 50);
         game.batch.end();
 	}
 
