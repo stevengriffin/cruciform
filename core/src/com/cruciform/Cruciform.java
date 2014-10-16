@@ -14,6 +14,7 @@ import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.UIFactory;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.systems.AISystem;
+import com.cruciform.systems.BlinkerSystem;
 import com.cruciform.systems.CollisionSystem;
 import com.cruciform.systems.DebugRenderSystem;
 import com.cruciform.systems.HealthSystem;
@@ -70,6 +71,7 @@ public class Cruciform extends Game {
 		engine.addSystem(new LineMoverSystem());
 		engine.addSystem(new ShooterSystem());
 		engine.addSystem(new AISystem());
+		engine.addSystem(new BlinkerSystem());
 		engine.addSystem(new MovementSystem(deferrer));
 		engine.addSystem(new LifetimeSystem(deferrer));
 		engine.addSystem(new CollisionSystem(engine, deferrer));

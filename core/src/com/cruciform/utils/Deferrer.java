@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.Cruciform;
+import com.cruciform.components.Blinker;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.SoundEffect;
@@ -62,21 +62,15 @@ public class Deferrer {
 		if (collider == null || renderer == null) {
 			return;
 		}
-		Texture image = renderer.image;
+		Blinker blinker = new Blinker();
+		blinker.metro = new Metro(BLINK_TIME, BLINK_TIME, 0.0f, false);
+		entity.add(blinker);
 		Timer.schedule(new Task() {
 			public void run() {
 				entity.add(collider);
+				entity.remove(Blinker.class);
+				renderer.shouldRender = true;
 			}
 		}, duration);
-		Timer.schedule(new Task() {
-			public void run() {
-				renderer.image = image;
-			}
-		}, BLINK_TIME, BLINK_TIME, (int) (duration/BLINK_TIME));
-		Timer.schedule(new Task() {
-			public void run() {
-				renderer.image = null;
-			}
-		}, 0, BLINK_TIME, (int) (duration/BLINK_TIME));
 	}
 }

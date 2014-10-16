@@ -45,7 +45,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		Position position = Position.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);
 		// TODO Switch to family-based when Ashley is updated
-		if (position == null || renderer == null || renderer.image == null) {
+		if (position == null || renderer == null || !renderer.shouldRender) {
 			return;
 		}
 		Rectangle rect = position.bounds.getBoundingRectangle();

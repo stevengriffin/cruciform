@@ -12,4 +12,5 @@ public class Renderer extends Component {
 	public float customYOffset = 0;
 	public boolean customOffset = false;
 	public Priority priority = new Priority(0); 
+	public boolean shouldRender = true;
 }

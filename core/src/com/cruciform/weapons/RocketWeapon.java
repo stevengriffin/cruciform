@@ -49,15 +49,15 @@ public class RocketWeapon extends Weapon {
 		timesFired++;
 		float maxSpeed;
 		if (isFastRocket()) {
-			maxSpeed = 24000.0f;
+			maxSpeed = 2400.0f;
 			coolDown = CoolDownMetro.asPrefired(1.0f);
 			image = FAST_ROCKET_IMAGE;
 		} else if (timesFired % 4 == 2) {
-			maxSpeed = 6000.0f;
+			maxSpeed = 600.0f;
 			coolDown = CoolDownMetro.asPrefired(0.3f);
 			image = ROCKET_IMAGE;
 		} else {
-			maxSpeed = 6000.0f;
+			maxSpeed = 600.0f;
 			coolDown = CoolDownMetro.asPrefired(0.1f);
 			image = ROCKET_IMAGE;
 		}
@@ -85,7 +85,7 @@ public class RocketWeapon extends Weapon {
 		
 		LineMover lineMover = new LineMover();
 		lineMover.absMaxVelocity = new Vector2(0, maxSpeed);
-		lineMover.accel = new Vector2(0, maxSpeed/20);
+		lineMover.accel = new Vector2(0, maxSpeed);
 		lineMover.accelerates = true;
 		entity.add(lineMover);
 	
