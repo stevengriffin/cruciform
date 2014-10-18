@@ -9,11 +9,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.cruciform.components.Renderer;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.UIFactory;
+import com.cruciform.serialization.RendererSerializer;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.states.State;
 import com.cruciform.systems.AISystem;
@@ -30,6 +31,8 @@ import com.cruciform.systems.ShooterSystem;
 import com.cruciform.systems.SplitterSystem;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.minlog.Log;
 
 public class Cruciform extends Game {
 	public SpriteBatch batch;
@@ -43,10 +46,13 @@ public class Cruciform extends Game {
 	public ShapeRenderer shapeRenderer;
 	public Deferrer deferrer;
 	public InputSystem inputSystem;
+	public Kryo kryo;
 	public Application application = null;
 	
 	@Override
 	public void create() {
+		// Debug
+		Log.set(Log.LEVEL_DEBUG);
 		
 		// Graphics
 		Gdx.graphics.setDisplayMode(Conf.screenWidth, Conf.screenHeight, true);
@@ -56,6 +62,10 @@ public class Cruciform extends Game {
 		shapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Conf.screenWidth, Conf.screenHeight);
+		
+		// Serialization
+		kryo = new Kryo();
+		kryo.addDefaultSerializer(Renderer.class, RendererSerializer.class);
 
 		// Entity engine
 		engine = new Engine();
@@ -80,8 +90,9 @@ public class Cruciform extends Game {
 		engine.addSystem(new MovementSystem(deferrer));
 		engine.addSystem(new LifetimeSystem(deferrer));
 		engine.addSystem(new CollisionSystem(engine, deferrer));
-		engine.addSystem(new SplitterSystem(engine));
+		engine.addSystem(new SplitterSystem(this));
 		engine.addSystem(new HealthSystem(explosionFactory, deferrer));
+		
 		this.setScreen(new MainMenuState(this));
 	}
 

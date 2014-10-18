@@ -68,8 +68,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	}
 
 	private void draw(TextureRegion region, float x, float y, float rotation) {
-			//batch.draw(region, x, y);
-			batch.draw(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionHeight(),
+		batch.draw(region, x, y, x, y, region.getRegionWidth(), region.getRegionHeight(),
 					1, 1, rotation);
 	}
 	

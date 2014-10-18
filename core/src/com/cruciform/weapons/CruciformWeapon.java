@@ -22,7 +22,7 @@ public class CruciformWeapon extends Weapon {
 	private final static float COOL_DOWN_TIME = 3.0f;
 	private final static CruciformSplitBehavior CRUCIFORM_SPLIT_BEHAVIOR = new CruciformSplitBehavior();
 	private final static float BEAM_WIDTH = 8.0f;
-	private final static float BEAM_HEIGHT = 1100.0f;
+	private final static float BEAM_HEIGHT = Conf.playWidth*2;
 	
 	public CruciformWeapon(final Engine engine, final Class<? extends Team> team) {
 		super(COOL_DOWN_TIME, engine, team);
@@ -42,8 +42,11 @@ public class CruciformWeapon extends Weapon {
 
 		@Override
 		public Entity mutate(Entity entity, final int index) {
+			final Splitter splitter = Splitter.mapper.get(entity);
 			final Position position = Position.mapper.get(entity);
 			position.bounds.rotate(90.0f);
+			position.bounds.setPosition(position.bounds.getX(), splitter.collisionY);
+			entity.remove(Splitter.class);
 			return entity;
 		}
 		
@@ -56,9 +59,9 @@ public class CruciformWeapon extends Weapon {
 		Position position = new Position();
 		position.bounds = Geometry.polyRect(
 				firerPos.bounds.getX(), 
-				firerPos.bounds.getY() + 1000, 
-				8, 
-				2000);
+				firerPos.bounds.getY() + BEAM_HEIGHT/2, 
+				BEAM_WIDTH, 
+				BEAM_HEIGHT);
 		entity.add(position);
 		
 		Renderer renderer = new Renderer();
@@ -82,7 +85,6 @@ public class CruciformWeapon extends Weapon {
 		
 		Splitter splitter = new Splitter();
 		splitter.componentsToRemoveFromChildren.add(SoundEffect.class);
-		splitter.componentsToRemoveFromChildren.add(Splitter.class);
 		splitter.numberOfNewEntities = 1;
 		splitter.customSplitBehavior = CRUCIFORM_SPLIT_BEHAVIOR;
 		entity.add(splitter);

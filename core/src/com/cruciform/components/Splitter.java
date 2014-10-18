@@ -13,4 +13,5 @@ public class Splitter extends Component {
 	public EntityMutator customSplitBehavior;
 	public boolean splitOnCollision = true;
 	public boolean splitOnNextUpdate = false;
+	public float collisionY = 0.0f; // TODO refactor
 }

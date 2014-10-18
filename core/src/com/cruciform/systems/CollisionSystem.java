@@ -41,8 +41,8 @@ public class CollisionSystem extends EntitySystem {
 					final Position otherPosition = Position.mapper.get(other);
 					if (Intersector.overlapConvexPolygons(position.bounds, otherPosition.bounds)) {
 						performDamagerEvent(entity, other);
-						performSplitterEvent(entity);
-						performSplitterEvent(other);
+						performSplitterEvent(entity, other);
+						performSplitterEvent(other, entity);
 					}
 				}
 			}
@@ -59,11 +59,16 @@ public class CollisionSystem extends EntitySystem {
 		deferrer.run(() -> culprit.remove(Collider.class));
 	}
 	
-	private void performSplitterEvent(Entity culprit) {
+	private void performSplitterEvent(Entity entity, Entity other) {
 		// TODO refactor to somewhere else?
-		Splitter splitter = Splitter.mapper.get(culprit);
+		Splitter splitter = Splitter.mapper.get(entity);
 		if (splitter != null && splitter.splitOnCollision) {
 			splitter.splitOnNextUpdate = true;
+			float newY = Position.mapper.get(other).bounds.getY();
+			// TODO refactor
+			if (splitter.collisionY == 0.0f || splitter.collisionY > newY) {
+				splitter.collisionY = newY;
+			}
 		}
 	}
 }

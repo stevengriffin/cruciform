@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.cruciform.components.Renderer;
 
 public class ImageManager {
 	private static Map<Picture, TextureRegion> map = new HashMap<>();
@@ -31,5 +32,12 @@ public class ImageManager {
 	
 	public static TextureRegion get(Picture picture) {
 		return map.get(picture);
+	}
+	
+	public static Renderer getRenderer(Picture picture) {
+		Renderer renderer = new Renderer();
+		renderer.image = map.get(picture);
+		renderer.imageName = picture;
+		return renderer;
 	}
 }
