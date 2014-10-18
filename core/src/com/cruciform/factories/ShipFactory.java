@@ -94,7 +94,7 @@ public class ShipFactory {
 		entity.add(position);
 		
 		LineMover lineMover = new LineMover();
-		lineMover.maxVelocity = new Vector2(0.0f, -12.0f);
+		lineMover.maxVelocity = new Vector2(0.0f, -24.0f);
 		lineMover.accelerates = false;
 		entity.add(lineMover);
 	

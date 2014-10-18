@@ -61,13 +61,14 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 			draw(renderer.image, position.bounds.getX() + renderer.customXOffset,
 				position.bounds.getY() + renderer.customYOffset, position.bounds.getRotation());
 		} else {
-			draw(renderer.image, position.bounds.getX() - rect.width/2,
-				position.bounds.getY() - rect.height/2, position.bounds.getRotation());
+			float[] vertices = position.bounds.getTransformedVertices();
+			draw(renderer.image, vertices[0],
+				vertices[1], position.bounds.getRotation());
 		}
 	}
 
 	private void draw(TextureRegion region, float x, float y, float rotation) {
-		batch.draw(region, x, y, x, y, region.getRegionWidth(), region.getRegionHeight(),
+		batch.draw(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionHeight(),
 					1, 1, rotation);
 	}
 	

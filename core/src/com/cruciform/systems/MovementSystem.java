@@ -20,6 +20,7 @@ public class MovementSystem extends IteratingSystem {
 		Position position = Position.mapper.get(entity);
 		Velocity velocity = Velocity.mapper.get(entity);
 		position.bounds.translate(velocity.linear.x*deltaTime, velocity.linear.y*deltaTime);
+		position.bounds.rotate(velocity.rotational*deltaTime);
 		if (position.outOfBoundsHandler.isOutOfBounds(position.bounds)) {
 			deferrer.remove(entity);
 		}

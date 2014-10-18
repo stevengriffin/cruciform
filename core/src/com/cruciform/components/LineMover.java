@@ -8,5 +8,6 @@ public class LineMover extends AbstractComponent {
 	public Vector2 maxVelocity;
 	public Vector2 absMaxVelocity; // x, y always >= 0
 	public Vector2 accel = new Vector2(0, 0);
+	public float maxRotationalVelocity = 0.0f; // no support for accelerated rotation yet
 	public boolean accelerates = false;
 }

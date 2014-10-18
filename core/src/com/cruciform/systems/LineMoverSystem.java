@@ -24,6 +24,7 @@ public class LineMoverSystem extends IteratingSystem {
 					-lineMover.absMaxVelocity.y, lineMover.absMaxVelocity.y);
 		} else {
 			velocity.linear = lineMover.maxVelocity;
+			velocity.rotational = lineMover.maxRotationalVelocity;
 		}
 	}
 

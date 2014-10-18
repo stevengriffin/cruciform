@@ -102,6 +102,7 @@ public class RifleWeapon extends Weapon {
 		LineMover lineMover = new LineMover();
 		lineMover.maxVelocity = new Vector2(bulletSpeed*MathUtils.sinDeg(currentRecoil)*directionX,
 				bulletSpeed*MathUtils.cosDeg(currentRecoil)*directionY);
+		lineMover.maxRotationalVelocity = 60;
 		lineMover.accelerates = false;
 		entity.add(lineMover);
 
