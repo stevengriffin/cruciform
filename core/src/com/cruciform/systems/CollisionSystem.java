@@ -13,6 +13,7 @@ import com.cruciform.components.Position;
 import com.cruciform.components.Splitter;
 import com.cruciform.components.team.Team;
 import com.cruciform.utils.Deferrer;
+import com.esotericsoftware.minlog.Log;
 
 public class CollisionSystem extends EntitySystem {
 
@@ -38,8 +39,12 @@ public class CollisionSystem extends EntitySystem {
 						Family.getFor(Collider.class, Position.class, team));
 				for (int j = 0; j < entitiesToCollideWith.size(); ++j) {
 					final Entity other = entitiesToCollideWith.get(j);
+					if (collider.entitiesCollidedWith.contains(other, true)) {
+						continue;
+					}
 					final Position otherPosition = Position.mapper.get(other);
 					if (Intersector.overlapConvexPolygons(position.bounds, otherPosition.bounds)) {
+						collider.entitiesCollidedWith.add(other);
 						performDamagerEvent(entity, other);
 						performSplitterEvent(entity, other);
 						performSplitterEvent(other, entity);
@@ -55,8 +60,8 @@ public class CollisionSystem extends EntitySystem {
 		Damager damager = Damager.mapper.get(culprit);
 		if (victimHealth != null && damager != null) {
 			victimHealth.currentHealth -= damager.damage;
+			Log.debug("Damaged for " + damager.damage);
 		}
-		deferrer.run(() -> culprit.remove(Collider.class));
 	}
 	
 	private void performSplitterEvent(Entity entity, Entity other) {

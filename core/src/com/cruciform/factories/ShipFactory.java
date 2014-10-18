@@ -23,6 +23,7 @@ import com.cruciform.utils.OutOfBoundsHandler;
 import com.cruciform.weapons.CruciformWeapon;
 import com.cruciform.weapons.RifleWeapon;
 import com.cruciform.weapons.RocketWeapon;
+import com.cruciform.weapons.SweepWeapon;
 
 public class ShipFactory {
 	private final Engine engine;
@@ -51,17 +52,20 @@ public class ShipFactory {
 		CruciformWeapon cruciform = new CruciformWeapon(engine, team.getClass());
 		RocketWeapon rocket = new RocketWeapon(0.1f, engine, explosionFactory, team.getClass());
 		RifleWeapon rifle = new RifleWeapon(0.05f, engine, explosionFactory, team.getClass());
+		SweepWeapon sweep = new SweepWeapon(2.0f, engine, explosionFactory, team.getClass());
 		
 		Shooter shooter = new Shooter();
 		shooter.weapons.add(cruciform);
 		shooter.weapons.add(rocket);
 		shooter.weapons.add(rifle);
+		shooter.weapons.add(sweep);
 		entity.add(shooter);
 		
 		PlayerInput playerInput = new PlayerInput();
 		playerInput.actions.put(InputCode.fromButton(Input.Buttons.LEFT), cruciform);
 		playerInput.actions.put(InputCode.fromButton(Input.Buttons.RIGHT), rocket);
 		playerInput.actions.put(InputCode.fromKey(Input.Keys.Z), rifle);
+		playerInput.actions.put(InputCode.fromKey(Input.Keys.SPACE), sweep);
 		entity.add(playerInput);
 
 		Health health = new Health();

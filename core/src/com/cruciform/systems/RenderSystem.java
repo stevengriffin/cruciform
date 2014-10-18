@@ -35,7 +35,6 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	@Override
 	public void update(float deltaTime) {
 		batch.begin();
-		//batch.draw(ImageManager.get(Picture.PLAYER_SHIP_1), Gdx.input.getX(), Conf.screenHeight - Gdx.input.getY());
 		for(Array<Entity> entities : entityMap.values()) {
 			for(int i = 0; i < entities.size; i++) {
 				processEntity(entities.get(i), deltaTime);
