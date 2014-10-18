@@ -32,6 +32,7 @@ public class SplitterSystem extends IteratingSystem {
 				for (int j = 0; j < parentComponents.size(); j++) {
 					Component component = parentComponents.get(j);
 					if (!splitter.componentsToRemoveFromChildren.contains(component.getClass(), false)) {
+						Log.debug("Copying " + component.getClass());
 						child.add(kryo.copy(component));
 					}
 				}

@@ -12,6 +12,7 @@ public class Splitter extends AbstractComponent {
 	public int numberOfNewEntities;
 	public EntityMutator customSplitBehavior;
 	public boolean splitOnCollision = true;
+	public boolean splitOnDeletion = false;
 	public boolean splitOnNextUpdate = false;
 	public float collisionY = 0.0f; // TODO refactor
 }

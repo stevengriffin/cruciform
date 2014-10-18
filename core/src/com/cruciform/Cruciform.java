@@ -10,10 +10,12 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.cruciform.components.Collider;
 import com.cruciform.components.Renderer;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.UIFactory;
+import com.cruciform.serialization.ColliderSerializer;
 import com.cruciform.serialization.RendererSerializer;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.states.State;
@@ -66,6 +68,7 @@ public class Cruciform extends Game {
 		// Serialization
 		kryo = new Kryo();
 		kryo.addDefaultSerializer(Renderer.class, RendererSerializer.class);
+		kryo.addDefaultSerializer(Collider.class, ColliderSerializer.class);
 
 		// Entity engine
 		engine = new Engine();
