@@ -111,6 +111,7 @@ public class ShipFactory {
 		rifle.bulletSpeed = 120.0f;
 		rifle.bulletsPerClip = 5;
 		rifle.reloadTime = 3.0f;
+		rifle.rotationalVelocity = 60.0f;
 		
 		Shooter shooter = new Shooter();
 		shooter.weapons.add(rifle);

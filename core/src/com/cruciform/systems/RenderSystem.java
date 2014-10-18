@@ -49,6 +49,9 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		batch.end();
 	}
 
+	private static int LEFT = 0;
+	private static int BOTTOM = 1;
+	
 	private void processEntity(Entity entity, float deltaTime) {
 		Position position = Position.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);
@@ -62,8 +65,8 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 				position.bounds.getY() + renderer.customYOffset, position.bounds.getRotation());
 		} else {
 			float[] vertices = position.bounds.getTransformedVertices();
-			draw(renderer.image, vertices[0],
-				vertices[1], position.bounds.getRotation());
+			draw(renderer.image, vertices[LEFT],
+				vertices[BOTTOM], position.bounds.getRotation());
 		}
 	}
 

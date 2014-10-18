@@ -28,6 +28,7 @@ public class RifleWeapon extends Weapon {
 	private static final TextureRegion RIFLE_BULLET_IMAGE = ImageManager.get(Picture.RIFLE_BULLET);
 	private final ExplosionFactory explosionFactory;
 	private float currentRecoil = 0.0f;
+	public float rotationalVelocity = 0;
 	public float volume = 0.2f;
 	public float bulletSpeed = 2400.0f;
 	private static final float RECOIL_PER_BULLET = 0.5f;
@@ -93,6 +94,7 @@ public class RifleWeapon extends Weapon {
 				originY, 
 				renderer.image.getRegionWidth(),
 				renderer.image.getRegionHeight());
+		position.bounds.rotate(-currentRecoil*directionX*directionY);
 		position.outOfBoundsHandler = OutOfBoundsHandler.all();
 		entity.add(position);
 		
@@ -102,7 +104,7 @@ public class RifleWeapon extends Weapon {
 		LineMover lineMover = new LineMover();
 		lineMover.maxVelocity = new Vector2(bulletSpeed*MathUtils.sinDeg(currentRecoil)*directionX,
 				bulletSpeed*MathUtils.cosDeg(currentRecoil)*directionY);
-		lineMover.maxRotationalVelocity = 60;
+		lineMover.maxRotationalVelocity = -rotationalVelocity*directionX*directionY;
 		lineMover.accelerates = false;
 		entity.add(lineMover);
 
