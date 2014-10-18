@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.utils.EntityMutator;
 
-public class Splitter extends Component {
+public class Splitter extends AbstractComponent {
     public static final ComponentMapper<Splitter> mapper = ComponentMapper.getFor(Splitter.class);
 	public boolean deleteOldEntity = false;
 	public Array<Class<? extends Component>> componentsToRemoveFromChildren = new Array<>();
