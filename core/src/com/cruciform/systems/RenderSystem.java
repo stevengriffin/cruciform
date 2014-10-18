@@ -7,9 +7,11 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
+import com.cruciform.Cruciform;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.utils.Conf;
@@ -19,18 +21,21 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 
 	private final Batch batch;
 	private final BitmapFont font;
+	private final Cruciform game;
 	private final OrderedMap<Priority, Array<Entity>> entityMap = new OrderedMap<>(); 
 	public final Family family;
 	
-	public RenderSystem(Batch batch, BitmapFont font) {
+	public RenderSystem(final Cruciform game, final Batch batch, final BitmapFont font) {
 		this.family = Family.getFor(Position.class, Renderer.class);
 		this.batch = batch;
 		this.font = font;
+		this.game = game;
 	}
 
 	@Override
 	public void update(float deltaTime) {
 		batch.begin();
+		//batch.draw(ImageManager.get(Picture.PLAYER_SHIP_1), Gdx.input.getX(), Conf.screenHeight - Gdx.input.getY());
 		for(Array<Entity> entities : entityMap.values()) {
 			for(int i = 0; i < entities.size; i++) {
 				processEntity(entities.get(i), deltaTime);
@@ -38,6 +43,10 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		}
 		font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(),
 				Conf.screenWidth*0.9f, Conf.screenHeight*0.9f);
+		font.draw(batch, "Java heap: " + game.application.getJavaHeap(),
+				Conf.screenWidth*0.8f, Conf.screenHeight*0.8f);
+		font.draw(batch, "Native heap: " + game.application.getNativeHeap(),
+				Conf.screenWidth*0.8f, Conf.screenHeight*0.7f);
 		batch.end();
 	}
 
@@ -50,14 +59,20 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		}
 		Rectangle rect = position.bounds.getBoundingRectangle();
 		if (renderer.customOffset) {
-			batch.draw(renderer.image, position.bounds.getX() + renderer.customXOffset,
-				position.bounds.getY() + renderer.customYOffset);
+			draw(renderer.image, position.bounds.getX() + renderer.customXOffset,
+				position.bounds.getY() + renderer.customYOffset, position.bounds.getRotation());
 		} else {
-			batch.draw(renderer.image, position.bounds.getX() - rect.width/2,
-				position.bounds.getY() - rect.height/2);
+			draw(renderer.image, position.bounds.getX() - rect.width/2,
+				position.bounds.getY() - rect.height/2, position.bounds.getRotation());
 		}
 	}
 
+	private void draw(TextureRegion region, float x, float y, float rotation) {
+			//batch.draw(region, x, y);
+			batch.draw(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionHeight(),
+					1, 1, rotation);
+	}
+	
 	@Override
 	public void entityAdded(Entity entity) {
 		// TODO Switch to family-based when Ashley is updated

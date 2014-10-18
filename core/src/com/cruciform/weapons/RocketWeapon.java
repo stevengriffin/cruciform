@@ -3,6 +3,7 @@ package com.cruciform.weapons;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
@@ -25,8 +26,8 @@ import com.cruciform.utils.OutOfBoundsHandler;
 
 public class RocketWeapon extends Weapon {
 
-	private static final Texture ROCKET_IMAGE = ImageManager.get(Picture.ROCKET);
-	private static final Texture FAST_ROCKET_IMAGE = ImageManager.get(Picture.ROCKET_FAST);
+	private static final TextureRegion ROCKET_IMAGE = ImageManager.get(Picture.ROCKET);
+	private static final TextureRegion FAST_ROCKET_IMAGE = ImageManager.get(Picture.ROCKET_FAST);
 	private final ExplosionFactory explosionFactory;
 	private Entity lastRocketFired;
 	private int timesFired = -1;
@@ -45,7 +46,7 @@ public class RocketWeapon extends Weapon {
 
 	@Override
 	void handleFire(Position firerPos) {
-		Texture image;
+		TextureRegion image;
 		timesFired++;
 		float maxSpeed;
 		if (isFastRocket()) {
@@ -64,7 +65,7 @@ public class RocketWeapon extends Weapon {
 		createRocket(firerPos.bounds.getX(), firerPos.bounds.getY(), maxSpeed, image);
 	}
 
-	private void createRocket(float originX, float originY, float maxSpeed, Texture image) {
+	private void createRocket(float originX, float originY, float maxSpeed, TextureRegion image) {
 		Entity entity = new Entity();
 
 		Renderer renderer = new Renderer();
@@ -75,8 +76,8 @@ public class RocketWeapon extends Weapon {
 		position.bounds = Geometry.polyRect(
 				originX, 
 				originY, 
-				renderer.image.getWidth(),
-				renderer.image.getHeight());
+				renderer.image.getRegionWidth(),
+				renderer.image.getRegionHeight());
 		position.outOfBoundsHandler = OutOfBoundsHandler.all();
 		entity.add(position);
 		

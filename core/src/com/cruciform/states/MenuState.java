@@ -16,6 +16,7 @@ public abstract class MenuState extends State {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(inputProcessor);
+		super.show();
 	}
 	
 	public abstract void confirm();

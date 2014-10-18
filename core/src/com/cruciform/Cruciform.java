@@ -1,6 +1,7 @@
 package com.cruciform;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,11 +9,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.UIFactory;
 import com.cruciform.states.MainMenuState;
+import com.cruciform.states.State;
 import com.cruciform.systems.AISystem;
 import com.cruciform.systems.BlinkerSystem;
 import com.cruciform.systems.CollisionSystem;
@@ -24,6 +27,7 @@ import com.cruciform.systems.LineMoverSystem;
 import com.cruciform.systems.MovementSystem;
 import com.cruciform.systems.RenderSystem;
 import com.cruciform.systems.ShooterSystem;
+import com.cruciform.systems.SplitterSystem;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
 
@@ -39,6 +43,7 @@ public class Cruciform extends Game {
 	public ShapeRenderer shapeRenderer;
 	public Deferrer deferrer;
 	public InputSystem inputSystem;
+	public Application application = null;
 	
 	@Override
 	public void create() {
@@ -62,11 +67,11 @@ public class Cruciform extends Game {
 		shipFactory = new ShipFactory(engine, explosionFactory);
 		
 		// Systems
-		RenderSystem renderSystem = new RenderSystem(batch, font);
+		RenderSystem renderSystem = new RenderSystem(this, batch, font);
 		engine.addSystem(renderSystem);
 		engine.addEntityListener(renderSystem);
 		engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
-		inputSystem = new InputSystem();
+		inputSystem = new InputSystem(this);
 		engine.addSystem(inputSystem);
 		engine.addSystem(new LineMoverSystem());
 		engine.addSystem(new ShooterSystem());
@@ -75,8 +80,8 @@ public class Cruciform extends Game {
 		engine.addSystem(new MovementSystem(deferrer));
 		engine.addSystem(new LifetimeSystem(deferrer));
 		engine.addSystem(new CollisionSystem(engine, deferrer));
+		engine.addSystem(new SplitterSystem(engine));
 		engine.addSystem(new HealthSystem(explosionFactory, deferrer));
-		
 		this.setScreen(new MainMenuState(this));
 	}
 
@@ -88,5 +93,8 @@ public class Cruciform extends Game {
 		super.render();
 		deferrer.clear();
 	}
-	
+
+	public State getState() {
+		return (State) this.getScreen();
+	}
 }

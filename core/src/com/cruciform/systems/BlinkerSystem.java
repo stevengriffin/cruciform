@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.cruciform.components.Blinker;
-import com.cruciform.components.Health;
 import com.cruciform.components.Renderer;
 
 public class BlinkerSystem extends IteratingSystem {

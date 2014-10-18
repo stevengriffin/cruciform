@@ -2,6 +2,8 @@ package com.cruciform.input;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.cruciform.factories.StateFactory;
+import com.cruciform.states.GameState;
 import com.cruciform.states.MenuState;
 
 public class MenuInputProcessor implements InputProcessor {
@@ -14,10 +16,13 @@ public class MenuInputProcessor implements InputProcessor {
 	
 	@Override
 	public boolean keyDown(int keycode) {
+		// TODO allow configurable
 		if (keycode == Keys.ENTER) {
 			state.confirm();
 		} else if (keycode == Keys.ESCAPE) {
-			state.exitGame();
+			state.escapeState();
+		} else if (keycode == Keys.SPACE) {
+			StateFactory.setAndRenewState(GameState.class, state.game);
 		}
 		return false;
 	}

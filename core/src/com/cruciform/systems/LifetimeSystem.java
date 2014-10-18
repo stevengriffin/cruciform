@@ -18,7 +18,7 @@ public class LifetimeSystem extends IteratingSystem {
 	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
 		final Lifetime lifetime = Lifetime.mapper.get(entity);
-		if (!lifetime.timeRemaining.tick(deltaTime)) {
+		if (!lifetime.tick(deltaTime)) {
 			deferrer.remove(entity);
 		}
 	}

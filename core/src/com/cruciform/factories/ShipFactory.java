@@ -104,9 +104,9 @@ public class ShipFactory {
 		
 		RifleWeapon rifle = new RifleWeapon(0.4f, engine, explosionFactory, team.getClass());
 		rifle.volume = 0.0f;
-		rifle.bulletSpeed = 60.0f;
-		rifle.bulletsPerClip = 10;
-		rifle.reloadTime = 2.0f;
+		rifle.bulletSpeed = 120.0f;
+		rifle.bulletsPerClip = 5;
+		rifle.reloadTime = 3.0f;
 		
 		Shooter shooter = new Shooter();
 		shooter.weapons.add(rifle);

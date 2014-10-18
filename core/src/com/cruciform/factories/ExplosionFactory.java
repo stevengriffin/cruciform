@@ -16,7 +16,6 @@ import com.cruciform.components.team.TeamRocket;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
-import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
 
 public class ExplosionFactory {
@@ -40,11 +39,11 @@ public class ExplosionFactory {
 		entity.add(renderer);
 
 		final Position position = new Position();
-		position.bounds = Geometry.polyRect(x, y, renderer.image.getWidth(), renderer.image.getHeight());
+		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
 		entity.add(position);
 	
 		final Lifetime lifetime = new Lifetime();
-		lifetime.timeRemaining = CoolDownMetro.asPrefired(0.5f);
+		lifetime.setTimeRemaining(0.5f);
 		entity.add(lifetime);
 		
 		final Collider collider = new Collider();

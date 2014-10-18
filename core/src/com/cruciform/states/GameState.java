@@ -4,9 +4,9 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
-import com.cruciform.audio.AudioManager;
 import com.cruciform.components.Health;
 import com.cruciform.components.team.TeamPlayer;
+import com.cruciform.factories.StateFactory;
 import com.cruciform.utils.Conf;
 
 public class GameState extends State {
@@ -15,6 +15,7 @@ public class GameState extends State {
 	
 	public GameState(Cruciform game) {
 		super(game);
+		game.engine.removeAllEntities();
 		game.uiFactory.createSidePanel(true);
 		game.uiFactory.createSidePanel(false);
 		player = game.shipFactory.createPlayer(500, 500);
@@ -26,7 +27,14 @@ public class GameState extends State {
 		game.shipFactory.createEnemy(Conf.playLeft + 325, 900);
 		game.shipFactory.createEnemy(Conf.playLeft + 525, 900);
 		game.shipFactory.createEnemy(Conf.playLeft + 725, 900);
-		AudioManager.initMusic(GameState.class);
+		game.shipFactory.createEnemy(Conf.playLeft + 25, 1000);
+		game.shipFactory.createEnemy(Conf.playLeft + 225, 1000);
+		game.shipFactory.createEnemy(Conf.playLeft + 425, 1000);
+		game.shipFactory.createEnemy(Conf.playLeft + 625, 1000);
+		game.shipFactory.createEnemy(Conf.playLeft + 125, 1200);
+		game.shipFactory.createEnemy(Conf.playLeft + 325, 1200);
+		game.shipFactory.createEnemy(Conf.playLeft + 525, 1200);
+		game.shipFactory.createEnemy(Conf.playLeft + 725, 1200);
 	}
 
 	@Override
@@ -42,7 +50,6 @@ public class GameState extends State {
 
 	@Override
 	public void show() {
-		System.out.println("Game");
 		Gdx.input.setInputProcessor(game.inputSystem);
 		if (game.engine.getEntitiesFor(Family.getFor(TeamPlayer.class)).size() == 0) {
 			game.engine.addEntity(player);
@@ -54,7 +61,7 @@ public class GameState extends State {
 
 	@Override
 	public void hide() {
-		
+		super.hide();
 	}
 
 	@Override
@@ -75,4 +82,8 @@ public class GameState extends State {
 		
 	}
 
+	@Override
+	public void escapeState() {
+		StateFactory.setState(MainMenuState.class, this.game);
+	}
 }

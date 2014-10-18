@@ -1,5 +1,6 @@
 package com.cruciform.audio;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,6 +10,8 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.cruciform.states.GameState;
+import com.cruciform.states.MainMenuState;
 import com.cruciform.states.State;
 import com.cruciform.utils.Conf;
 
@@ -29,6 +32,7 @@ public class AudioManager {
 			newMusic("track11.mp3"),
 			newMusic("track12.mp3"),
 			newMusic("track13.mp3"));
+	private static List<Music> shuffledTracks;
 	private static int currentTrackNumber = -1;
 	private static MusicListener musicListener = new MusicListener();
 	
@@ -38,7 +42,8 @@ public class AudioManager {
 		map.put(Noise.CRUCIFORM, newSound("cruciform.mp3"));
 		map.put(Noise.RIFLE_BULLET, newSound("rifle_bullet.mp3"));
 		map.put(Noise.RIFLE_FIRE, newSound("rifle_fire_single_deep.mp3"));
-		Collections.shuffle(tracks);
+		shuffledTracks = new ArrayList<>(tracks);
+		Collections.shuffle(shuffledTracks);
 	}
 	
 	private static Sound newSound(String name) {
@@ -50,14 +55,30 @@ public class AudioManager {
 		newMusic.setOnCompletionListener(musicListener);
 		return newMusic;
 	}
-	
+
 	public static Sound get(Noise noise) {
 		return map.get(noise);
 	}
 	
 	public static void initMusic(Class<? extends State> state) {
-		// TODO: different for different states
-		musicListener.onCompletion(null);
+		if (state == MainMenuState.class) {
+			Music menuMusic = tracks.get(12);
+			menuMusic.setLooping(true);
+			menuMusic.setVolume(Conf.volume);
+			menuMusic.play();
+		} else if (state == GameState.class) {
+			musicListener.onCompletion(null);
+		}
+	}
+	
+	public static void stopMusic(Class<? extends State> state) {
+		if (state == MainMenuState.class) {
+			tracks.get(12).stop();
+		} else if (state == GameState.class) {
+			if (currentTrackNumber >= 0) {
+				shuffledTracks.get(currentTrackNumber).stop();
+			}
+		}
 	}
 
 	private static class MusicListener implements Music.OnCompletionListener {
@@ -68,10 +89,10 @@ public class AudioManager {
 				currentTrackNumber = -1;
 			}
 			currentTrackNumber++;
-			if (currentTrackNumber >= tracks.size()) {
+			if (currentTrackNumber >= shuffledTracks.size()) {
 				currentTrackNumber = 0;
 			}
-			Music newMusic = tracks.get(currentTrackNumber);
+			Music newMusic = shuffledTracks.get(currentTrackNumber);
 			newMusic.setVolume(Conf.volume);
 			newMusic.play();
 		}

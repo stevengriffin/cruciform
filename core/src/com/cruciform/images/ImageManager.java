@@ -6,9 +6,10 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ImageManager {
-	private static Map<Picture, Texture> map = new HashMap<>();
+	private static Map<Picture, TextureRegion> map = new HashMap<>();
 	
 	static {
 		map.put(Picture.CRUCIFORM_1, newTexture("cruciform_weapon1"));
@@ -21,13 +22,14 @@ public class ImageManager {
 		map.put(Picture.SIDE_PANEL, newTexture("side_panel"));
 	}
 	
-	private static Texture newTexture(String name) {
+	private static TextureRegion newTexture(String name) {
 		Texture texture =  new Texture(Gdx.files.internal("images/" + name + ".png"), true);
 		texture.setFilter(TextureFilter.MipMap, TextureFilter.Linear);
-		return texture;
+		TextureRegion region = new TextureRegion(texture);
+		return region;
 	}
 	
-	public static Texture get(Picture picture) {
+	public static TextureRegion get(Picture picture) {
 		return map.get(picture);
 	}
 }

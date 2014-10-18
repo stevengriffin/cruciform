@@ -13,8 +13,9 @@ public class InsertCreditState extends MenuState {
 	@Override
 	public void render(float delta) {
 		game.batch.begin();
+		// TODO Make buttons instead
 		String insertCredit = "Insert Credit [ENTER]";
-		String exitGame = "Exit Game [ESCAPE]";
+		String exitGame = "Exit To Menu [ESCAPE]";
         game.font.draw(game.batch, insertCredit, 
         		100, 100);
         game.font.draw(game.batch, exitGame, 100, 50);
@@ -29,14 +30,14 @@ public class InsertCreditState extends MenuState {
 
 	@Override
 	public void show() {
+		// TODO
 		super.show();
-		System.out.println("InsertCredit");
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+		super.hide();
 	}
 
 	@Override
@@ -61,5 +62,4 @@ public class InsertCreditState extends MenuState {
 	public void confirm() {
 		StateFactory.setState(GameState.class, game);
 	}
-	
 }

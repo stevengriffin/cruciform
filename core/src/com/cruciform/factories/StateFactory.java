@@ -9,14 +9,21 @@ public class StateFactory {
 	private static ObjectMap<Class<? extends State>, State> states = new ObjectMap<>();
 
 	public static State setState(final Class<? extends State> state, final Cruciform game) {
-		State result = getOrCreate(state, game);
+		State result = getOrCreate(state, game, false);
 		game.setScreen(result);
 		return result;
 	}
 	
-	private static State getOrCreate(final Class<? extends State> state, final Cruciform game) {
+	public static State setAndRenewState(final Class<? extends State> state, final Cruciform game) {
+		State result = getOrCreate(state, game, true);
+		game.setScreen(result);
+		return result;
+	}
+	
+	private static State getOrCreate(final Class<? extends State> state, final Cruciform game,
+			final boolean shouldRenew) {
 		try {
-			State result = states.get(state);
+			State result = shouldRenew ? null : states.get(state);
 			if (result == null) {
 				result = state.getConstructor(Cruciform.class).newInstance(game);
 				states.put(state, result);

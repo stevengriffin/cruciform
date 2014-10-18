@@ -6,5 +6,13 @@ import com.cruciform.utils.CoolDownMetro;
 
 public class Lifetime extends Component {
     public static final ComponentMapper<Lifetime> mapper = ComponentMapper.getFor(Lifetime.class);
-    public CoolDownMetro timeRemaining;
+    private CoolDownMetro timeRemaining;
+    
+    public void setTimeRemaining(float time) {
+    	timeRemaining = CoolDownMetro.asPrefired(time);
+    }
+    
+    public boolean tick(float dt) {
+    	return timeRemaining.tick(dt);
+    }
 }

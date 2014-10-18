@@ -10,6 +10,7 @@ import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Health;
 import com.cruciform.components.Position;
+import com.cruciform.components.Splitter;
 import com.cruciform.components.team.Team;
 import com.cruciform.utils.Deferrer;
 
@@ -39,18 +40,30 @@ public class CollisionSystem extends EntitySystem {
 					final Entity other = entitiesToCollideWith.get(j);
 					final Position otherPosition = Position.mapper.get(other);
 					if (Intersector.overlapConvexPolygons(position.bounds, otherPosition.bounds)) {
-						Health otherHealth = Health.mapper.get(other);
-						Damager damager = Damager.mapper.get(entity);
-						if (otherHealth != null && damager != null) {
-							System.out.println("Damaging " + otherHealth.currentHealth + " for " + damager.damage + " damage.");
-							otherHealth.currentHealth -= damager.damage;
-						} else {
-							System.out.println("Damaging");
-						}
-						deferrer.run(() -> entity.remove(Collider.class));
+						performDamagerEvent(entity, other);
+						performSplitterEvent(entity);
+						performSplitterEvent(other);
 					}
 				}
 			}
+		}
+	}
+	
+	private void performDamagerEvent(Entity culprit, Entity victim) {
+		// TODO refactor to somewhere else?
+		Health victimHealth = Health.mapper.get(victim);
+		Damager damager = Damager.mapper.get(culprit);
+		if (victimHealth != null && damager != null) {
+			victimHealth.currentHealth -= damager.damage;
+		}
+		deferrer.run(() -> culprit.remove(Collider.class));
+	}
+	
+	private void performSplitterEvent(Entity culprit) {
+		// TODO refactor to somewhere else?
+		Splitter splitter = Splitter.mapper.get(culprit);
+		if (splitter != null && splitter.splitOnCollision) {
+			splitter.splitOnNextUpdate = true;
 		}
 	}
 }

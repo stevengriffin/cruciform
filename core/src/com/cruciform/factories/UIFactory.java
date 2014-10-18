@@ -27,7 +27,7 @@ public class UIFactory {
 		
 		final Position position = new Position();
 		if (isLeft) {
-			position.bounds = Geometry.polyRect(Conf.playLeft - renderer.image.getWidth(), 0, Conf.playLeft, Conf.screenHeight);
+			position.bounds = Geometry.polyRect(Conf.playLeft - renderer.image.getRegionWidth(), 0, Conf.playLeft, Conf.screenHeight);
 		} else {
 			position.bounds = Geometry.polyRect(Conf.playRight, 0, Conf.screenWidth, Conf.screenHeight);
 		}
