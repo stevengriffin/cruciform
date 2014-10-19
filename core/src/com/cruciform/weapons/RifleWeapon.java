@@ -115,6 +115,6 @@ public class RifleWeapon extends Weapon {
 		entity.add(damager);
 		
 		engine.addEntity(entity);
-	}
+	}	
 	
 }

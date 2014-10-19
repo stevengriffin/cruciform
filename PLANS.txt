@@ -1,0 +1,80 @@
+entity creation:
+
+EntityBuilder.create(EntityTag.PLAYER, x, y))
+
+enum EntityTag {
+    PLAYER,
+    ENEMY_A,
+    ENEMY_B,
+    ENEMY_C
+}
+
+class EntityBuilder {
+    static builderPool
+    static engine
+    static entityFactory
+    tag
+    x
+    y
+
+    static create(EntityTag tag, float x, float y) {
+        entity = engine.createPooledEntity()
+        engine.addEntity(entity)
+        return entityFactory.create(builderPool.newBuilder(entity, tag, x, y))
+    }
+
+}
+
+class EntityFactory {
+    engine
+    componentFactory
+
+    create(EntityBuilder builder) {
+        switch(builder.tag) {
+            case EntityTag.PLAYER:
+                return createPlayer(builder)
+            ...
+        }
+    }
+
+    private createPlayer(EntityBuilder builder) {
+        componentFactory.createA(builder)
+        componentFactory.createB(builder)
+        componentFactory.createC(builder)
+    }
+
+}
+
+class ComponentFactory {
+    static engine
+
+    static create(Class<? extends AbstractComponent> componentClass) {
+        return engine.createComponent(componentClass)
+    }
+
+    createA(EntityBuilder builder) {
+        switch(builder.tag) {
+            case EntityTag.PLAYER:
+            case EntityTag.ENEMY_C:
+                return A.builder()
+                    .propertyE(5)
+                    .build()
+            case EntityTag.ENEMY_A:
+                return A.builder()
+                    .propertyE(1)
+                    .build()
+            ...
+        }
+        
+    }
+
+    createB ...
+
+    createC ...
+}
+
+
+@PooledBuilder(StaticFactoryMethod = ComponentFactory.create)
+class A extends AbstractComponent {
+    int propertyE
+}

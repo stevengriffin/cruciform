@@ -55,11 +55,9 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	private void processEntity(Entity entity, float deltaTime) {
 		Position position = Position.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);
-		// TODO Switch to family-based when Ashley is updated
-		if (position == null || renderer == null || !renderer.shouldRender) {
+		if (!renderer.shouldRender) {
 			return;
 		}
-		Rectangle rect = position.bounds.getBoundingRectangle();
 		if (renderer.customOffset) {
 			draw(renderer.image, position.bounds.getX() + renderer.customXOffset,
 				position.bounds.getY() + renderer.customYOffset, position.bounds.getRotation());
@@ -77,13 +75,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	
 	@Override
 	public void entityAdded(Entity entity) {
-		// TODO Switch to family-based when Ashley is updated
-		// TODO This version may be bugged if Renderers are removed from an Entity without destroying it.
-		Position position = Position.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);
-		if (position == null || renderer == null) {
-			return;
-		}
 		Array<Entity> entities = entityMap.get(renderer.priority);
 		if (entities == null) {
 			entities = new Array<Entity>();
@@ -96,13 +88,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 
 	@Override
 	public void entityRemoved(Entity entity) {
-		// TODO Switch to family-based when Ashley is updated
-		// TODO This version may be bugged if Renderers are removed from an Entity without destroying it.
-		Position position = Position.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);
-		if (position == null || renderer == null) {
-			return;
-		}
 		Array<Entity> entities = entityMap.get(renderer.priority);
 		if (entities != null) {
 			entities.removeValue(entity, true);
