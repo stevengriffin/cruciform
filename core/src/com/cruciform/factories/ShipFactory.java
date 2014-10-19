@@ -1,5 +1,7 @@
 package com.cruciform.factories;
 
+import java.awt.RadialGradientPaint;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
@@ -21,6 +23,7 @@ import com.cruciform.input.InputCode;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
 import com.cruciform.weapons.CruciformWeapon;
+import com.cruciform.weapons.RadialWeapon;
 import com.cruciform.weapons.RifleWeapon;
 import com.cruciform.weapons.RocketWeapon;
 import com.cruciform.weapons.SweepWeapon;
@@ -37,15 +40,14 @@ public class ShipFactory {
 	public Entity createPlayer(float x, float y) {
 		Entity entity = new Entity();
 		
-		Position position = new Position();
-		position.bounds = Geometry.polyRect(x, y, 20, 20);
+		Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(x, y, 5, 5);
 		position.yDirection = 1;
-		entity.add(position);
 		
-		Renderer renderer = new Renderer();
+		Renderer renderer = new Renderer(entity);
 		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_2);
-		entity.add(renderer);
-	
+		renderer.shouldRender = false;
+		
 		TeamPlayer team = new TeamPlayer();
 		entity.add(team);
 		
@@ -83,15 +85,13 @@ public class ShipFactory {
 	public Entity createEnemy(float x, float y) {
 		Entity entity = new Entity();
 		
-		Renderer renderer = new Renderer();
+		Renderer renderer = new Renderer(entity);
 		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_1);
-		entity.add(renderer);
 		
-		Position position = new Position();
+		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, 20, 20);
 		position.yDirection = -1;
 		position.outOfBoundsHandler = OutOfBoundsHandler.south();
-		entity.add(position);
 		
 		LineMover lineMover = new LineMover();
 		lineMover.maxVelocity = new Vector2(0.0f, -24.0f);
@@ -113,8 +113,13 @@ public class ShipFactory {
 		rifle.reloadTime = 3.0f;
 		rifle.rotationalVelocity = 60.0f;
 		
+		RadialWeapon radial = new RadialWeapon(2.0f, engine, explosionFactory);
+		radial.bulletSpeed = 120.0f;
+		radial.rotationalVelocity = 20.0f;
+		
 		Shooter shooter = new Shooter();
-		shooter.weapons.add(rifle);
+		//shooter.weapons.add(rifle);
+		shooter.weapons.add(radial);
 		entity.add(shooter);
 	
 		AI ai = new AI();

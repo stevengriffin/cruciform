@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.cruciform.components.Position;
 import com.cruciform.components.Velocity;
 import com.cruciform.utils.Deferrer;
+import com.cruciform.utils.Deferrer.RemovalUrgency;
 
 public class MovementSystem extends IteratingSystem {
 
@@ -22,7 +23,7 @@ public class MovementSystem extends IteratingSystem {
 		position.bounds.translate(velocity.linear.x*deltaTime, velocity.linear.y*deltaTime);
 		position.bounds.rotate(velocity.rotational*deltaTime);
 		if (position.outOfBoundsHandler.isOutOfBounds(position.bounds)) {
-			deferrer.remove(entity);
+			deferrer.remove(entity, RemovalUrgency.URGENT);
 		}
 	}
 }

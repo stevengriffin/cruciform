@@ -1,6 +1,7 @@
 package com.cruciform.utils;
 
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 
 public class OutOfBoundsHandler {
 	
@@ -29,9 +30,10 @@ public class OutOfBoundsHandler {
 	}
 	
 	public boolean isOutOfBounds(Polygon bounds) {
-		return (bounds.getX() > Conf.screenWidth * 1.3f && removeWhenEast) ||
-				(bounds.getX() < -Conf.screenWidth * 0.3f && removeWhenWest) ||
-				(bounds.getY() > Conf.screenHeight * 1.3f && removeWhenNorth) ||
-				(bounds.getY() < -Conf.screenHeight * 0.3f && removeWhenSouth);
+		Rectangle rect = bounds.getBoundingRectangle();
+		return (rect.x > Conf.playRight && removeWhenEast) ||
+				(rect.x + rect.width < Conf.playLeft && removeWhenWest) ||
+				(rect.y > Conf.screenHeight * 1.3f && removeWhenNorth) ||
+				(rect.y + rect.height < 0.0f && removeWhenSouth);
 	}
 }

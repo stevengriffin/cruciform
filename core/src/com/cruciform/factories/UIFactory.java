@@ -19,19 +19,14 @@ public class UIFactory {
 	public Entity createSidePanel(boolean isLeft) {
 		final Entity entity = new Entity();
 
-		final Renderer renderer = new Renderer();
-		renderer.image = ImageManager.get(Picture.SIDE_PANEL);
-		renderer.customOffset = true;
-		renderer.priority = new Priority(6);
-		entity.add(renderer);
+		final Renderer renderer = Renderer.defaultForUI(entity, ImageManager.get(Picture.SIDE_PANEL));
 		
-		final Position position = new Position();
+		final Position position = new Position(entity);
 		if (isLeft) {
 			position.bounds = Geometry.polyRect(Conf.playLeft - renderer.image.getRegionWidth(), 0, Conf.playLeft, Conf.screenHeight);
 		} else {
 			position.bounds = Geometry.polyRect(Conf.playRight, 0, Conf.screenWidth, Conf.screenHeight);
 		}
-		entity.add(position);
 		
 		engine.addEntity(entity);
 		return entity;

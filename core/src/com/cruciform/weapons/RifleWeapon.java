@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
+import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
@@ -81,22 +82,13 @@ public class RifleWeapon extends Weapon {
 	private void createBullet(float originX, float originY, int directionX, int directionY) {
 		Entity entity = new Entity();
 
-		Renderer renderer = new Renderer();
-		renderer.image = RIFLE_BULLET_IMAGE;
-		if (team == TeamEnemy.class) {
-			renderer.priority = new Priority(5);
-		}
-		entity.add(renderer);
+		Renderer renderer = Renderer.defaultForBullet(entity, team, RIFLE_BULLET_IMAGE);
 		
-		Position position = new Position();
-		position.bounds = Geometry.polyRect(
-				originX, 
-				originY, 
+		Position.defaultForBullet(entity,
+				originX, originY,
 				renderer.image.getRegionWidth(),
-				renderer.image.getRegionHeight());
-		position.bounds.rotate(-currentRecoil*directionX*directionY);
-		position.outOfBoundsHandler = OutOfBoundsHandler.all();
-		entity.add(position);
+				renderer.image.getRegionHeight(),
+				-currentRecoil*directionX*directionY);
 		
 		Velocity velocity = new Velocity();
 		entity.add(velocity);
@@ -108,7 +100,7 @@ public class RifleWeapon extends Weapon {
 		lineMover.accelerates = false;
 		entity.add(lineMover);
 
-		addColliderComponent(entity);
+		Collider.defaultForProjectile(entity, team);
 		
 		Damager damager = new Damager();
 		damager.damage = damagePerBullet;

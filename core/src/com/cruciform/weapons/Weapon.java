@@ -53,14 +53,4 @@ public abstract class Weapon implements InputAction {
 		return coolDown.getPercent();
 	}
 
-	Collider addColliderComponent(Entity entity) {
-		Collider collider = new Collider();
-		if (team == TeamEnemy.class) {
-			collider.teamsToCollide.add(TeamPlayer.class);
-		} else {
-			collider.teamsToCollide.add(TeamEnemy.class);
-		}
-		entity.add(collider);
-		return collider;
-	}	
 }

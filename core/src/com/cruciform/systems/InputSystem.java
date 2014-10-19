@@ -19,7 +19,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	private static final float ACCEL_CONSTANT = 0.0f; //0.1f;
 	private PlayerInput playerInput = null;
-	private float sensitivity = 0.25f; //0.5f;
+	private float sensitivity = 0.5f;
 	private float keysSpeed = 240.0f;
 	private final Cruciform game;
 	
@@ -43,7 +43,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 		final int deltaY = Gdx.input.getDeltaY();
 		//System.out.println("dx: " + deltaX + " dy: " + deltaY);
 		x += calculateMovement(deltaX);
-		y -= calculateMovement(deltaY);
+		y -= 1.3f*calculateMovement(deltaY);
 		// TODO allow configurable
 		if (Gdx.input.isKeyPressed(Keys.A)) {
 			x -= keysSpeed*deltaTime;

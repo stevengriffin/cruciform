@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.cruciform.Cruciform;
+import com.cruciform.components.Lifetime;
 import com.cruciform.components.Splitter;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.minlog.Log;
@@ -26,6 +27,8 @@ public class SplitterSystem extends IteratingSystem {
 	public void processEntity(final Entity entity, final float deltaTime) {
 		final Splitter splitter = Splitter.mapper.get(entity);
 		if (splitter.splitOnNextUpdate) {
+			splitter.timesSplit++;
+			splitter.splitOnNextUpdate = false;
 			final ImmutableArray<Component> parentComponents = entity.getComponents();
 			for (int i = 0; i < splitter.numberOfNewEntities; i++) {
 				Entity child = new Entity();
@@ -36,14 +39,14 @@ public class SplitterSystem extends IteratingSystem {
 						child.add(kryo.copy(component));
 					}
 				}
+				Lifetime.mapper.get(child).getClass();
 				child = splitter.customSplitBehavior.mutate(child, i);
 				engine.addEntity(child);
 			}
 			if (splitter.deleteOldEntity) {
 				engine.removeEntity(entity);
-			} else {
-				entity.remove(Splitter.class);
 			}
+			entity.remove(Splitter.class);
 		}
 	}
 }

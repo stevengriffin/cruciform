@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
+import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Lifetime;
 import com.cruciform.components.Position;
@@ -56,24 +57,22 @@ public class CruciformWeapon extends Weapon {
 			final boolean splits) {
 		Entity entity = new Entity();
 		
-		Position position = new Position();
+		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(
 				firerPos.bounds.getX(), 
 				firerPos.bounds.getY() + BEAM_HEIGHT/2, 
 				BEAM_WIDTH, 
 				BEAM_HEIGHT);
-		entity.add(position);
 		
-		Renderer renderer = new Renderer();
+		Renderer renderer = new Renderer(entity);
 		renderer.image = ImageManager.get(Picture.CRUCIFORM_1);
-		entity.add(renderer);
 		
 		SoundEffect soundEffect = new SoundEffect();
 		soundEffect.sound = AudioManager.get(Noise.CRUCIFORM);
 		soundEffect.id = soundEffect.sound.play(1.0f * Conf.volume);
 		entity.add(soundEffect);
 		
-		addColliderComponent(entity);
+		Collider.defaultForProjectile(entity, team);
 		
 		Damager damager = new Damager();
 		damager.damage = 50.0f;

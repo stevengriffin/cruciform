@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.cruciform.components.Renderer;
 
 public class ImageManager {
 	private static Map<Picture, TextureRegion> map = new HashMap<>();
@@ -17,6 +16,7 @@ public class ImageManager {
 		map.put(Picture.PLAYER_SHIP_1, newTexture("ship1"));
 		map.put(Picture.PLAYER_SHIP_2, newTexture("player_ship2"));
 		map.put(Picture.RIFLE_BULLET, newTexture("rifle_bullet"));
+		map.put(Picture.ENEMY_BULLET_ELONGATED, newTexture("enemy_bullet_elongated_1"));
 		map.put(Picture.ROCKET, newTexture("rocket"));
 		map.put(Picture.ROCKET_FAST, newTexture("rocket_fast"));
 		map.put(Picture.ROCKET_EXPLOSION, newTexture("rocket_explosion"));
@@ -32,12 +32,5 @@ public class ImageManager {
 	
 	public static TextureRegion get(Picture picture) {
 		return map.get(picture);
-	}
-	
-	public static Renderer getRenderer(Picture picture) {
-		Renderer renderer = new Renderer();
-		renderer.image = map.get(picture);
-		renderer.imageName = picture;
-		return renderer;
 	}
 }

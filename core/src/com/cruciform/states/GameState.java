@@ -19,24 +19,24 @@ public class GameState extends State {
 		game.uiFactory.createSidePanel(true);
 		game.uiFactory.createSidePanel(false);
 		player = game.shipFactory.createPlayer(500, 500);
-		game.shipFactory.createEnemy(Conf.playLeft + 25, 800);
-		game.shipFactory.createEnemy(Conf.playLeft + 225, 800);
-		game.shipFactory.createEnemy(Conf.playLeft + 425, 800);
-		game.shipFactory.createEnemy(Conf.playLeft + 625, 800);
-		game.shipFactory.createEnemy(Conf.playLeft + 825, 800);
-		game.shipFactory.createEnemy(Conf.playLeft + 125, 900);
-		game.shipFactory.createEnemy(Conf.playLeft + 325, 900);
-		game.shipFactory.createEnemy(Conf.playLeft + 525, 900);
-		game.shipFactory.createEnemy(Conf.playLeft + 725, 900);
-		game.shipFactory.createEnemy(Conf.playLeft + 25, 1000);
-		game.shipFactory.createEnemy(Conf.playLeft + 225, 1000);
+//		game.shipFactory.createEnemy(Conf.playLeft + 25, 800);
+//		game.shipFactory.createEnemy(Conf.playLeft + 225, 800);
+//		game.shipFactory.createEnemy(Conf.playLeft + 425, 800);
+//		game.shipFactory.createEnemy(Conf.playLeft + 625, 800);
+//		game.shipFactory.createEnemy(Conf.playLeft + 825, 800);
+//		game.shipFactory.createEnemy(Conf.playLeft + 125, 900);
+//		game.shipFactory.createEnemy(Conf.playLeft + 325, 900);
+//		game.shipFactory.createEnemy(Conf.playLeft + 525, 900);
+//		game.shipFactory.createEnemy(Conf.playLeft + 725, 900);
+//		game.shipFactory.createEnemy(Conf.playLeft + 25, 1000);
+//		game.shipFactory.createEnemy(Conf.playLeft + 225, 1000);
 		game.shipFactory.createEnemy(Conf.playLeft + 425, 1000);
-		game.shipFactory.createEnemy(Conf.playLeft + 625, 1000);
-		game.shipFactory.createEnemy(Conf.playLeft + 825, 1000);
-		game.shipFactory.createEnemy(Conf.playLeft + 125, 1200);
-		game.shipFactory.createEnemy(Conf.playLeft + 325, 1200);
-		game.shipFactory.createEnemy(Conf.playLeft + 525, 1200);
-		game.shipFactory.createEnemy(Conf.playLeft + 725, 1200);
+//		game.shipFactory.createEnemy(Conf.playLeft + 625, 1000);
+//		game.shipFactory.createEnemy(Conf.playLeft + 825, 1000);
+//		game.shipFactory.createEnemy(Conf.playLeft + 125, 1200);
+//		game.shipFactory.createEnemy(Conf.playLeft + 325, 1200);
+//		game.shipFactory.createEnemy(Conf.playLeft + 525, 1200);
+//		game.shipFactory.createEnemy(Conf.playLeft + 725, 1200);
 	}
 
 	@Override

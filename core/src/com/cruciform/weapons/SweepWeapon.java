@@ -64,11 +64,10 @@ public class SweepWeapon extends Weapon {
 		shotGrowthMultiplier = 1;
 		final Entity entity = new Entity();
 
-		final Renderer renderer = new Renderer();
+		final Renderer renderer = new Renderer(entity);
 		renderer.shouldRender = false; // TODO
-		entity.add(renderer);
 		
-		final Position position = new Position();
+		final Position position = new Position(entity);
 		position.bounds = Geometry.polyTrapezoid(
 				firerPos.bounds.getX(), 
 				firerPos.bounds.getY(), 
@@ -76,7 +75,6 @@ public class SweepWeapon extends Weapon {
 				0,
 				32);
 		position.outOfBoundsHandler = OutOfBoundsHandler.all();
-		entity.add(position);
 		
 		final Velocity velocity = new Velocity();
 		entity.add(velocity);
@@ -91,7 +89,7 @@ public class SweepWeapon extends Weapon {
 		soundEffect.id = soundEffect.sound.play(0.2f * Conf.volume);
 		entity.add(soundEffect);
 
-		addColliderComponent(entity);
+		Collider.defaultForProjectile(entity, team);
 		
 		final Damager damager = new Damager();
 		damager.damage = 25.0f;

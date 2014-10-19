@@ -34,13 +34,11 @@ public class ExplosionFactory {
 		
 		final Entity entity = new Entity();
 		
-		final Renderer renderer = new Renderer();
+		final Renderer renderer = new Renderer(entity);
 		renderer.image = ImageManager.get(Picture.ROCKET_EXPLOSION);
-		entity.add(renderer);
 
-		final Position position = new Position();
+		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
-		entity.add(position);
 	
 		final Lifetime lifetime = new Lifetime();
 		lifetime.setTimeRemaining(0.5f);

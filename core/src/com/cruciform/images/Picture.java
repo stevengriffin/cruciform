@@ -2,6 +2,7 @@ package com.cruciform.images;
 
 public enum Picture {
 	RIFLE_BULLET,
+	ENEMY_BULLET_ELONGATED,
 	CRUCIFORM_1,
 	PLAYER_SHIP_1,
 	PLAYER_SHIP_2,

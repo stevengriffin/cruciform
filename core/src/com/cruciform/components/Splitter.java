@@ -15,4 +15,5 @@ public class Splitter extends AbstractComponent {
 	public boolean splitOnDeletion = false;
 	public boolean splitOnNextUpdate = false;
 	public float collisionY = 0.0f; // TODO refactor
+	public int timesSplit = 0;
 }

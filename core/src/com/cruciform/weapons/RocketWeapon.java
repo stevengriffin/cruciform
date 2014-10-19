@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
+import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Health;
 import com.cruciform.components.LineMover;
@@ -68,18 +69,16 @@ public class RocketWeapon extends Weapon {
 	private void createRocket(float originX, float originY, float maxSpeed, TextureRegion image) {
 		Entity entity = new Entity();
 
-		Renderer renderer = new Renderer();
+		Renderer renderer = new Renderer(entity);
 		renderer.image = image;
-		entity.add(renderer);
 		
-		Position position = new Position();
+		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(
 				originX, 
 				originY, 
 				renderer.image.getRegionWidth(),
 				renderer.image.getRegionHeight());
 		position.outOfBoundsHandler = OutOfBoundsHandler.all();
-		entity.add(position);
 		
 		Velocity velocity = new Velocity();
 		entity.add(velocity);
@@ -103,7 +102,7 @@ public class RocketWeapon extends Weapon {
 		soundEffect.id = soundEffect.sound.play(0.2f * Conf.volume);
 		entity.add(soundEffect);
 
-		addColliderComponent(entity);
+		Collider.defaultForProjectile(entity, team);
 		
 		Damager damager = new Damager();
 		damager.damage = 25.0f;
