@@ -31,13 +31,13 @@ public class WeaponFactory {
 	public static Weapon createSpiralingRadialWeapon(final Engine engine,
 			final ExplosionFactory explosionFactory) {
 		final float rotationalVelocity = 60.0f;
-		final float bulletSpeed = 240.0f;
-		WrappedIncrementor incrementor = new WrappedIncrementor(6);
+		final float bulletSpeed = 480.0f;
+		WrappedIncrementor incrementor = new WrappedIncrementor(5);
 		BulletRuleHandler bulletRuleHandler = new BulletRuleHandler(incrementor, engine);
 		bulletRuleHandler.spokes = 30;
 		bulletRuleHandler.addRule(createSpiralingBehavior(rotationalVelocity, bulletSpeed));
 		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
-		//coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(2.0f), 6);
+		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(2.0f), 5);
 		RadialWeapon radial = new RadialWeapon(0.2f, engine, explosionFactory,
 				bulletRuleHandler, coolDownRuleHandler);
 		return radial;

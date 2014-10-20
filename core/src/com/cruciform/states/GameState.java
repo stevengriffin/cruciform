@@ -22,7 +22,7 @@ public class GameState extends State {
 		player = game.shipFactory.createPlayer(500, 500);
 		FormationFactory.createBroadFormation(
 				(x, y) -> game.shipFactory.createEnemy(x, y),
-				0.0f, 2, (int) (Conf.playLeft*1.1f), (int) (Conf.screenWidth - Conf.playLeft*1.1f));
+				0.0f, 3, (int) (Conf.playLeft*1.1f), (int) (Conf.screenWidth - Conf.playLeft*1.1f));
 	}
 
 	@Override
