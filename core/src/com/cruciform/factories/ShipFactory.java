@@ -1,7 +1,5 @@
 package com.cruciform.factories;
 
-import java.awt.RadialGradientPaint;
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
@@ -23,14 +21,18 @@ import com.cruciform.input.InputCode;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
 import com.cruciform.weapons.CruciformWeapon;
-import com.cruciform.weapons.RadialWeapon;
 import com.cruciform.weapons.RifleWeapon;
 import com.cruciform.weapons.RocketWeapon;
 import com.cruciform.weapons.SweepWeapon;
+import com.cruciform.weapons.Weapon;
 
 public class ShipFactory {
 	private final Engine engine;
 	private final ExplosionFactory explosionFactory;
+
+	public interface ShipCreator {
+		public Entity createAt(float x, float y);
+	}
 	
 	public ShipFactory(final Engine engine, final ExplosionFactory explosionFactory) {
 		this.engine = engine;
@@ -113,13 +115,13 @@ public class ShipFactory {
 		rifle.reloadTime = 3.0f;
 		rifle.rotationalVelocity = 60.0f;
 		
-		RadialWeapon radial = new RadialWeapon(2.0f, engine, explosionFactory);
-		radial.bulletSpeed = 120.0f;
-		//radial.rotationalVelocity = 20.0f;
+		Weapon radialSplitter = WeaponFactory.createSplittingRadialWeapon(engine, explosionFactory);
+		Weapon radialSpiraler = WeaponFactory.createSpiralingRadialWeapon(engine, explosionFactory);
 		
 		Shooter shooter = new Shooter();
 		//shooter.weapons.add(rifle);
-		shooter.weapons.add(radial);
+		//shooter.weapons.add(radialSplitter);
+		shooter.weapons.add(radialSpiraler);
 		entity.add(shooter);
 	
 		AI ai = new AI();

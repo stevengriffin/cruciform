@@ -30,67 +30,16 @@ public class RadialWeapon extends Weapon {
 
 	private static final TextureRegion BULLET_IMAGE = ImageManager.get(Picture.ENEMY_BULLET_ELONGATED);
 	private final ExplosionFactory explosionFactory;
-	public float rotationalVelocity = 0;
 	public float volume = 0.0f;
-	public float bulletSpeed = 120.0f;
-	public float damagePerBullet = 5.0f;
-	public float bulletLifetime = 2.0f;
 	private final BulletRuleHandler ruleHandler;
-	private final RadialSplitBehavior behavior;
 	
-	public RadialWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory) {
+	public RadialWeapon(float coolDownTime, Engine engine,
+			ExplosionFactory explosionFactory, BulletRuleHandler ruleHandler) {
 		super(coolDownTime, engine, TeamEnemy.class);
 		this.explosionFactory = explosionFactory;
-		behavior = new RadialSplitBehavior();
-		ruleHandler = new BulletRuleHandler(new WrappedIncrementor(30), engine);
-		ruleHandler.spokes = 6;
-		ruleHandler.addRule(new EntityMutator() {
-			@Override
-			public Entity mutate(final Entity entity, final int index) {
-				Position position = Position.mapper.get(entity);
-				position.incrementRotation(index*5);
-				
-				LineMover lineMover = new LineMover();
-				lineMover.maxVelocity = Geometry.rotatedVector(position.bounds.getRotation(), bulletSpeed);
-				lineMover.maxRotationalVelocity = rotationalVelocity;
-				lineMover.accelerates = false;
-				entity.add(lineMover);
-
-				Splitter splitter = new Splitter();
-				splitter.numberOfNewEntities = 2;
-				splitter.customSplitBehavior = behavior;
-				splitter.splitOnCollision = false;
-				splitter.splitOnDeletion = true;
-				entity.add(splitter);
-
-				Lifetime lifetime = new Lifetime();
-				lifetime.setTimeRemaining(1);
-				entity.add(lifetime);
-				
-				return entity;
-			}
-		});
+		this.ruleHandler = ruleHandler;
 	}
 
-	private class RadialSplitBehavior implements EntityMutator {
-
-		@Override
-		public Entity mutate(Entity entity, final int index) {
-			final LineMover mover = LineMover.mapper.get(entity);
-			final Position position = Position.mapper.get(entity);
-			float rotation = index == 0 ?
-					 mover.maxVelocity.angle() - 90 : mover.maxVelocity.angle() - 120;
-			position.bounds.rotate(rotation);
-		
-			mover.maxVelocity = Geometry.rotatedVector(rotation, mover.maxVelocity.len());
-			
-			final Lifetime lifetime = Lifetime.mapper.get(entity);
-			lifetime.setTimeRemaining(1);
-			return entity;
-		}
-		
-	}
-	
 	@Override
 	void handleUpdate(float dt, Position firerPos) {
 	}

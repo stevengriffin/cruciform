@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
 import com.cruciform.components.Health;
 import com.cruciform.components.team.TeamPlayer;
+import com.cruciform.factories.FormationFactory;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.utils.Conf;
 
@@ -19,24 +20,9 @@ public class GameState extends State {
 		game.uiFactory.createSidePanel(true);
 		game.uiFactory.createSidePanel(false);
 		player = game.shipFactory.createPlayer(500, 500);
-//		game.shipFactory.createEnemy(Conf.playLeft + 25, 800);
-//		game.shipFactory.createEnemy(Conf.playLeft + 225, 800);
-//		game.shipFactory.createEnemy(Conf.playLeft + 425, 800);
-//		game.shipFactory.createEnemy(Conf.playLeft + 625, 800);
-//		game.shipFactory.createEnemy(Conf.playLeft + 825, 800);
-//		game.shipFactory.createEnemy(Conf.playLeft + 125, 900);
-//		game.shipFactory.createEnemy(Conf.playLeft + 325, 900);
-//		game.shipFactory.createEnemy(Conf.playLeft + 525, 900);
-//		game.shipFactory.createEnemy(Conf.playLeft + 725, 900);
-//		game.shipFactory.createEnemy(Conf.playLeft + 25, 1000);
-//		game.shipFactory.createEnemy(Conf.playLeft + 225, 1000);
-		game.shipFactory.createEnemy(Conf.playLeft + 425, 1000);
-//		game.shipFactory.createEnemy(Conf.playLeft + 625, 1000);
-//		game.shipFactory.createEnemy(Conf.playLeft + 825, 1000);
-//		game.shipFactory.createEnemy(Conf.playLeft + 125, 1200);
-//		game.shipFactory.createEnemy(Conf.playLeft + 325, 1200);
-//		game.shipFactory.createEnemy(Conf.playLeft + 525, 1200);
-//		game.shipFactory.createEnemy(Conf.playLeft + 725, 1200);
+		FormationFactory.createBroadFormation(
+				(x, y) -> game.shipFactory.createEnemy(x, y),
+				0.0f, 2, (int) (Conf.playLeft*1.1f), (int) (Conf.screenWidth - Conf.playLeft*1.1f));
 	}
 
 	@Override
