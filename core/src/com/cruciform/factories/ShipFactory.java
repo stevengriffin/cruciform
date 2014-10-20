@@ -115,7 +115,7 @@ public class ShipFactory {
 		
 		RadialWeapon radial = new RadialWeapon(2.0f, engine, explosionFactory);
 		radial.bulletSpeed = 120.0f;
-		radial.rotationalVelocity = 20.0f;
+		//radial.rotationalVelocity = 20.0f;
 		
 		Shooter shooter = new Shooter();
 		//shooter.weapons.add(rifle);

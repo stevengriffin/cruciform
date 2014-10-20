@@ -25,4 +25,8 @@ public class Position extends AbstractComponent {
 		return position;
 	}
 	
+	public void incrementRotation(float degrees) {
+		bounds.rotate(bounds.getRotation() + degrees);
+	}
+	
 }

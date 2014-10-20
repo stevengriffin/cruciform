@@ -42,9 +42,34 @@ public class RadialWeapon extends Weapon {
 		super(coolDownTime, engine, TeamEnemy.class);
 		this.explosionFactory = explosionFactory;
 		behavior = new RadialSplitBehavior();
-		ruleHandler = new BulletRuleHandler(new WrappedIncrementor(30));
+		ruleHandler = new BulletRuleHandler(new WrappedIncrementor(30), engine);
 		ruleHandler.spokes = 6;
-		ruleHandler.addRule((config) -> config.angle += config.patternIndex*5);
+		ruleHandler.addRule(new EntityMutator() {
+			@Override
+			public Entity mutate(final Entity entity, final int index) {
+				Position position = Position.mapper.get(entity);
+				position.incrementRotation(index*5);
+				
+				LineMover lineMover = new LineMover();
+				lineMover.maxVelocity = Geometry.rotatedVector(position.bounds.getRotation(), bulletSpeed);
+				lineMover.maxRotationalVelocity = rotationalVelocity;
+				lineMover.accelerates = false;
+				entity.add(lineMover);
+
+				Splitter splitter = new Splitter();
+				splitter.numberOfNewEntities = 2;
+				splitter.customSplitBehavior = behavior;
+				splitter.splitOnCollision = false;
+				splitter.splitOnDeletion = true;
+				entity.add(splitter);
+
+				Lifetime lifetime = new Lifetime();
+				lifetime.setTimeRemaining(1);
+				entity.add(lifetime);
+				
+				return entity;
+			}
+		});
 	}
 
 	private class RadialSplitBehavior implements EntityMutator {
@@ -73,48 +98,6 @@ public class RadialWeapon extends Weapon {
 	@Override
 	void handleFire(Position firerPos) {
 		AudioManager.get(Noise.RIFLE_FIRE).play(Conf.volume*volume);
-		ruleHandler.fire().forEach((config) ->
-		createBullet(firerPos.bounds.getX(), firerPos.bounds.getY(), config.angle));
+		ruleHandler.createBullets(firerPos.bounds.getX(), firerPos.bounds.getY(), BULLET_IMAGE, team);
 	}
-
-	private void createBullet(float originX, float originY, float rotation) {
-		Entity entity = new Entity();
-
-		Renderer renderer = Renderer.defaultForBullet(entity, team, BULLET_IMAGE);
-		
-		Position.defaultForBullet(entity,
-				originX, originY,
-				renderer.image.getRegionWidth(),
-				renderer.image.getRegionHeight(),
-				rotation);
-		
-		Velocity velocity = new Velocity();
-		entity.add(velocity);
-		
-		LineMover lineMover = new LineMover();
-		lineMover.maxVelocity = Geometry.rotatedVector(rotation, bulletSpeed);
-		lineMover.maxRotationalVelocity = rotationalVelocity;
-		lineMover.accelerates = false;
-		entity.add(lineMover);
-
-		Collider.defaultForProjectile(entity, team);
-		
-		Damager damager = new Damager();
-		damager.damage = damagePerBullet;
-		entity.add(damager);
-		
-		Splitter splitter = new Splitter();
-		splitter.numberOfNewEntities = 2;
-		splitter.customSplitBehavior = behavior;
-		splitter.splitOnCollision = false;
-		splitter.splitOnDeletion = true;
-		entity.add(splitter);
-	
-		Lifetime lifetime = new Lifetime();
-		lifetime.setTimeRemaining(1);
-		entity.add(lifetime);
-		
-		engine.addEntity(entity);
-	}	
-	
 }
