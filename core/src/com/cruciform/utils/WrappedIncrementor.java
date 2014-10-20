@@ -4,6 +4,10 @@ public class WrappedIncrementor {
 	private final int max;
 	private final int min;
 	private int index = 0;
+
+	public interface Accepter {
+		public boolean execute(int index, WrappedIncrementor incrementor);
+	}
 	
 	public WrappedIncrementor(final int max) {
 		this.max = max;

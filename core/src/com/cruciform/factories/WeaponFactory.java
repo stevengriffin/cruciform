@@ -6,10 +6,12 @@ import com.cruciform.components.Lifetime;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
 import com.cruciform.components.Splitter;
+import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.EntityMutator;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.WrappedIncrementor;
 import com.cruciform.weapons.BulletRuleHandler;
+import com.cruciform.weapons.CoolDownRuleHandler;
 import com.cruciform.weapons.RadialWeapon;
 import com.cruciform.weapons.Weapon;
 
@@ -18,9 +20,11 @@ public class WeaponFactory {
 			final ExplosionFactory explosionFactory) {
 		final float rotationalVelocity = 0;
 		final float bulletSpeed = 120.0f;
-		BulletRuleHandler handler = new BulletRuleHandler(new WrappedIncrementor(30), engine);
-		handler.addRule(createSplitterBehavior(rotationalVelocity, bulletSpeed, createRadialSplitBehavior()));
-		RadialWeapon radial = new RadialWeapon(2.0f, engine, explosionFactory, handler);
+		WrappedIncrementor incrementor = new WrappedIncrementor(30);
+		BulletRuleHandler bulletRuleHandler = new BulletRuleHandler(incrementor, engine);
+		bulletRuleHandler.addRule(createSplitterBehavior(rotationalVelocity, bulletSpeed, createRadialSplitBehavior()));
+		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
+		RadialWeapon radial = new RadialWeapon(2.0f, engine, explosionFactory, bulletRuleHandler, coolDownRuleHandler);
 		return radial;
 	}
 	
@@ -28,10 +32,14 @@ public class WeaponFactory {
 			final ExplosionFactory explosionFactory) {
 		final float rotationalVelocity = 60.0f;
 		final float bulletSpeed = 240.0f;
-		BulletRuleHandler handler = new BulletRuleHandler(new WrappedIncrementor(30), engine);
-		handler.spokes = 30;
-		handler.addRule(createSpiralingBehavior(rotationalVelocity, bulletSpeed));
-		RadialWeapon radial = new RadialWeapon(0.2f, engine, explosionFactory, handler);
+		WrappedIncrementor incrementor = new WrappedIncrementor(6);
+		BulletRuleHandler bulletRuleHandler = new BulletRuleHandler(incrementor, engine);
+		bulletRuleHandler.spokes = 30;
+		bulletRuleHandler.addRule(createSpiralingBehavior(rotationalVelocity, bulletSpeed));
+		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
+		//coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(2.0f), 6);
+		RadialWeapon radial = new RadialWeapon(0.2f, engine, explosionFactory,
+				bulletRuleHandler, coolDownRuleHandler);
 		return radial;
 	}
 

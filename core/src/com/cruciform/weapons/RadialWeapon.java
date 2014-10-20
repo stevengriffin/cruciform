@@ -31,13 +31,17 @@ public class RadialWeapon extends Weapon {
 	private static final TextureRegion BULLET_IMAGE = ImageManager.get(Picture.ENEMY_BULLET_ELONGATED);
 	private final ExplosionFactory explosionFactory;
 	public float volume = 0.0f;
-	private final BulletRuleHandler ruleHandler;
+	private final BulletRuleHandler bulletRuleHandler;
+	private final CoolDownRuleHandler coolDownRuleHandler; 
 	
 	public RadialWeapon(float coolDownTime, Engine engine,
-			ExplosionFactory explosionFactory, BulletRuleHandler ruleHandler) {
+			ExplosionFactory explosionFactory, BulletRuleHandler ruleHandler,
+			CoolDownRuleHandler coolDownRuleHandler) {
 		super(coolDownTime, engine, TeamEnemy.class);
 		this.explosionFactory = explosionFactory;
-		this.ruleHandler = ruleHandler;
+		this.bulletRuleHandler = ruleHandler;
+		this.coolDownRuleHandler = coolDownRuleHandler;
+		this.coolDownRuleHandler.setDefaultDoolDown(coolDown);
 	}
 
 	@Override
@@ -47,6 +51,7 @@ public class RadialWeapon extends Weapon {
 	@Override
 	void handleFire(Position firerPos) {
 		AudioManager.get(Noise.RIFLE_FIRE).play(Conf.volume*volume);
-		ruleHandler.createBullets(firerPos.bounds.getX(), firerPos.bounds.getY(), BULLET_IMAGE, team);
+		bulletRuleHandler.createBullets(firerPos.bounds.getX(), firerPos.bounds.getY(), BULLET_IMAGE, team);
+		coolDown = coolDownRuleHandler.updateCoolDown(coolDown);
 	}
 }
