@@ -35,7 +35,7 @@ public class RifleWeapon extends Weapon {
 	private static final float RECOIL_PER_BULLET = 0.5f;
 	private static final float RECOIL_RESET_RATE = 20.0f;
 	private static final float MAX_RECOIL = 20.0f;
-	public float damagePerBullet = 5.0f;
+	public float damagePerBullet = 10.0f;
 	public float reloadTime = 5.0f;
 	/*
 	 * Setting bullets per clip to 0 will give unlimited clip size.

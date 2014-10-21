@@ -12,7 +12,9 @@ import com.cruciform.components.Health;
 import com.cruciform.components.Position;
 import com.cruciform.components.Splitter;
 import com.cruciform.components.team.Team;
+import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.utils.Deferrer;
+import com.cruciform.utils.Score;
 import com.esotericsoftware.minlog.Log;
 
 public class CollisionSystem extends EntitySystem {
@@ -59,6 +61,10 @@ public class CollisionSystem extends EntitySystem {
 		Health victimHealth = Health.mapper.get(victim);
 		Damager damager = Damager.mapper.get(culprit);
 		if (victimHealth != null && damager != null) {
+			TeamEnemy enemy = TeamEnemy.mapper.get(victim);
+			if (enemy != null) {
+				Score.incrementFromDamagerEvent(damager.damage, victimHealth.currentHealth);
+			}
 			victimHealth.currentHealth -= damager.damage;
 			Log.debug("Damaged for " + damager.damage);
 		}

@@ -4,15 +4,14 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.IntMap;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.Team;
+import com.cruciform.components.team.TeamEnemyBullet;
 import com.cruciform.utils.AbstractRuleHandler;
-import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.EntityMutator;
 import com.cruciform.utils.WrappedIncrementor;
 
@@ -52,6 +51,9 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 			Damager damager = new Damager();
 			damager.damage = DAMAGE_TO_INSTAKILL_PLAYER;
 			entity.add(damager);
+		
+			TeamEnemyBullet bulletTeam = new TeamEnemyBullet();
+			entity.add(bulletTeam);
 			
 			engine.addEntity(entity);
 			bullets.add(entity);

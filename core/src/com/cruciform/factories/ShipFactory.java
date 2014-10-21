@@ -15,6 +15,7 @@ import com.cruciform.components.Shooter;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.components.team.TeamPlayer;
+import com.cruciform.enemies.EnemyTypes;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
 import com.cruciform.input.InputCode;
@@ -24,12 +25,11 @@ import com.cruciform.weapons.CruciformWeapon;
 import com.cruciform.weapons.RifleWeapon;
 import com.cruciform.weapons.RocketWeapon;
 import com.cruciform.weapons.SweepWeapon;
-import com.cruciform.weapons.Weapon;
 
 public class ShipFactory {
 	private final Engine engine;
 	private final ExplosionFactory explosionFactory;
-
+	private final EnemyWeaponFactory weaponFactory;
 	public interface ShipCreator {
 		public Entity createAt(float x, float y);
 	}
@@ -37,6 +37,7 @@ public class ShipFactory {
 	public ShipFactory(final Engine engine, final ExplosionFactory explosionFactory) {
 		this.engine = engine;
 		this.explosionFactory = explosionFactory;
+	    this.weaponFactory = new EnemyWeaponFactory(engine, explosionFactory);
 	}
 	
 	public Entity createPlayer(float x, float y) {
@@ -84,7 +85,7 @@ public class ShipFactory {
 		return entity;
 	}
 	
-	public Entity createEnemy(float x, float y) {
+	public Entity createEnemy(float x, float y, EnemyTypes type) {
 		Entity entity = new Entity();
 		
 		Renderer renderer = new Renderer(entity);
@@ -96,7 +97,7 @@ public class ShipFactory {
 		position.outOfBoundsHandler = OutOfBoundsHandler.south();
 		
 		LineMover lineMover = new LineMover();
-		lineMover.maxVelocity = new Vector2(0.0f, -24.0f);
+		lineMover.maxVelocity = new Vector2(0.0f, -100.0f);
 		lineMover.accelerates = false;
 		entity.add(lineMover);
 	
@@ -107,31 +108,17 @@ public class ShipFactory {
 	
 		TeamEnemy team = new TeamEnemy();
 		entity.add(team);
-		
-		RifleWeapon rifle = new RifleWeapon(0.4f, engine, explosionFactory, team.getClass());
-		rifle.volume = 0.0f;
-		rifle.bulletSpeed = 120.0f;
-		rifle.bulletsPerClip = 5;
-		rifle.reloadTime = 3.0f;
-		rifle.rotationalVelocity = 60.0f;
-		
-		Weapon radialSplitter = WeaponFactory.createSplittingRadialWeapon(engine, explosionFactory);
-		Weapon radialSpiraler = WeaponFactory.createSpiralingRadialWeapon(engine, explosionFactory);
-		
-		Shooter shooter = new Shooter();
-		//shooter.weapons.add(rifle);
-		//shooter.weapons.add(radialSplitter);
-		shooter.weapons.add(radialSpiraler);
-		entity.add(shooter);
+	
+		weaponFactory.createShooter(type, entity);
 	
 		AI ai = new AI();
 		entity.add(ai);
 		
 		Health health = new Health();
-		health.maxHealth = 1;
-		health.currentHealth = 1;
+		health.maxHealth = 100;
+		health.currentHealth = 100;
 		entity.add(health);
-		
+	
 		engine.addEntity(entity);
 		return entity;
 	}

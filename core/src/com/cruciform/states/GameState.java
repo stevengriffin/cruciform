@@ -3,12 +3,14 @@ package com.cruciform.states;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Timer;
 import com.cruciform.Cruciform;
 import com.cruciform.components.Health;
 import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.FormationFactory;
 import com.cruciform.factories.StateFactory;
-import com.cruciform.utils.Conf;
+import com.cruciform.levels.Level1;
+import com.cruciform.utils.Score;
 
 public class GameState extends State {
 
@@ -16,17 +18,19 @@ public class GameState extends State {
 	
 	public GameState(Cruciform game) {
 		super(game);
+		Timer.instance().clear();
+		Timer.instance().start();
+		Score.init();
+		FormationFactory.reset();
 		game.engine.removeAllEntities();
 		game.uiFactory.createSidePanel(true);
 		game.uiFactory.createSidePanel(false);
-		player = game.shipFactory.createPlayer(500, 500);
-		FormationFactory.createBroadFormation(
-				(x, y) -> game.shipFactory.createEnemy(x, y),
-				0.0f, 3, (int) (Conf.playLeft*1.1f), (int) (Conf.screenWidth - Conf.playLeft*1.1f));
+		player = new Level1(game).createAndReturnPlayer();
 	}
 
 	@Override
 	public void render(float delta) {
+		Score.update();
 		game.engine.update(delta);
 	}
 
@@ -39,6 +43,7 @@ public class GameState extends State {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(game.inputSystem);
+		Timer.instance().start();
 		if (game.engine.getEntitiesFor(Family.getFor(TeamPlayer.class)).size() == 0) {
 			game.engine.addEntity(player);
 			Health health = Health.mapper.get(player);
@@ -50,6 +55,8 @@ public class GameState extends State {
 	@Override
 	public void hide() {
 		super.hide();
+		Timer.instance().stop();
+		FormationFactory.reset();
 	}
 
 	@Override

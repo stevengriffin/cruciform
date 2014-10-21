@@ -23,6 +23,7 @@ import com.cruciform.systems.AISystem;
 import com.cruciform.systems.BlinkerSystem;
 import com.cruciform.systems.CollisionSystem;
 import com.cruciform.systems.DebugRenderSystem;
+import com.cruciform.systems.EnemyMarkerSystem;
 import com.cruciform.systems.HealthSystem;
 import com.cruciform.systems.InputSystem;
 import com.cruciform.systems.LifetimeSystem;
@@ -31,6 +32,7 @@ import com.cruciform.systems.MovementSystem;
 import com.cruciform.systems.RenderSystem;
 import com.cruciform.systems.ShooterSystem;
 import com.cruciform.systems.SplitterSystem;
+import com.cruciform.systems.WaveSystem;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
 import com.esotericsoftware.kryo.Kryo;
@@ -84,6 +86,7 @@ public class Cruciform extends Game {
 		engine.addSystem(renderSystem);
 		engine.addEntityListener(renderSystem.family, renderSystem);
 		engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
+		engine.addSystem(new EnemyMarkerSystem(batch, shapeRenderer));
 		inputSystem = new InputSystem(this);
 		engine.addSystem(inputSystem);
 		engine.addSystem(new LineMoverSystem());
@@ -94,6 +97,7 @@ public class Cruciform extends Game {
 		engine.addSystem(new LifetimeSystem(deferrer));
 		engine.addSystem(new CollisionSystem(engine, deferrer));
 		engine.addSystem(new SplitterSystem(this));
+		engine.addSystem(new WaveSystem(engine));
 		engine.addSystem(new HealthSystem(explosionFactory, deferrer));
 		
 		this.setScreen(new MainMenuState(this));

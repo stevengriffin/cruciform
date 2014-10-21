@@ -1,0 +1,43 @@
+package com.cruciform.levels;
+
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.utils.Array;
+import com.cruciform.Cruciform;
+import com.cruciform.utils.Conf;
+import com.esotericsoftware.minlog.Log;
+
+public abstract class Level {
+	interface Wave {
+		void create();
+	}
+	
+	private static Level currentLevel;
+	Array<Wave> waves;
+	private int waveIndex = 0;
+	final Cruciform game;
+	
+	public static Level getCurrentLevel() {
+		return currentLevel;
+	}
+	
+	public Level(final Cruciform game) {
+		this.game = game;
+		currentLevel = this;
+		waves = new Array<Wave>();
+	}
+	
+	public Entity createAndReturnPlayer() {
+		return game.shipFactory.createPlayer(Conf.playCenter, Conf.screenHeight*0.1f);
+	}
+	
+	public void createNextWave() {
+		// TODO allow for pauses between waves
+		if (waveIndex >= waves.size) {
+			// TODO next level
+			return;
+		}
+		Log.debug("creating wave " + waveIndex);
+		waves.get(waveIndex).create();
+		waveIndex++;
+	}
+}

@@ -16,6 +16,7 @@ import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Priority;
+import com.cruciform.utils.Score;
 
 public class RenderSystem extends EntitySystem implements EntityListener {
 
@@ -42,6 +43,8 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		}
 		font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(),
 				Conf.screenWidth*0.9f, Conf.screenHeight*0.9f);
+		font.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
+				Conf.screenWidth*0.9f, Conf.screenHeight*0.85f);
 		font.draw(batch, "Java heap: " + game.application.getJavaHeap(),
 				Conf.screenWidth*0.8f, Conf.screenHeight*0.8f);
 		font.draw(batch, "Native heap: " + game.application.getNativeHeap(),
