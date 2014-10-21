@@ -42,9 +42,11 @@ public class EnemyWeaponFactory {
 	private Weapon[] createWeapons(EnemyTypes type) {
 		switch(type) {
 			case RADIAL_SPIRALER:
-				return new Weapon[] { createSpiralingRadialWeapon() };
+				return new Weapon[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f) };
+			case RADIAL_SPIRALER_SOLID:
+				return new Weapon[] { createSpiralingRadialWeapon(120, 12, 6, 0.1f) };
 			case RADIAL_STRAIGHT:
-				return new Weapon[] { createStraightRadialWeapon() };
+				return new Weapon[] { createStraightRadialWeapon(480, 3, 30, 0.2f) };
 			case RADIAL_SPLITTER:
 				return new Weapon[] { createSplittingRadialWeapon() };
 			default:
@@ -62,16 +64,16 @@ public class EnemyWeaponFactory {
 		return rifle;
 	}
 	
-	private Weapon createStraightRadialWeapon() {
+	private Weapon createStraightRadialWeapon(float bulletSpeed, int patternMax,
+			int spokes, float coolDown) {
 		final float rotationalVelocity = 0.0f;
-		final float bulletSpeed = 480.0f;
-		WrappedIncrementor incrementor = new WrappedIncrementor(3);
+		WrappedIncrementor incrementor = new WrappedIncrementor(patternMax);
 		BulletRuleHandler bulletRuleHandler = new BulletRuleHandler(incrementor, engine);
-		bulletRuleHandler.spokes = 30;
+		bulletRuleHandler.spokes = spokes;
 		bulletRuleHandler.addRule(createLineMoverBehavior(rotationalVelocity, bulletSpeed));
 		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
-		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(3.0f), 3);
-		RadialWeapon radial = new RadialWeapon(0.2f, engine, explosionFactory,
+		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(3.0f), patternMax);
+		RadialWeapon radial = new RadialWeapon(coolDown, engine, explosionFactory,
 				bulletRuleHandler, coolDownRuleHandler);
 		return radial;
 	}
@@ -89,17 +91,17 @@ public class EnemyWeaponFactory {
 		return radial;
 	}
 	
-	private Weapon createSpiralingRadialWeapon() {
+	private Weapon createSpiralingRadialWeapon(float bulletSpeed, int patternMax,
+			int spokes, float coolDown) {
 		final float rotationalVelocity = 60.0f;
-		final float bulletSpeed = 480.0f;
-		WrappedIncrementor incrementor = new WrappedIncrementor(3);
+		WrappedIncrementor incrementor = new WrappedIncrementor(patternMax);
 		BulletRuleHandler bulletRuleHandler = new BulletRuleHandler(incrementor, engine);
-		bulletRuleHandler.spokes = 30;
+		bulletRuleHandler.spokes = spokes;
 		bulletRuleHandler.addRule(createSpiralingBehavior());
 		bulletRuleHandler.addRule(createLineMoverBehavior(rotationalVelocity, bulletSpeed));
 		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
-		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(2.0f), 3);
-		RadialWeapon radial = new RadialWeapon(0.2f, engine, explosionFactory,
+		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(2.0f), patternMax);
+		RadialWeapon radial = new RadialWeapon(coolDown, engine, explosionFactory,
 				bulletRuleHandler, coolDownRuleHandler);
 		return radial;
 	}

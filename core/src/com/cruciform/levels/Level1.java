@@ -22,7 +22,11 @@ public class Level1 extends Level {
 				
 				() -> (FormationFactory.createBroadFormation(
 				(x, y) -> game.shipFactory.createEnemy(x, y, EnemyTypes.RADIAL_SPIRALER),
-				1.0f, 3, (int) (Conf.playLeft*1.1f), (int) (Conf.screenWidth - Conf.playLeft*1.1f)))
+				1.0f, 3, (int) (Conf.playLeft*1.1f), (int) (Conf.screenWidth - Conf.playLeft*1.1f))),
+				
+				() -> (FormationFactory.createSingularShip(
+				(x, y) -> game.shipFactory.createEnemy(x, y, EnemyTypes.RADIAL_SPIRALER_SOLID),
+				1.0f, (Conf.playLeft + Conf.playCenter)/2))
 				
 		});
 //		FormationFactory.createSingularShip(
