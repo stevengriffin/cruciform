@@ -3,6 +3,8 @@ package com.cruciform.levels;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.Cruciform;
+import com.cruciform.factories.StateFactory;
+import com.cruciform.states.WinState;
 import com.cruciform.utils.Conf;
 import com.esotericsoftware.minlog.Log;
 
@@ -31,9 +33,9 @@ public abstract class Level {
 	}
 	
 	public void createNextWave() {
-		// TODO allow for pauses between waves
 		if (waveIndex >= waves.size) {
 			// TODO next level
+			StateFactory.setState(WinState.class, game);
 			return;
 		}
 		Log.debug("creating wave " + waveIndex);

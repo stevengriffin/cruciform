@@ -4,13 +4,17 @@ import com.badlogic.gdx.Screen;
 import com.cruciform.Cruciform;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.factories.StateFactory;
+import com.cruciform.utils.TextDrawer;
 
 public abstract class State implements Screen {
 	
 	public final Cruciform game;
+	protected final TextDrawer drawer;
+	
 	
 	public State(final Cruciform game) {
 		this.game = game;
+		this.drawer = new TextDrawer(game.batch, game.font);
 	}
 	
 	public void escapeState() {

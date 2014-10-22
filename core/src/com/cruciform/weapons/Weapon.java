@@ -11,11 +11,14 @@ public abstract class Weapon implements InputAction {
 	Engine engine;
 	final Class<? extends Team> team;
 	private boolean shouldFire = false;
+	public final String name;
 	
-	public Weapon(final float coolDownTime, final Engine engine, final Class<? extends Team> team) {
+	public Weapon(final float coolDownTime, final Engine engine, final Class<? extends Team> team,
+			final String name) {
 		coolDown = new CoolDownMetro(coolDownTime);
 		this.engine = engine;
 		this.team = team;
+		this.name = name;
 	}
 	
 	public boolean update(float dt, Position firerPos) {

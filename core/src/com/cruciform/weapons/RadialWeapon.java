@@ -37,7 +37,7 @@ public class RadialWeapon extends Weapon {
 	public RadialWeapon(float coolDownTime, Engine engine,
 			ExplosionFactory explosionFactory, BulletRuleHandler ruleHandler,
 			CoolDownRuleHandler coolDownRuleHandler) {
-		super(coolDownTime, engine, TeamEnemy.class);
+		super(coolDownTime, engine, TeamEnemy.class, "Radial");
 		this.explosionFactory = explosionFactory;
 		this.bulletRuleHandler = ruleHandler;
 		this.coolDownRuleHandler = coolDownRuleHandler;

@@ -15,6 +15,7 @@ public class ImageManager {
 		map.put(Picture.CRUCIFORM_1, newTexture("cruciform_weapon1"));
 		map.put(Picture.PLAYER_SHIP_1, newTexture("ship1"));
 		map.put(Picture.PLAYER_SHIP_2, newTexture("player_ship2"));
+		map.put(Picture.PLAYER_SHIP_GOLD, newTexture("player_ship_gold"));
 		map.put(Picture.RIFLE_BULLET, newTexture("rifle_bullet"));
 		map.put(Picture.ENEMY_BULLET_ELONGATED, newTexture("enemy_bullet_elongated_1"));
 		map.put(Picture.ROCKET, newTexture("rocket"));

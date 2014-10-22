@@ -48,7 +48,7 @@ public class RifleWeapon extends Weapon {
 	
 	public RifleWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory,
 			Class<? extends Team> team) {
-		super(coolDownTime, engine, team);
+		super(coolDownTime, engine, team, "Rifle");
 		this.coolDownTime = coolDownTime;
 		this.recoilGapTime = coolDownTime*4;
 		this.explosionFactory = explosionFactory;

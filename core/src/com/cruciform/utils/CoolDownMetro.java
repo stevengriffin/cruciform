@@ -61,12 +61,12 @@ public class CoolDownMetro {
 	public float getPercent() {
 		/*
             If in the fired state, returns what fraction of the state we've
-            passed. Otherwise returns 0.
+            passed. Otherwise returns 1.
 		 */
 		if (this.hasFired) {
 			return this.metro.getPercentGreen();
 		} else {
-			return 0;
+			return 1;
 		}
 	}
 

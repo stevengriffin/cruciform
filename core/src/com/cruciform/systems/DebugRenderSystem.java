@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.cruciform.components.Collider;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 
@@ -16,10 +17,10 @@ import com.cruciform.components.Renderer;
 public class DebugRenderSystem extends IteratingSystem {
 
 	private final ShapeRenderer shapeRenderer;
-	private static final Color debugColor = Color.YELLOW;
+	private static final Color debugColor = Color.MAGENTA;
 	
 	public DebugRenderSystem(Batch batch, ShapeRenderer shapeRenderer) {
-		super(Family.getFor(Position.class, Renderer.class));
+		super(Family.getFor(Position.class, Renderer.class, Collider.class));
 		this.shapeRenderer = shapeRenderer;
 	}
 
@@ -32,10 +33,7 @@ public class DebugRenderSystem extends IteratingSystem {
 	
 	public void processEntity(Entity entity, float deltaTime) {
 		Position position = Position.mapper.get(entity);
-		Renderer renderer = Renderer.mapper.get(entity);
-		if (!renderer.customOffset) {
-			shapeRenderer.setColor(debugColor);
-			shapeRenderer.polygon(position.bounds.getTransformedVertices());
-		}
+		shapeRenderer.setColor(debugColor);
+		shapeRenderer.polygon(position.bounds.getTransformedVertices());
 	}
 }

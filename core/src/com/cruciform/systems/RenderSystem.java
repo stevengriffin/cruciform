@@ -8,15 +8,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.cruciform.Cruciform;
+import com.cruciform.components.PlayerInput;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
+import com.cruciform.components.Shooter;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Priority;
 import com.cruciform.utils.Score;
+import com.cruciform.weapons.Weapon;
 
 public class RenderSystem extends EntitySystem implements EntityListener {
 
@@ -45,11 +47,29 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 				Conf.screenWidth*0.9f, Conf.screenHeight*0.9f);
 		font.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
 				Conf.screenWidth*0.9f, Conf.screenHeight*0.85f);
+		font.draw(batch, "Credits Used: " + Score.getCreditsUsed(),
+				Conf.screenWidth*0.9f, Conf.screenHeight*0.8f);
 		font.draw(batch, "Java heap: " + game.application.getJavaHeap(),
 				Conf.screenWidth*0.8f, Conf.screenHeight*0.8f);
 		font.draw(batch, "Native heap: " + game.application.getNativeHeap(),
 				Conf.screenWidth*0.8f, Conf.screenHeight*0.7f);
+		drawPlayerWeaponInfo();
 		batch.end();
+	}
+	
+	private void drawPlayerWeaponInfo() {
+		PlayerInput input = game.getGameState().getPlayer().getComponent(PlayerInput.class);
+		Shooter shooter = game.getGameState().getPlayer().getComponent(Shooter.class);
+		for (int i = 0; i < shooter.weapons.size(); i++) {
+			final int index = i;
+			Weapon weapon = shooter.weapons.get(i);
+			input.actions.forEach((k, v) -> { 
+				if (v == weapon) {
+					font.draw(batch, k.toString() + " --- " + weapon.name + ": " + weapon.getPercentReady(),
+							Conf.screenWidth*0.8f, Conf.screenHeight*0.3f + Conf.screenHeight*0.1f*index);
+				}
+			});
+		}
 	}
 
 	private static int LEFT = 0;

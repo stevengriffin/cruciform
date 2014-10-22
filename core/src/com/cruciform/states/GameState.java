@@ -82,4 +82,8 @@ public class GameState extends State {
 	public void escapeState() {
 		StateFactory.setState(MainMenuState.class, this.game);
 	}
+	
+	public Entity getPlayer() {
+		return player;
+	}
 }

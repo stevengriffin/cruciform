@@ -26,7 +26,7 @@ public class CruciformWeapon extends Weapon {
 	private final static float BEAM_HEIGHT = Conf.playWidth*2;
 	
 	public CruciformWeapon(final Engine engine, final Class<? extends Team> team) {
-		super(COOL_DOWN_TIME, engine, team);
+		super(COOL_DOWN_TIME, engine, team, "Cruciform");
 	}
 
 	@Override

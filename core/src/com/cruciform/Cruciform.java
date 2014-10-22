@@ -23,6 +23,7 @@ import com.cruciform.factories.UIFactory;
 import com.cruciform.serialization.ColliderSerializer;
 import com.cruciform.serialization.RendererSerializer;
 import com.cruciform.serialization.SplitterSerializer;
+import com.cruciform.states.GameState;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.states.State;
 import com.cruciform.systems.AISystem;
@@ -128,5 +129,9 @@ public class Cruciform extends Game {
 
 	public State getState() {
 		return (State) this.getScreen();
+	}
+	
+	public GameState getGameState() {
+		return (GameState) this.getState();
 	}
 }

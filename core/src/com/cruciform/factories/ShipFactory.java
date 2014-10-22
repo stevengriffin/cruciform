@@ -52,9 +52,10 @@ public class ShipFactory {
 		position.yDirection = 1;
 		
 		Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_2);
-		renderer.shouldRender = false;
-		
+		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_GOLD);
+		renderer.customXOffset = -32.5f;
+		renderer.customYOffset = -45;
+		renderer.customOffset = true;
 		TeamPlayer team = new TeamPlayer();
 		entity.add(team);
 		
@@ -74,7 +75,7 @@ public class ShipFactory {
 		playerInput.actions.put(InputCode.fromButton(Input.Buttons.LEFT), cruciform);
 		playerInput.actions.put(InputCode.fromButton(Input.Buttons.RIGHT), rocket);
 		playerInput.actions.put(InputCode.fromKey(Input.Keys.Z), rifle);
-		playerInput.actions.put(InputCode.fromKey(Input.Keys.SPACE), sweep);
+		playerInput.actions.put(InputCode.fromKey(Input.Keys.X), sweep);
 		entity.add(playerInput);
 
 		Health health = new Health();

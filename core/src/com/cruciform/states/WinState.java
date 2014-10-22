@@ -4,21 +4,24 @@ import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Score;
+import com.cruciform.utils.TextDrawer;
 
-public class InsertCreditState extends MenuState {
-
-	public InsertCreditState(Cruciform game) {
+public class WinState extends MenuState {
+	
+	public WinState(Cruciform game) {
 		super(game);
 	}
 
 	@Override
 	public void render(float delta) {
 		game.batch.begin();
+        
+        drawer.drawCentered("You Win!", Conf.playCenter, Conf.fractionY(0.7f));
+        drawer.drawCentered("Score: " + Score.getScore(), Conf.playCenter, Conf.fractionY(0.6f));
+        drawer.drawCentered("Credits Used: " + Score.getCreditsUsed(), Conf.playCenter, Conf.fractionY(0.5f));
 		// TODO Make buttons instead
-		final String insertCredit = "Insert Credit [ENTER]";
 		final String exitGame = "Exit To Menu [ESCAPE]";
-		final String newGame = "New Game [SPACE]";
-        drawer.drawCentered(insertCredit, Conf.playCenter, Conf.screenHeight/2);
+		final String newGame = "New Game [SPACE] or [ENTER]";
 		drawer.drawCentered(exitGame, Conf.playCenter, Conf.fractionY(0.4f));
 		drawer.drawCentered(newGame, Conf.playCenter, Conf.fractionY(0.3f));
         game.batch.end();
@@ -62,7 +65,6 @@ public class InsertCreditState extends MenuState {
 
 	@Override
 	public void confirm() {
-		Score.useCredit();
-		StateFactory.setState(GameState.class, game);
+		StateFactory.setAndRenewState(GameState.class, game);
 	}
 }

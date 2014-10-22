@@ -9,12 +9,14 @@ public class Score {
 	private static final int DAMAGE_PER_MULT_INCREASE = 100;
 	private static final long MULTIPLIER_DECAY_TIME = 2000;
 	private static long lastDamagerEventTime;
+	private static int creditsUsed;
 	
 	public static void init() {
 		score = 0;
 		multiplier = 1;
 		damageForNextMultiplier = 0;
 		lastDamagerEventTime = TimeUtils.millis();
+		creditsUsed = 1;
 	}
 	
 	public static void incrementFromDamagerEvent(float damage, float currentHealth) {
@@ -41,6 +43,14 @@ public class Score {
 	
 	public static int getMultiplier() {
 		return multiplier;
+	}
+
+	public static void useCredit() {
+		creditsUsed++;
+	}
+	
+	public static int getCreditsUsed() {
+		return creditsUsed;
 	}
 	
 }

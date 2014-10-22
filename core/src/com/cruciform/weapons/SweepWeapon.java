@@ -31,7 +31,7 @@ public class SweepWeapon extends Weapon {
 	
 	public SweepWeapon(final float coolDownTime, final Engine engine, final ExplosionFactory explosionFactory,
 			final Class<? extends Team> team) {
-		super(coolDownTime, engine, team);
+		super(coolDownTime, engine, team, "Sweep");
 		this.explosionFactory = explosionFactory;
 	}
 
