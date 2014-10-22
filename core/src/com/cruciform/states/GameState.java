@@ -25,6 +25,7 @@ public class GameState extends State {
 		game.engine.removeAllEntities();
 		game.uiFactory.createSidePanel(true);
 		game.uiFactory.createSidePanel(false);
+		game.uiFactory.createBottomPanel();
 		player = new Level1(game).createAndReturnPlayer();
 	}
 
@@ -57,7 +58,7 @@ public class GameState extends State {
 	public void hide() {
 		super.hide();
 		Timer.instance().stop();
-		FormationFactory.reset();
+		//FormationFactory.reset();
 	}
 
 	@Override

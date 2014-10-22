@@ -86,9 +86,10 @@ public class AudioManager {
 		public void onCompletion(Music music) {
 			System.out.println("completed, track#: " + currentTrackNumber);
 			if (music == null) {
-				currentTrackNumber = -1;
+				currentTrackNumber = 0;
+			} else {
+				currentTrackNumber++;
 			}
-			currentTrackNumber++;
 			if (currentTrackNumber >= shuffledTracks.size()) {
 				currentTrackNumber = 0;
 			}

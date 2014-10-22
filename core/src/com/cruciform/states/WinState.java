@@ -4,7 +4,6 @@ import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Score;
-import com.cruciform.utils.TextDrawer;
 
 public class WinState extends MenuState {
 	

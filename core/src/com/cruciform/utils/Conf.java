@@ -8,7 +8,7 @@ public class Conf {
 	public static int playLeft = (screenWidth - playWidth)/2;
 	public static int playRight = screenWidth - (screenWidth - playWidth)/2;
 	public static int playCenter = (playLeft + playRight) / 2;
-	public static int playBottom = screenHeight/20;
+	public static int playBottom = fractionY(0.05f);
 	public static float volume = 1.0f;
 	
 	public static int fractionX(float fraction) {

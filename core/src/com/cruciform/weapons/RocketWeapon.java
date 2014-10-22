@@ -2,7 +2,6 @@ package com.cruciform.weapons;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.audio.AudioManager;
@@ -105,7 +104,7 @@ public class RocketWeapon extends Weapon {
 		Collider.defaultForProjectile(entity, team);
 		
 		Damager damager = new Damager();
-		damager.damage = 25.0f;
+		damager.damage = 100.0f;
 		entity.add(damager);
 		
 		engine.addEntity(entity);

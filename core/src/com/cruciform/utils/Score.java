@@ -19,7 +19,7 @@ public class Score {
 		creditsUsed = 1;
 	}
 	
-	public static void incrementFromDamagerEvent(float damage, float currentHealth) {
+	public static void incrementFromDamagerEvent(final float damage, final float currentHealth) {
 		final int effectiveDamage = (int) (currentHealth > damage ? damage : currentHealth);
 		score += effectiveDamage*multiplier;
 		damageForNextMultiplier += effectiveDamage;

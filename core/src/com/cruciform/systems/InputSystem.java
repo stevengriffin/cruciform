@@ -11,62 +11,64 @@ import com.badlogic.gdx.math.Rectangle;
 import com.cruciform.Cruciform;
 import com.cruciform.components.PlayerInput;
 import com.cruciform.components.Position;
+import com.cruciform.components.Renderer;
 import com.cruciform.input.InputAction;
 import com.cruciform.input.InputCode;
 import com.cruciform.utils.Conf;
 
 public class InputSystem extends IteratingSystem implements InputProcessor {
 
-	private static final float ACCEL_CONSTANT = 0.0f; //0.1f;
+	private static final float ACCEL_CONSTANT = 0.0f;
 	private PlayerInput playerInput = null;
-	private float sensitivity = 0.5f;
-	private float keysSpeed = 240.0f;
+	private float sensitivity = 120.0f; //0.5f;
+	private float keysSpeed = 480.0f;
 	private final Cruciform game;
 	
 	public InputSystem(final Cruciform game) {
-		super(Family.getFor(PlayerInput.class, Position.class));
+		super(Family.getFor(PlayerInput.class, Position.class, Renderer.class));
 		this.game = game;
 	}
 
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		//org.lwjgl.opengl.Display.processMessages();
-		// if deltaX is positive
-		//angleX += deltaX*sensitivity*(1 + (currentTime - inputTime)/frameTime)
+		float focusMultiplier; 
+		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
+			focusMultiplier = 0.5f;
+		} else {
+			focusMultiplier = 1.0f;
+		}
 		playerInput = PlayerInput.mapper.get(entity);
+		final Renderer renderer = Renderer.mapper.get(entity);
 		final Position position = Position.mapper.get(entity);
 		final Rectangle rect = position.bounds.getBoundingRectangle();
 		float x = position.bounds.getX();
 		float y = position.bounds.getY();
 		// TODO fix dependence on FPS!
-		final int deltaX = Gdx.input.getDeltaX();
-		final int deltaY = Gdx.input.getDeltaY();
+		final float deltaX = Gdx.input.getDeltaX()*deltaTime;
+		final float deltaY = Gdx.input.getDeltaY()*deltaTime;
 		//System.out.println("dx: " + deltaX + " dy: " + deltaY);
-		x += calculateMovement(deltaX);
-		y -= 1.3f*calculateMovement(deltaY);
+		x += focusMultiplier*calculateMovement(deltaX);
+		y -= focusMultiplier*1.3f*calculateMovement(deltaY);
 		// TODO allow configurable
 		if (Gdx.input.isKeyPressed(Keys.A)) {
-			x -= keysSpeed*deltaTime;
+			x -= keysSpeed*deltaTime*focusMultiplier;
 		}
 		if (Gdx.input.isKeyPressed(Keys.D)) {
-			x += keysSpeed*deltaTime;
+			x += keysSpeed*deltaTime*focusMultiplier;
 		}
 		if (Gdx.input.isKeyPressed(Keys.W)) {
-			y += keysSpeed*deltaTime;
+			y += keysSpeed*deltaTime*focusMultiplier;
 		}
 		if (Gdx.input.isKeyPressed(Keys.S)) {
-			y -= keysSpeed*deltaTime;
+			y -= keysSpeed*deltaTime*focusMultiplier;
 		}
 		
 		x = MathUtils.clamp(x, Conf.playLeft, Conf.playRight - rect.width);
-		y = MathUtils.clamp(y, 0, Conf.screenHeight - rect.height);
+		y = MathUtils.clamp(y, Conf.playBottom - renderer.customYOffset, Conf.screenHeight + renderer.customYOffset);
 		position.bounds.setPosition(x, y);
-		/*if (Gdx.input.isKeyJustPressed(Keys.ALT_LEFT)) {
-			Gdx.input.setCursorCatched(!Gdx.input.isCursorCatched());
-		}*/
 	}
 
-	private float calculateMovement(int deltaPos) {
+	private float calculateMovement(float deltaPos) {
 		final float accel = deltaPos > 0 ?
 			ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity
 		    : -ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity;

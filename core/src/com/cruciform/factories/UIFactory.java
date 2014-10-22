@@ -8,7 +8,6 @@ import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Geometry;
-import com.cruciform.utils.Priority;
 
 public class UIFactory {
 	private final Engine engine;
@@ -23,10 +22,26 @@ public class UIFactory {
 		
 		final Position position = new Position(entity);
 		if (isLeft) {
-			position.bounds = Geometry.polyRect(Conf.playLeft - renderer.image.getRegionWidth(), 0, Conf.playLeft, Conf.screenHeight);
+			position.bounds = Geometry.polyRect(Conf.playLeft - renderer.image.getRegionWidth(),
+					0, Conf.playLeft, Conf.screenHeight);
 		} else {
-			position.bounds = Geometry.polyRect(Conf.playRight, 0, Conf.screenWidth, Conf.screenHeight);
+			position.bounds = Geometry.polyRect(Conf.playRight, 0, Conf.screenWidth,
+					Conf.screenHeight);
 		}
+		
+		engine.addEntity(entity);
+		return entity;
+	}
+	
+	public Entity createBottomPanel() {
+		final Entity entity = new Entity();
+
+		Renderer renderer = Renderer.defaultForUI(entity, ImageManager.get(Picture.BOTTOM_PANEL));
+		
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(Conf.playCenter - renderer.image.getRegionWidth()/2,
+				Conf.playBottom - renderer.image.getRegionHeight(), 
+				renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
 		
 		engine.addEntity(entity);
 		return entity;
