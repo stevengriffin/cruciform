@@ -32,7 +32,7 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 		incrementPattern();
 		Array<Entity> bullets = new Array<>();
 		for (float rotation = originAngle; rotation < originAngle + spanAngle;
-				rotation += (spanAngle - originAngle)/spokes) {
+				rotation += spanAngle/spokes) {
 			Entity entity = new Entity();
 
 			Renderer renderer = Renderer.defaultForBullet(entity, team, image);

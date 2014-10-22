@@ -32,6 +32,7 @@ public class GameState extends State {
 	public void render(float delta) {
 		Score.update();
 		game.engine.update(delta);
+		game.tweenManager.update(delta);
 	}
 
 	@Override

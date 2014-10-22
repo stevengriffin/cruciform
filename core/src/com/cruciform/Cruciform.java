@@ -1,5 +1,8 @@
 package com.cruciform;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
@@ -11,12 +14,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.cruciform.components.Collider;
+import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
+import com.cruciform.components.Splitter;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.UIFactory;
 import com.cruciform.serialization.ColliderSerializer;
 import com.cruciform.serialization.RendererSerializer;
+import com.cruciform.serialization.SplitterSerializer;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.states.State;
 import com.cruciform.systems.AISystem;
@@ -33,6 +39,7 @@ import com.cruciform.systems.RenderSystem;
 import com.cruciform.systems.ShooterSystem;
 import com.cruciform.systems.SplitterSystem;
 import com.cruciform.systems.WaveSystem;
+import com.cruciform.tweening.PositionAccessor;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
 import com.esotericsoftware.kryo.Kryo;
@@ -52,6 +59,7 @@ public class Cruciform extends Game {
 	public InputSystem inputSystem;
 	public Kryo kryo;
 	public Application application = null;
+	public TweenManager tweenManager;
 	
 	@Override
 	public void create() {
@@ -69,8 +77,10 @@ public class Cruciform extends Game {
 		
 		// Serialization
 		kryo = new Kryo();
-		kryo.addDefaultSerializer(Renderer.class, RendererSerializer.class);
+		// Manually shallow copy fields because setImmutable does not seem to work
+		kryo.addDefaultSerializer(Splitter.class, SplitterSerializer.class);
 		kryo.addDefaultSerializer(Collider.class, ColliderSerializer.class);
+		kryo.addDefaultSerializer(Renderer.class, RendererSerializer.class);
 
 		// Entity engine
 		engine = new Engine();
@@ -99,6 +109,10 @@ public class Cruciform extends Game {
 		engine.addSystem(new SplitterSystem(this));
 		engine.addSystem(new WaveSystem(engine));
 		engine.addSystem(new HealthSystem(explosionFactory, deferrer));
+	
+		// Tweening
+		Tween.registerAccessor(Position.class, new PositionAccessor());
+		tweenManager = new TweenManager();
 		
 		this.setScreen(new MainMenuState(this));
 	}

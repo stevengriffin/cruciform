@@ -31,7 +31,7 @@ public class RadialWeapon extends Weapon {
 	private static final TextureRegion BULLET_IMAGE = ImageManager.get(Picture.ENEMY_BULLET_ELONGATED);
 	private final ExplosionFactory explosionFactory;
 	public float volume = 0.0f;
-	private final BulletRuleHandler bulletRuleHandler;
+	public final BulletRuleHandler bulletRuleHandler;
 	private final CoolDownRuleHandler coolDownRuleHandler; 
 	
 	public RadialWeapon(float coolDownTime, Engine engine,

@@ -14,9 +14,9 @@ public class RendererSerializer extends FieldSerializer<Renderer> {
 	public Renderer copy(Kryo kryo, Renderer original) {
 		TextureRegion image = original.image;
 		original.image = null;
-		Renderer copied = super.copy(kryo, original);
+		Renderer newObject = super.copy(kryo, original);
 		original.image = image;
-		copied.image = image;
-		return copied;
+		newObject.image = image;
+		return newObject;
 	}
 }

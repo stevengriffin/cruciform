@@ -13,10 +13,11 @@ public class ColliderSerializer extends FieldSerializer<Collider> {
 
 	@Override
 	public Collider copy(Kryo kryo, Collider original) {
-		Array<Entity> originalArray = original.entitiesCollidedWith;
-		original.entitiesCollidedWith = new Array<Entity>();
-		Collider copied = super.copy(kryo, original);
-		original.entitiesCollidedWith = originalArray;
-		return copied;
+		Array<Entity> entitiesCollidedWith = original.entitiesCollidedWith;
+		original.entitiesCollidedWith = null;
+		Collider newObject = super.copy(kryo, original);
+		original.entitiesCollidedWith = entitiesCollidedWith;
+		newObject.entitiesCollidedWith = entitiesCollidedWith;
+		return newObject;
 	}
 }

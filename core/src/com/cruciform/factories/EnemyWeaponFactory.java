@@ -26,6 +26,7 @@ public class EnemyWeaponFactory {
 
 	private final Engine engine;
 	private final ExplosionFactory explosionFactory;
+	private static final float ANGLE_DOWN = 190;
 	
 	public EnemyWeaponFactory(final Engine engine, final ExplosionFactory explosionFactory) {
 		this.engine = engine;
@@ -41,10 +42,15 @@ public class EnemyWeaponFactory {
 	
 	private Weapon[] createWeapons(EnemyTypes type) {
 		switch(type) {
+			case RADIAL_3PRONG:
+				RadialWeapon weapon = createStraightRadialWeapon(480, 3, 3, 0.2f);
+				weapon.bulletRuleHandler.originAngle = ANGLE_DOWN-30;
+				weapon.bulletRuleHandler.spanAngle = 60;
+				return new Weapon[] { weapon };
 			case RADIAL_SPIRALER:
-				return new Weapon[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f) };
+				return new Weapon[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f, 60.0f) };
 			case RADIAL_SPIRALER_SOLID:
-				return new Weapon[] { createSpiralingRadialWeapon(120, 12, 6, 0.1f) };
+				return new Weapon[] { createSpiralingRadialWeapon(120, 12, 12, 0.1f, 20.0f) };
 			case RADIAL_STRAIGHT:
 				return new Weapon[] { createStraightRadialWeapon(480, 3, 30, 0.2f) };
 			case RADIAL_SPLITTER:
@@ -64,7 +70,7 @@ public class EnemyWeaponFactory {
 		return rifle;
 	}
 	
-	private Weapon createStraightRadialWeapon(float bulletSpeed, int patternMax,
+	private RadialWeapon createStraightRadialWeapon(float bulletSpeed, int patternMax,
 			int spokes, float coolDown) {
 		final float rotationalVelocity = 0.0f;
 		WrappedIncrementor incrementor = new WrappedIncrementor(patternMax);
@@ -91,9 +97,8 @@ public class EnemyWeaponFactory {
 		return radial;
 	}
 	
-	private Weapon createSpiralingRadialWeapon(float bulletSpeed, int patternMax,
-			int spokes, float coolDown) {
-		final float rotationalVelocity = 60.0f;
+	private Weapon createSpiralingRadialWeapon(final float bulletSpeed, final int patternMax,
+			final int spokes, final float coolDown, final float rotationalVelocity) {
 		WrappedIncrementor incrementor = new WrappedIncrementor(patternMax);
 		BulletRuleHandler bulletRuleHandler = new BulletRuleHandler(incrementor, engine);
 		bulletRuleHandler.spokes = spokes;
@@ -107,19 +112,16 @@ public class EnemyWeaponFactory {
 	}
 
 	private EntityMutator createLineMoverBehavior(final float rotationalVelocity, final float bulletSpeed) {
-		return new EntityMutator() {	
-		@Override
-			public Entity mutate(final Entity entity, final int index) {
-				Position position = Position.mapper.get(entity);
-				
-				LineMover lineMover = new LineMover();
-				lineMover.maxVelocity = Geometry.rotatedVector(position.bounds.getRotation(), bulletSpeed);
-				lineMover.maxRotationalVelocity = rotationalVelocity;
-				lineMover.accelerates = false;
-				entity.add(lineMover);
+		return (entity, index) -> {	
+			Position position = Position.mapper.get(entity);
 
-				return entity;
-			}
+			LineMover lineMover = new LineMover();
+			lineMover.maxVelocity = Geometry.rotatedVector(position.bounds.getRotation(), bulletSpeed);
+			lineMover.maxRotationalVelocity = rotationalVelocity;
+			lineMover.accelerates = false;
+			entity.add(lineMover);
+
+			return entity;
 		};
 	}
 
@@ -127,53 +129,44 @@ public class EnemyWeaponFactory {
 	 * Add this before line mover behavior so position change is taken into account.
 	 */
 	private EntityMutator createSpiralingBehavior() {
-		return new EntityMutator() {	
-		@Override
-			public Entity mutate(final Entity entity, final int index) {
-				Position position = Position.mapper.get(entity);
-				position.incrementRotation(index*5);
-				
-				return entity;
-			}
+		return (entity, index) -> {	
+			Position position = Position.mapper.get(entity);
+			position.incrementRotation(index*5);
+
+			return entity;
 		};
 	}
 	
 	private EntityMutator createRadialSplitBehavior() {
-		return new EntityMutator() {
-			@Override
-			public Entity mutate(Entity entity, final int index) {
-				final LineMover mover = LineMover.mapper.get(entity);
-				final Position position = Position.mapper.get(entity);
-				float rotation = index == 0 ?
-						mover.maxVelocity.angle() - 30 + 270: mover.maxVelocity.angle() + 30 + 270;
-				position.bounds.rotate(rotation);
+		return (entity, index) -> {	
+			final LineMover mover = LineMover.mapper.get(entity);
+			final Position position = Position.mapper.get(entity);
+			float rotation = index == 0 ?
+					mover.maxVelocity.angle() - 30 + 270: mover.maxVelocity.angle() + 30 + 270;
+			position.bounds.rotate(rotation);
 
-				mover.maxVelocity = Geometry.rotatedVector(rotation, mover.maxVelocity.len());
+			mover.maxVelocity = Geometry.rotatedVector(rotation, mover.maxVelocity.len());
 
-				final Lifetime lifetime = Lifetime.mapper.get(entity);
-				lifetime.setTimeRemaining(1);
-				return entity;
-			}
+			final Lifetime lifetime = Lifetime.mapper.get(entity);
+			lifetime.setTimeRemaining(1);
+			return entity;
 		};
 	}
 	
 	private EntityMutator createSplitterBehavior(final EntityMutator behavior) {
-		return new EntityMutator() {	
-		@Override
-			public Entity mutate(final Entity entity, final int index) {
-				Splitter splitter = new Splitter();
-				splitter.numberOfNewEntities = 2;
-				splitter.customSplitBehavior = behavior;
-				splitter.splitOnCollision = false;
-				splitter.splitOnDeletion = true;
-				entity.add(splitter);
+		return (entity, index) -> {	
+			Splitter splitter = new Splitter();
+			splitter.numberOfNewEntities = 2;
+			splitter.customSplitBehavior = behavior;
+			splitter.splitOnCollision = false;
+			splitter.splitOnDeletion = true;
+			entity.add(splitter);
 
-				Lifetime lifetime = new Lifetime();
-				lifetime.setTimeRemaining(1);
-				entity.add(lifetime);
-				
-				return entity;
-			}
+			Lifetime lifetime = new Lifetime();
+			lifetime.setTimeRemaining(1);
+			entity.add(lifetime);
+
+			return entity;
 		};
 	}
 }

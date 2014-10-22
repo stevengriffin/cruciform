@@ -29,31 +29,29 @@ public class FormationFactory {
 		
 	}
 	
-	public static void createBroadFormation(final ShipFactory.ShipCreator creator,
+	public static void createBroadFormation(final ShipFactory.ShipCreatorIndexed creator,
 			final float timeDelay, final int number, final int left, final int right) {
 		final int increment = (right - left)/(number - 1);
 		final float y = 0; // For now this is useless as it gets immediately adjusted after creation
-		schedule(new Runnable() {
-			public void run() {
-				for (int x = left; x <= right; x += increment) {
-					Entity ship = creator.createAt(x, y);
-					Position position = Position.mapper.get(ship);
-					position.bounds.setPosition(position.bounds.getX(),
-							Conf.screenHeight + position.bounds.getBoundingRectangle().height);
-				}
+		schedule(() -> {
+			int i = 0;
+			for (int x = left; x <= right; x += increment) {
+				Entity ship = creator.createAt(x, y, i);
+				Position position = Position.mapper.get(ship);
+				position.bounds.setPosition(position.bounds.getX(),
+						Conf.screenHeight + position.bounds.getBoundingRectangle().height);
+				i++;
 			}
 		}, timeDelay);
 	}
 	
 	public static void createSingularShip(final ShipFactory.ShipCreator creator, final float timeDelay,
 			float x) {
-		schedule(new Runnable() {
-			public void run() {
-				Entity ship = creator.createAt(x, 0);
-				Position position = Position.mapper.get(ship);
-				position.bounds.setPosition(position.bounds.getX(),
-						Conf.screenHeight + position.bounds.getBoundingRectangle().height);
-			}
+		schedule(() -> {
+			Entity ship = creator.createAt(x, 0);
+			Position position = Position.mapper.get(ship);
+			position.bounds.setPosition(position.bounds.getX(),
+					Conf.screenHeight + position.bounds.getBoundingRectangle().height);
 		}, timeDelay);
 	}
 }

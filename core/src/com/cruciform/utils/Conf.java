@@ -10,4 +10,16 @@ public class Conf {
 	public static int playCenter = (playLeft + playRight) / 2;
 	public static int playBottom = screenHeight/20;
 	public static float volume = 1.0f;
+	
+	public static int fractionX(float fraction) {
+		return (int) (playLeft + playWidth*fraction);
+	}
+	
+	public static int fractionXRel(float fraction) {
+		return (int) (playWidth*fraction);
+	}
+	
+	public static int fractionY(float fraction) {
+		return (int) (screenHeight*fraction);
+	}
 }

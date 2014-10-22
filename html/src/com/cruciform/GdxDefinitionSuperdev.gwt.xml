@@ -13,3 +13,4 @@
 	
 	<set-configuration-property name="gdx.assetpath" value="../core/assets" />
 </module>
+<inherits name='aurelienribon.tweenengine'/>

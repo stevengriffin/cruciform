@@ -34,6 +34,10 @@ public class ShipFactory {
 		public Entity createAt(float x, float y);
 	}
 	
+	public interface ShipCreatorIndexed {
+		public Entity createAt(float x, float y, float i);
+	}
+	
 	public ShipFactory(final Engine engine, final ExplosionFactory explosionFactory) {
 		this.engine = engine;
 		this.explosionFactory = explosionFactory;
