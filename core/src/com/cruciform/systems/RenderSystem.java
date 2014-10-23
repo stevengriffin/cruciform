@@ -117,8 +117,8 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 					1, 1, rotation);
 		} else {
 			batch.draw(region, x, y, 0, 0, 
-					region.getRegionWidth(),
-					region.getRegionHeight(),
+					region.getRegionWidth()*Conf.scaleFactor,
+					region.getRegionHeight()*Conf.scaleFactor,
 					1, 1, rotation);
 		}
 	}

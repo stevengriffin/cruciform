@@ -11,15 +11,16 @@ public class Conf {
 	// 1440x900
 	// Play coordinates go from x: 0 to canonicalPlayWidth, y: 0 to canonicalPlayHeight
 	// UI coordinates go from 0 to screenWidth, y: 0 to screenHeight
-	public static int canonicalPlayWidth = (int) (1080/1.2f);
-	public static int canonicalPlayHeight = (int) (1080*0.95f);
+	public static final int canonicalWidth = 1920;
+	public static final int canonicalHeight = 1080;
+	public static final int canonicalPlayWidth = (int) (canonicalHeight/1.2f);
+	public static final int canonicalPlayHeight = (int) (canonicalHeight*0.95f);
 	public static int screenHeight = 1080;
 	public static int screenWidth = 1920;
 	public static int playWidth = (int)(screenHeight / 1.2f);
 	public static int playLeft = (screenWidth - playWidth)/2;
 	public static int playRight = screenWidth - (screenWidth - playWidth)/2;
 	public static int playCenter = (playLeft + playRight) / 2;
-	public static final int canonicalHeight = 1080;
 	public static int playBottom = fractionY(0.05f);
 	public static float scaleFactor;
 	public static float volume = 1.0f;
@@ -39,15 +40,11 @@ public class Conf {
 	}
 	
 	public static int fractionX(float fraction) {
-		return (int) (playLeft + playWidth*fraction);
-	}
-	
-	public static int fractionXRel(float fraction) {
-		return (int) (playWidth*fraction);
+		return (int) (canonicalPlayWidth*fraction);
 	}
 	
 	public static int fractionY(float fraction) {
-		return (int) (screenHeight*fraction);
+		return (int) (canonicalPlayHeight*fraction);
 	}
 	
 	public static int fractionXLeftUI(float fraction) {

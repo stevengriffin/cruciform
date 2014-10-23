@@ -23,7 +23,8 @@ public class UIFactory {
 		
 		final Position position = new Position(entity);
 		if (isLeft) {
-			position.bounds = Geometry.polyRect(Conf.playLeft - renderer.image.getRegionWidth(),
+			position.bounds = Geometry.polyRect(Conf.playLeft - 
+					renderer.image.getRegionWidth()*Conf.scaleFactor,
 					0, Conf.playLeft, Conf.screenHeight);
 		} else {
 			position.bounds = Geometry.polyRect(Conf.playRight, 0, Conf.screenWidth,
@@ -41,9 +42,11 @@ public class UIFactory {
 		renderer.renderAtPlayCoordinates = false;
 		
 		final Position position = new Position(entity);
-		position.bounds = Geometry.polyRect(Conf.playCenter - renderer.image.getRegionWidth()/2,
+		position.bounds = Geometry.polyRect(Conf.playCenter - 
+				renderer.image.getRegionWidth()*Conf.scaleFactor/2,
 				Conf.playBottom - renderer.image.getRegionHeight(), 
-				renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+				renderer.image.getRegionWidth()*Conf.scaleFactor,
+				renderer.image.getRegionHeight()*Conf.scaleFactor);
 		
 		engine.addEntity(entity);
 		return entity;

@@ -20,10 +20,10 @@ public class PathFactory {
 	}
 	
 	public void createBentPath(final Entity entity, boolean reversed) {
-		float xMove1 = -Conf.fractionXRel(0.3f);
+		float xMove1 = -Conf.fractionX(0.3f);
 		float yMove1 = -Conf.fractionY(0.1f);
-		float xMove2 = Conf.fractionXRel(0.4f);
-		float yMove2 = -Conf.fractionXRel(0.3f);
+		float xMove2 = Conf.fractionX(0.4f);
+		float yMove2 = -Conf.fractionX(0.3f);
 		if (reversed) {
 			xMove1 = -xMove1;
 			xMove2 = -xMove2;
