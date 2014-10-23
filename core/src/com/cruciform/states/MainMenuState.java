@@ -3,6 +3,7 @@ package com.cruciform.states;
 import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
+import com.cruciform.utils.Conf;
 
 public class MainMenuState extends MenuState {
 
@@ -64,6 +65,7 @@ public class MainMenuState extends MenuState {
 
 	@Override
 	public void escapeState() {
+		Conf.saveSettings(Gdx.app);
 		Gdx.app.exit();
 	}
 	

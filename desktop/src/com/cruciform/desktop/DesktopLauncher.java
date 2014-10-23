@@ -4,7 +4,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.cruciform.Cruciform;
-import com.cruciform.utils.Conf;
 import com.esotericsoftware.minlog.Log;
 
 public class DesktopLauncher {

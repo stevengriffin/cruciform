@@ -21,7 +21,7 @@ public class Level1 extends Level {
                 	pathFactory.createBentPath(entity, false);
                 	return entity;
                 },
-				2.0f, Conf.playCenter)),
+				2.0f, Conf.fractionX(0.5f))),
 				
 				() -> (FormationFactory.createSingularShip(
                 (x, y) -> {
@@ -29,7 +29,7 @@ public class Level1 extends Level {
                 	pathFactory.createBentPath(entity, false);
                 	return entity;
                 },
-				2.0f, Conf.playCenter)),
+				2.0f, Conf.fractionX(0.5f))),
 				
 				() -> (FormationFactory.createBroadFormation(
                 (x, y, i) -> {
@@ -41,7 +41,7 @@ public class Level1 extends Level {
 				
 				() -> (FormationFactory.createSingularShip(
 				(x, y) -> game.shipFactory.createEnemy(x, y, EnemyTypes.RADIAL_SPLITTER),
-				2.0f, Conf.playCenter)),
+				2.0f, Conf.fractionX(0.5f))),
 				
 				() -> (FormationFactory.createBroadFormation(
 				(x, y, i) -> game.shipFactory.createEnemy(x, y, EnemyTypes.RADIAL_SPLITTER),

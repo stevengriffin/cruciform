@@ -29,7 +29,7 @@ public abstract class Level {
 	}
 	
 	public Entity createAndReturnPlayer() {
-		return game.shipFactory.createPlayer(Conf.playCenter, Conf.canonicalHeight*0.1f);
+		return game.shipFactory.createPlayer(Conf.fractionX(0.5f), Conf.canonicalHeight*0.1f);
 	}
 	
 	public void createNextWave() {
