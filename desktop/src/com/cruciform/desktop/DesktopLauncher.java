@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.foregroundFPS = 240;
 		config.backgroundFPS = 240;
 		config.title = "Cruciform";
+		Conf.setResolution(1024, 768);
 		config.height = Conf.screenHeight;
 		config.width = Conf.screenWidth;
 		final Cruciform game = new Cruciform();
