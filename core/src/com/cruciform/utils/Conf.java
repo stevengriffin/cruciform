@@ -9,6 +9,10 @@ public class Conf {
 	// 1600x900
 	// 1680x1050
 	// 1440x900
+	// Play coordinates go from x: 0 to canonicalPlayWidth, y: 0 to canonicalPlayHeight
+	// UI coordinates go from 0 to screenWidth, y: 0 to screenHeight
+	public static int canonicalPlayWidth = (int) (1080/1.2f);
+	public static int canonicalPlayHeight = (int) (1080*0.95f);
 	public static int screenHeight = 1080;
 	public static int screenWidth = 1920;
 	public static int playWidth = (int)(screenHeight / 1.2f);
@@ -31,6 +35,7 @@ public class Conf {
 		playLeft = playRight - playWidth;
 		playCenter = (playLeft + playRight) / 2;
 		playBottom = fractionY(0.05f);
+		Log.debug("pw: " + playWidth + " pr: " + playRight + " pl: " + playLeft + " pc: " + playCenter + " pb: " + playBottom);
 	}
 	
 	public static int fractionX(float fraction) {
@@ -48,4 +53,12 @@ public class Conf {
 	public static int fractionXLeftUI(float fraction) {
 		return (int) (playRight + (screenWidth - playRight)*fraction);
 	}
+	
+	public static float playToScreenX(float x) {
+		return x*scaleFactor + playLeft;
+	}
+	public static float playToScreenY(float y) {
+		return y*Conf.scaleFactor + Conf.playBottom;
+	}
+	
 }

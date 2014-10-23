@@ -54,9 +54,9 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		font.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
 				Conf.fractionXLeftUI(0.2f), Conf.screenHeight*0.85f);
 		font.draw(batch, "Credits Used: " + Score.getCreditsUsed(),
-				Conf.fractionXLeftUI(0.2f), Conf.screenHeight*0.8f);
+				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.8f);
 		draw(ImageManager.get(Picture.WEAPONS_PANEL), Conf.fractionXLeftUI(0.05f),
-				Conf.screenHeight*0.07f, 0);
+				Conf.screenHeight*0.07f, 0, false);
 		drawPlayerWeaponInfo();
 		batch.end();
 	}
@@ -90,28 +90,49 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		Position position = Position.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);
 		if (renderer.patch != null) {
-			Rectangle rect = position.bounds.getBoundingRectangle();
-			renderer.patch.draw(batch, (rect.x-2)*Conf.scaleFactor, (rect.y-2)*Conf.scaleFactor,
-					(rect.width+4)*Conf.scaleFactor, (rect.height+4)*Conf.scaleFactor);
+			drawPatch(renderer.patch, position, renderer.renderAtPlayCoordinates);
 		}
 		if (!renderer.shouldRender || renderer.image == null) {
 			return;
 		}
 		if (renderer.customOffset) {
 			draw(renderer.image, position.bounds.getX() + renderer.customXOffset,
-				position.bounds.getY() + renderer.customYOffset, position.bounds.getRotation());
+				position.bounds.getY() + renderer.customYOffset, position.bounds.getRotation(),
+				renderer.renderAtPlayCoordinates);
 		} else {
 			float[] vertices = position.bounds.getTransformedVertices();
 			draw(renderer.image, vertices[LEFT],
-				vertices[BOTTOM], position.bounds.getRotation());
+				vertices[BOTTOM], position.bounds.getRotation(),
+				renderer.renderAtPlayCoordinates);
 		}
 	}
 
-	private void draw(TextureRegion region, float x, float y, float rotation) {
-		batch.draw(region, x*Conf.scaleFactor, y*Conf.scaleFactor, 0, 0, 
-				region.getRegionWidth()*Conf.scaleFactor,
-				region.getRegionHeight()*Conf.scaleFactor,
+	private void draw(TextureRegion region, float x, float y, float rotation,
+			boolean renderAtPlayCoordinates) {
+		if (renderAtPlayCoordinates) {
+			batch.draw(region, Conf.playToScreenX(x),
+					Conf.playToScreenY(y), 0, 0, 
+					region.getRegionWidth()*Conf.scaleFactor,
+					region.getRegionHeight()*Conf.scaleFactor,
 					1, 1, rotation);
+		} else {
+			batch.draw(region, x, y, 0, 0, 
+					region.getRegionWidth(),
+					region.getRegionHeight(),
+					1, 1, rotation);
+		}
+	}
+	
+	private void drawPatch(NinePatch patch, Position position,
+			boolean renderAtPlayCoordinates) {
+		Rectangle rect = position.bounds.getBoundingRectangle();
+		if (renderAtPlayCoordinates) {
+			patch.draw(batch, Conf.playToScreenX(rect.x-2), Conf.playToScreenY(rect.y-2),
+					(rect.width+4)*Conf.scaleFactor, (rect.height+4)*Conf.scaleFactor);
+		} else {
+			patch.draw(batch, (rect.x-2), (rect.y-2),
+					(rect.width+4), (rect.height+4));
+		}
 	}
 	
 	@Override

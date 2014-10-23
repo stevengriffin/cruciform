@@ -31,9 +31,9 @@ public class OutOfBoundsHandler {
 	
 	public boolean isOutOfBounds(Polygon bounds) {
 		Rectangle rect = bounds.getBoundingRectangle();
-		return (rect.x > Conf.playRight && removeWhenEast) ||
-				(rect.x + rect.width < Conf.playLeft && removeWhenWest) ||
-				(rect.y > Conf.canonicalHeight * 1.3f && removeWhenNorth) ||
+		return (rect.x > Conf.canonicalPlayWidth && removeWhenEast) ||
+				(rect.x + rect.width < 0.0f && removeWhenWest) ||
+				(rect.y > Conf.canonicalPlayHeight * 1.3f && removeWhenNorth) ||
 				(rect.y + rect.height < 0.0f && removeWhenSouth);
 	}
 }

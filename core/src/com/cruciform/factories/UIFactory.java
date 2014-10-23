@@ -19,6 +19,7 @@ public class UIFactory {
 		final Entity entity = new Entity();
 
 		final Renderer renderer = Renderer.defaultForUI(entity, ImageManager.get(Picture.SIDE_PANEL));
+		renderer.renderAtPlayCoordinates = false;
 		
 		final Position position = new Position(entity);
 		if (isLeft) {
@@ -37,6 +38,7 @@ public class UIFactory {
 		final Entity entity = new Entity();
 
 		Renderer renderer = Renderer.defaultForUI(entity, ImageManager.get(Picture.BOTTOM_PANEL));
+		renderer.renderAtPlayCoordinates = false;
 		
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(Conf.playCenter - renderer.image.getRegionWidth()/2,

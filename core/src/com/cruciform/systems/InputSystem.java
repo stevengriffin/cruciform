@@ -62,8 +62,8 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 			y -= keysSpeed*deltaTime*focusMultiplier;
 		}
 		
-		x = MathUtils.clamp(x, Conf.playLeft, Conf.playRight - rect.width);
-		y = MathUtils.clamp(y, Conf.playBottom - renderer.customYOffset, Conf.canonicalHeight + renderer.customYOffset);
+		x = MathUtils.clamp(x, 0, Conf.canonicalPlayWidth - rect.width);
+		y = MathUtils.clamp(y, 0 - renderer.customYOffset, Conf.canonicalPlayHeight + renderer.customYOffset);
 		position.bounds.setPosition(x, y);
 	}
 

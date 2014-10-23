@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
+import com.cruciform.utils.Conf;
 
 /**
  * Renders debug information like hitboxes.
@@ -32,8 +33,23 @@ public class DebugRenderSystem extends IteratingSystem {
 	}
 	
 	public void processEntity(Entity entity, float deltaTime) {
-		Position position = Position.mapper.get(entity);
+		final Position position = Position.mapper.get(entity);
+		final Renderer renderer = Renderer.mapper.get(entity);
 		shapeRenderer.setColor(debugColor);
-		shapeRenderer.polygon(position.bounds.getTransformedVertices());
+		draw(position.bounds.getTransformedVertices(), renderer.renderAtPlayCoordinates);
+	}
+	
+	private void draw(float[] vertices, boolean renderAtPlayCoordinates) {
+		// Don't need to see the collision outline for UI elements.
+		if (renderAtPlayCoordinates) {
+			float[] verticesCopy = vertices.clone();
+			for (int i = 0; i < verticesCopy.length; i+= 2) {
+				// x
+				verticesCopy[i] = Conf.playToScreenX(verticesCopy[i]);
+				// y
+				verticesCopy[i + 1] = Conf.playToScreenY(verticesCopy[i + 1]);
+			}
+			shapeRenderer.polygon(verticesCopy);
+		}
 	}
 }
