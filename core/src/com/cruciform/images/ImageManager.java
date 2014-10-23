@@ -14,6 +14,7 @@ public class ImageManager {
 	
 	static {
 		map.put(Picture.CRUCIFORM_1, newTexture("cruciform_weapon1"));
+		map.put(Picture.CRUCIFORM_WEAPON_CROSS, newTexture("cruciform_weapon_cross"));
 		map.put(Picture.PLAYER_SHIP_1, newTexture("ship1"));
 		map.put(Picture.PLAYER_SHIP_2, newTexture("player_ship2"));
 		map.put(Picture.PLAYER_SHIP_GOLD, newTexture("player_ship_gold"));
@@ -31,6 +32,10 @@ public class ImageManager {
 	
 	static {
 		ninePatchMap.put(NinePatches.BUTTON_1, newNinePatch("button1"));
+		ninePatchMap.put(NinePatches.CRUCIFORM_WEAPON_BEAM_VERTICAL,
+				newNinePatch("cruciform_weapon_beam_vertical"));
+		ninePatchMap.put(NinePatches.CRUCIFORM_WEAPON_BEAM_HORIZONTAL,
+				newNinePatch("cruciform_weapon_beam_horizontal"));
 	}
 	
 	private static Texture instantiateTexture(String name) {

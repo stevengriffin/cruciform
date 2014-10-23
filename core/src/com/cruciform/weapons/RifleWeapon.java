@@ -14,14 +14,12 @@ import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.Team;
-import com.cruciform.components.team.TeamEnemy;
+import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
-import com.cruciform.utils.Geometry;
-import com.cruciform.utils.OutOfBoundsHandler;
 import com.cruciform.utils.Priority;
 
 public class RifleWeapon extends Weapon {
@@ -83,6 +81,10 @@ public class RifleWeapon extends Weapon {
 		Entity entity = new Entity();
 
 		Renderer renderer = Renderer.defaultForBullet(entity, team, RIFLE_BULLET_IMAGE);
+		if (team == TeamPlayer.class) {
+			// Render underneath player ship.
+			renderer.priority = new Priority(-1);
+		}
 		
 		Position.defaultForBullet(entity,
 				originX, originY,

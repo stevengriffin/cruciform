@@ -13,11 +13,12 @@ import com.cruciform.components.Renderer;
 import com.cruciform.components.SoundEffect;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.Team;
+import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
-import com.esotericsoftware.minlog.Log;
+import com.cruciform.utils.Priority;
 
 public class SweepWeapon extends Weapon {
 
@@ -66,6 +67,10 @@ public class SweepWeapon extends Weapon {
 
 		final Renderer renderer = new Renderer(entity);
 		renderer.shouldRender = false; // TODO
+		if (team == TeamPlayer.class) {
+			// Render underneath player ship.
+			renderer.priority = new Priority(-1);
+		}
 		
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyTrapezoid(

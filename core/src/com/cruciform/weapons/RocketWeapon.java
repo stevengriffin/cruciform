@@ -15,6 +15,7 @@ import com.cruciform.components.Renderer;
 import com.cruciform.components.SoundEffect;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.Team;
+import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.components.team.TeamRocket;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.images.ImageManager;
@@ -23,6 +24,7 @@ import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
+import com.cruciform.utils.Priority;
 
 public class RocketWeapon extends Weapon {
 
@@ -70,6 +72,10 @@ public class RocketWeapon extends Weapon {
 
 		Renderer renderer = new Renderer(entity);
 		renderer.image = image;
+		if (team == TeamPlayer.class) {
+			// Render underneath player ship.
+			renderer.priority = new Priority(-1);
+		}
 		
 		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(

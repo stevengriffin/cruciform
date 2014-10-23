@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.cruciform.Cruciform;
@@ -54,10 +55,6 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 				Conf.fractionXLeftUI(0.2f), Conf.screenHeight*0.85f);
 		font.draw(batch, "Credits Used: " + Score.getCreditsUsed(),
 				Conf.fractionXLeftUI(0.2f), Conf.screenHeight*0.8f);
-//		font.draw(batch, "Java heap: " + game.application.getJavaHeap(),
-//				Conf.screenWidth*0.8f, Conf.screenHeight*0.8f);
-//		font.draw(batch, "Native heap: " + game.application.getNativeHeap(),
-//				Conf.screenWidth*0.8f, Conf.screenHeight*0.7f);
 		draw(ImageManager.get(Picture.WEAPONS_PANEL), Conf.fractionXLeftUI(0.05f),
 				Conf.screenHeight*0.07f, 0);
 		drawPlayerWeaponInfo();
@@ -92,7 +89,12 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	private void processEntity(Entity entity, float deltaTime) {
 		Position position = Position.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);
-		if (!renderer.shouldRender) {
+		if (renderer.patch != null) {
+			Rectangle rect = position.bounds.getBoundingRectangle();
+			renderer.patch.draw(batch, (rect.x-2)*Conf.scaleFactor, (rect.y-2)*Conf.scaleFactor,
+					(rect.width+4)*Conf.scaleFactor, (rect.height+4)*Conf.scaleFactor);
+		}
+		if (!renderer.shouldRender || renderer.image == null) {
 			return;
 		}
 		if (renderer.customOffset) {

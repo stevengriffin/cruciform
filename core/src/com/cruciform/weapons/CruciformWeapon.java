@@ -13,10 +13,12 @@ import com.cruciform.components.SoundEffect;
 import com.cruciform.components.Splitter;
 import com.cruciform.components.team.Team;
 import com.cruciform.images.ImageManager;
+import com.cruciform.images.NinePatches;
 import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.EntityMutator;
 import com.cruciform.utils.Geometry;
+import com.cruciform.utils.Priority;
 
 public class CruciformWeapon extends Weapon {
 
@@ -45,6 +47,13 @@ public class CruciformWeapon extends Weapon {
 		public Entity mutate(Entity entity, final int index) {
 			final Splitter splitter = Splitter.mapper.get(entity);
 			final Position position = Position.mapper.get(entity);
+			final Renderer renderer = Renderer.mapper.get(entity);
+			renderer.image = ImageManager.get(Picture.CRUCIFORM_WEAPON_CROSS);
+			renderer.customOffset = true;
+			renderer.customXOffset = renderer.image.getRegionWidth()/2;
+			renderer.customYOffset = -renderer.image.getRegionHeight()/2;
+			renderer.priority = new Priority(-1);
+			renderer.patch = ImageManager.getPatch(NinePatches.CRUCIFORM_WEAPON_BEAM_HORIZONTAL);
 			position.bounds.rotate(90.0f);
 			position.bounds.setPosition(position.bounds.getX(), splitter.collisionY);
 			entity.remove(Splitter.class);
@@ -65,7 +74,9 @@ public class CruciformWeapon extends Weapon {
 				BEAM_HEIGHT);
 		
 		Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.get(Picture.CRUCIFORM_1);
+		renderer.patch = ImageManager.getPatch(NinePatches.CRUCIFORM_WEAPON_BEAM_VERTICAL);
+		// Render underneath cross and player ship.
+		renderer.priority = new Priority(-2);
 		
 		SoundEffect soundEffect = new SoundEffect();
 		soundEffect.sound = AudioManager.get(Noise.CRUCIFORM);
