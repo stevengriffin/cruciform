@@ -20,7 +20,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	private static final float ACCEL_CONSTANT = 0.0f;
 	private PlayerInput playerInput = null;
-	private float sensitivity = 120.0f; //0.5f;
+	private float sensitivity = 120.0f;
 	private float keysSpeed = 480.0f;
 	private final Cruciform game;
 	
@@ -30,7 +30,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 	}
 
 	@Override
-	public void processEntity(Entity entity, float deltaTime) {
+	public void processEntity(final Entity entity, final float deltaTime) {
 		float focusMultiplier; 
 		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
 			focusMultiplier = 0.5f;
@@ -43,7 +43,6 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 		final Rectangle rect = position.bounds.getBoundingRectangle();
 		float x = position.bounds.getX();
 		float y = position.bounds.getY();
-		// TODO fix dependence on FPS!
 		final float deltaX = Gdx.input.getDeltaX()*deltaTime;
 		final float deltaY = Gdx.input.getDeltaY()*deltaTime;
 		//System.out.println("dx: " + deltaX + " dy: " + deltaY);
@@ -64,11 +63,11 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 		}
 		
 		x = MathUtils.clamp(x, Conf.playLeft, Conf.playRight - rect.width);
-		y = MathUtils.clamp(y, Conf.playBottom - renderer.customYOffset, Conf.screenHeight + renderer.customYOffset);
+		y = MathUtils.clamp(y, Conf.playBottom - renderer.customYOffset, Conf.canonicalHeight + renderer.customYOffset);
 		position.bounds.setPosition(x, y);
 	}
 
-	private float calculateMovement(float deltaPos) {
+	private float calculateMovement(final float deltaPos) {
 		final float accel = deltaPos > 0 ?
 			ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity
 		    : -ACCEL_CONSTANT*deltaPos*deltaPos*sensitivity*sensitivity;

@@ -39,7 +39,7 @@ public class FormationFactory {
 				Entity ship = creator.createAt(x, y, i);
 				Position position = Position.mapper.get(ship);
 				position.bounds.setPosition(position.bounds.getX(),
-						Conf.screenHeight + position.bounds.getBoundingRectangle().height);
+						Conf.canonicalHeight + position.bounds.getBoundingRectangle().height);
 				i++;
 			}
 		}, timeDelay);
@@ -51,7 +51,7 @@ public class FormationFactory {
 			Entity ship = creator.createAt(x, 0);
 			Position position = Position.mapper.get(ship);
 			position.bounds.setPosition(position.bounds.getX(),
-					Conf.screenHeight + position.bounds.getBoundingRectangle().height);
+					Conf.canonicalHeight + position.bounds.getBoundingRectangle().height);
 		}, timeDelay);
 	}
 }

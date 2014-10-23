@@ -1,5 +1,7 @@
 package com.cruciform.utils;
 
+import com.esotericsoftware.minlog.Log;
+
 public class Conf {
 	// TODO persist with Preferences
 	// TODO support smaller resolutions
@@ -13,10 +15,14 @@ public class Conf {
 	public static int playLeft = (screenWidth - playWidth)/2;
 	public static int playRight = screenWidth - (screenWidth - playWidth)/2;
 	public static int playCenter = (playLeft + playRight) / 2;
+	public static final int canonicalHeight = 1080;
 	public static int playBottom = fractionY(0.05f);
+	public static float scaleFactor;
 	public static float volume = 1.0f;
 
 	public static void setResolution(int width, int height) {
+		scaleFactor = ((float) height)/canonicalHeight;
+		Log.debug("sF: " + scaleFactor);
 		screenWidth = width;
 		screenHeight = height;
 		playWidth = (int)(height / 1.2f);
@@ -37,5 +43,9 @@ public class Conf {
 	
 	public static int fractionY(float fraction) {
 		return (int) (screenHeight*fraction);
+	}
+	
+	public static int fractionXLeftUI(float fraction) {
+		return (int) (playRight + (screenWidth - playRight)*fraction);
 	}
 }

@@ -49,16 +49,16 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 			}
 		}
 		font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(),
-				Conf.screenWidth*0.9f, Conf.screenHeight*0.9f);
+				Conf.fractionXLeftUI(0.2f), Conf.screenHeight*0.9f);
 		font.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
-				Conf.screenWidth*0.9f, Conf.screenHeight*0.85f);
+				Conf.fractionXLeftUI(0.2f), Conf.screenHeight*0.85f);
 		font.draw(batch, "Credits Used: " + Score.getCreditsUsed(),
-				Conf.screenWidth*0.9f, Conf.screenHeight*0.8f);
-		font.draw(batch, "Java heap: " + game.application.getJavaHeap(),
-				Conf.screenWidth*0.8f, Conf.screenHeight*0.8f);
-		font.draw(batch, "Native heap: " + game.application.getNativeHeap(),
-				Conf.screenWidth*0.8f, Conf.screenHeight*0.7f);
-		draw(ImageManager.get(Picture.WEAPONS_PANEL), Conf.screenWidth*0.75f,
+				Conf.fractionXLeftUI(0.2f), Conf.screenHeight*0.8f);
+//		font.draw(batch, "Java heap: " + game.application.getJavaHeap(),
+//				Conf.screenWidth*0.8f, Conf.screenHeight*0.8f);
+//		font.draw(batch, "Native heap: " + game.application.getNativeHeap(),
+//				Conf.screenWidth*0.8f, Conf.screenHeight*0.7f);
+		draw(ImageManager.get(Picture.WEAPONS_PANEL), Conf.fractionXLeftUI(0.05f),
 				Conf.screenHeight*0.07f, 0);
 		drawPlayerWeaponInfo();
 		batch.end();
@@ -75,7 +75,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 			Weapon weapon = shooter.weapons.get(i);
 			input.actions.forEach((k, v) -> { 
 				if (v == weapon) {
-					final float x = Conf.screenWidth*0.758f;
+					final float x = Conf.fractionXLeftUI(0.075f);
 					final float y = Conf.screenHeight*0.11f + Conf.screenHeight*0.15f*index;
 					font.draw(batch, k.toString() + " --- " + weapon.name + ": " + weapon.getPercentReady(),
 							x, y);
@@ -106,7 +106,9 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	}
 
 	private void draw(TextureRegion region, float x, float y, float rotation) {
-		batch.draw(region, x, y, 0, 0, region.getRegionWidth(), region.getRegionHeight(),
+		batch.draw(region, x*Conf.scaleFactor, y*Conf.scaleFactor, 0, 0, 
+				region.getRegionWidth()*Conf.scaleFactor,
+				region.getRegionHeight()*Conf.scaleFactor,
 					1, 1, rotation);
 	}
 	

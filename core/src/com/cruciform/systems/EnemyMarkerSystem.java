@@ -34,6 +34,9 @@ public class EnemyMarkerSystem extends IteratingSystem {
 		Position position = Position.mapper.get(entity);
 		shapeRenderer.setColor(markerColor);
 		Rectangle rect = position.bounds.getBoundingRectangle();
-		shapeRenderer.rect(rect.x, Conf.playBottom - rect.height, rect.width, rect.height);
+		shapeRenderer.rect(rect.x*Conf.scaleFactor,
+				Conf.playBottom - rect.height*Conf.scaleFactor,
+				rect.width*Conf.scaleFactor,
+				rect.height*Conf.scaleFactor);
 	}
 }

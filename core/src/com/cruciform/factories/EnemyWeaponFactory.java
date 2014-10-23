@@ -1,10 +1,11 @@
 package com.cruciform.factories;
 
 import java.util.Arrays;
-import java.util.List;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.components.Lifetime;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
@@ -55,6 +56,8 @@ public class EnemyWeaponFactory {
 				return new Weapon[] { createStraightRadialWeapon(480, 3, 30, 0.2f) };
 			case RADIAL_SPLITTER:
 				return new Weapon[] { createSplittingRadialWeapon() };
+			case PENTAGRAM:
+				return new Weapon[] { createPentagramWeapon(480, 20, 0.1f) };
 			default:
 				return new Weapon[] { createRifleWeapon() };
 		}
@@ -77,6 +80,22 @@ public class EnemyWeaponFactory {
 		BulletRuleHandler bulletRuleHandler = new BulletRuleHandler(incrementor, engine);
 		bulletRuleHandler.spokes = spokes;
 		bulletRuleHandler.addRule(createLineMoverBehavior(rotationalVelocity, bulletSpeed));
+		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
+		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(3.0f), patternMax);
+		RadialWeapon radial = new RadialWeapon(coolDown, engine, explosionFactory,
+				bulletRuleHandler, coolDownRuleHandler);
+		return radial;
+	}
+	
+	private RadialWeapon createPentagramWeapon(float bulletSpeed, int patternMax,
+			float coolDown) {
+		final int spokes = 5;
+		final float rotationalVelocity = 0.0f;
+		WrappedIncrementor incrementor = new WrappedIncrementor(patternMax);
+		BulletRuleHandler bulletRuleHandler = new BulletRuleHandler(incrementor, engine);
+		bulletRuleHandler.spokes = spokes;
+		bulletRuleHandler.addRule(createLineMoverBehavior(rotationalVelocity, bulletSpeed));
+		bulletRuleHandler.addRule(createPentagramBehavior());
 		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
 		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(3.0f), patternMax);
 		RadialWeapon radial = new RadialWeapon(coolDown, engine, explosionFactory,
@@ -166,6 +185,25 @@ public class EnemyWeaponFactory {
 			lifetime.setTimeRemaining(1);
 			entity.add(lifetime);
 
+			return entity;
+		};
+	}
+	
+	private EntityMutator createPentagramBehavior() {
+		return (entity, index) -> {
+			Timer.schedule(new Task() {
+
+				@Override
+				public void run() {
+					LineMover lineMover = LineMover.mapper.get(entity);
+					if (index % 2 == 0) {
+						lineMover.maxVelocity.rotate90(1);
+					} else {
+						lineMover.maxVelocity.rotate90(-1);
+					}
+				}
+			}
+			, 0.3f);
 			return entity;
 		};
 	}

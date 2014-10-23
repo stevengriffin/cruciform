@@ -33,7 +33,7 @@ public class OutOfBoundsHandler {
 		Rectangle rect = bounds.getBoundingRectangle();
 		return (rect.x > Conf.playRight && removeWhenEast) ||
 				(rect.x + rect.width < Conf.playLeft && removeWhenWest) ||
-				(rect.y > Conf.screenHeight * 1.3f && removeWhenNorth) ||
+				(rect.y > Conf.canonicalHeight * 1.3f && removeWhenNorth) ||
 				(rect.y + rect.height < 0.0f && removeWhenSouth);
 	}
 }

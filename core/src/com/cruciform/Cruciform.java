@@ -64,9 +64,6 @@ public class Cruciform extends Game {
 	
 	@Override
 	public void create() {
-		// Debug
-		Log.set(Log.LEVEL_DEBUG);
-		
 		// Graphics
 		Gdx.graphics.setDisplayMode(Conf.screenWidth, Conf.screenHeight, true);
 		Gdx.input.setCursorCatched(true);
@@ -96,7 +93,9 @@ public class Cruciform extends Game {
 		RenderSystem renderSystem = new RenderSystem(this, batch, font);
 		engine.addSystem(renderSystem);
 		engine.addEntityListener(renderSystem.family, renderSystem);
-		engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
+		if (Log.DEBUG) {
+			engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
+		}
 		engine.addSystem(new EnemyMarkerSystem(batch, shapeRenderer));
 		inputSystem = new InputSystem(this);
 		engine.addSystem(inputSystem);
