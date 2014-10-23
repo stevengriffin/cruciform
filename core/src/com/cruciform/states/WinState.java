@@ -15,14 +15,14 @@ public class WinState extends MenuState {
 	public void render(float delta) {
 		game.batch.begin();
         
-        drawer.drawCentered("You Win!", Conf.playCenter, Conf.fractionY(0.7f));
-        drawer.drawCentered("Score: " + Score.getScore(), Conf.playCenter, Conf.fractionY(0.6f));
-        drawer.drawCentered("Credits Used: " + Score.getCreditsUsed(), Conf.playCenter, Conf.fractionY(0.5f));
+        drawer.drawCentered("You Win!", Conf.screenCenterX, Conf.screenHeight*0.7f);
+        drawer.drawCentered("Score: " + Score.getScore(), Conf.screenCenterX, Conf.screenHeight*0.6f);
+        drawer.drawCentered("Credits Used: " + Score.getCreditsUsed(), Conf.screenCenterX, Conf.screenHeight*0.5f);
 		// TODO Make buttons instead
 		final String exitGame = "Exit To Menu [ESCAPE]";
 		final String newGame = "New Game [SPACE] or [ENTER]";
-		drawer.drawCentered(exitGame, Conf.playCenter, Conf.fractionY(0.4f));
-		drawer.drawCentered(newGame, Conf.playCenter, Conf.fractionY(0.3f));
+		drawer.drawCentered(exitGame, Conf.screenCenterX, Conf.screenHeight*0.4f);
+		drawer.drawCentered(newGame, Conf.screenCenterX, Conf.screenHeight*0.3f);
         game.batch.end();
 	}
 

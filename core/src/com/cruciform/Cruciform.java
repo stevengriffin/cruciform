@@ -65,7 +65,7 @@ public class Cruciform extends Game {
 	@Override
 	public void create() {
 		// Graphics
-		Gdx.graphics.setDisplayMode(Conf.screenWidth, Conf.screenHeight, true);
+		Conf.setResolution(800, 600);
 		Gdx.input.setCursorCatched(true);
 		font = new BitmapFont();
 		batch = new SpriteBatch();

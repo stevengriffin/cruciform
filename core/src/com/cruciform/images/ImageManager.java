@@ -62,4 +62,9 @@ public class ImageManager {
 	public static TextureRegion get(Picture picture) {
 		return map.get(picture);
 	}
+	
+	public static void scalePatches(final float relativeScale) {
+		ninePatchMap.forEach((k, patch) -> patch.scale(relativeScale, relativeScale));
+	}
+	
 }

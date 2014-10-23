@@ -44,7 +44,7 @@ public class UIFactory {
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(Conf.playCenter - 
 				renderer.image.getRegionWidth()*Conf.scaleFactor/2,
-				Conf.playBottom - renderer.image.getRegionHeight(), 
+				Conf.playBottom - renderer.image.getRegionHeight()*Conf.scaleFactor, 
 				renderer.image.getRegionWidth()*Conf.scaleFactor,
 				renderer.image.getRegionHeight()*Conf.scaleFactor);
 		

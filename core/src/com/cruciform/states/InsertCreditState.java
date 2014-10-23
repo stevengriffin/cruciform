@@ -18,9 +18,9 @@ public class InsertCreditState extends MenuState {
 		final String insertCredit = "Insert Credit [ENTER]";
 		final String exitGame = "Exit To Menu [ESCAPE]";
 		final String newGame = "New Game [SPACE]";
-        drawer.drawCentered(insertCredit, Conf.playCenter, Conf.screenHeight/2);
-		drawer.drawCentered(exitGame, Conf.playCenter, Conf.fractionY(0.4f));
-		drawer.drawCentered(newGame, Conf.playCenter, Conf.fractionY(0.3f));
+        drawer.drawCentered(insertCredit, Conf.screenCenterX, Conf.screenHeight*0.5f);
+		drawer.drawCentered(exitGame, Conf.screenCenterX, Conf.screenHeight*0.4f);
+		drawer.drawCentered(newGame, Conf.screenCenterX, Conf.screenHeight*0.3f);
         game.batch.end();
 	}
 

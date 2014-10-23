@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
@@ -50,9 +51,9 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 			}
 		}
 		font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(),
-				Conf.fractionXLeftUI(0.2f), Conf.screenHeight*0.9f);
+				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.9f);
 		font.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
-				Conf.fractionXLeftUI(0.2f), Conf.screenHeight*0.85f);
+				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.85f);
 		font.draw(batch, "Credits Used: " + Score.getCreditsUsed(),
 				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.8f);
 		draw(ImageManager.get(Picture.WEAPONS_PANEL), Conf.fractionXLeftUI(0.05f),
@@ -76,7 +77,9 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 					final float y = Conf.screenHeight*0.11f + Conf.screenHeight*0.15f*index;
 					font.draw(batch, k.toString() + " --- " + weapon.name + ": " + weapon.getPercentReady(),
 							x, y);
-					patch.draw(batch, x, y, coolDownBarWidth*(weapon.getPercentReady() + 0.5f),
+					patch.draw(batch, x, y, Math.max(
+							coolDownBarWidth*(weapon.getPercentReady() + 0.5f),
+							coolDownBarHeight),
 							coolDownBarHeight);
 				}
 			});

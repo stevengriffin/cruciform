@@ -17,9 +17,8 @@ public class DesktopLauncher {
 		config.foregroundFPS = 240;
 		config.backgroundFPS = 240;
 		config.title = "Cruciform";
-		Conf.setResolution(1600, 900);
-		config.height = Conf.screenHeight;
-		config.width = Conf.screenWidth;
+		config.height = 600;
+		config.width = 800;
 		final Cruciform game = new Cruciform();
 		final Application app = new LwjglApplication(game, config);
 		game.application = app;

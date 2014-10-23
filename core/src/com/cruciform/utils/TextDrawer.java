@@ -14,7 +14,7 @@ public class TextDrawer {
 		this.font = font;
 	}
 	
-	public void drawCentered(String text, int x, int y) {
+	public void drawCentered(String text, float x, float y) {
 		TextBounds bounds = font.getBounds(text);
 		font.draw(batch, text, x - bounds.width/2, y - bounds.height/2);
 	}

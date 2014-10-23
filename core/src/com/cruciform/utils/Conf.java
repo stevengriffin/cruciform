@@ -1,5 +1,7 @@
 package com.cruciform.utils;
 
+import com.badlogic.gdx.Gdx;
+import com.cruciform.images.ImageManager;
 import com.esotericsoftware.minlog.Log;
 
 public class Conf {
@@ -22,14 +24,19 @@ public class Conf {
 	public static int playRight = screenWidth - (screenWidth - playWidth)/2;
 	public static int playCenter = (playLeft + playRight) / 2;
 	public static int playBottom = fractionY(0.05f);
-	public static float scaleFactor;
+	public static float scaleFactor = 1;
+	public static int screenCenterX;
 	public static float volume = 1.0f;
 
 	public static void setResolution(int width, int height) {
+		Gdx.graphics.setDisplayMode(width, height, true);
+		final float oldScaleFactor = scaleFactor; 
 		scaleFactor = ((float) height)/canonicalHeight;
+		ImageManager.scalePatches(scaleFactor/oldScaleFactor);
 		Log.debug("sF: " + scaleFactor);
 		screenWidth = width;
 		screenHeight = height;
+		screenCenterX = width/2;
 		playWidth = (int)(height / 1.2f);
 		// Need at least 0.25 of width on the right.
 		playRight = Math.min(screenWidth - (screenWidth - playWidth)/2, (int) (screenWidth*0.75f));
