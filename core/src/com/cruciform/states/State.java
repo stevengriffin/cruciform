@@ -15,6 +15,7 @@ public abstract class State implements Screen {
 	public State(final Cruciform game) {
 		this.game = game;
 		this.drawer = new TextDrawer(game.batch, game.font);
+		AudioManager.initMusic(this.getClass());
 	}
 	
 	public void escapeState() {
@@ -25,7 +26,7 @@ public abstract class State implements Screen {
 	public void show() {
 		Class<? extends State> runtimeClass = this.getClass();
 		System.out.println(runtimeClass.toString());
-		AudioManager.initMusic(runtimeClass);
+		AudioManager.resumeMusic(runtimeClass);
 	}
 	
 	@Override

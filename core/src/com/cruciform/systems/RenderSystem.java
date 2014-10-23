@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
@@ -15,6 +16,9 @@ import com.cruciform.components.PlayerInput;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.Shooter;
+import com.cruciform.images.ImageManager;
+import com.cruciform.images.NinePatches;
+import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Priority;
 import com.cruciform.utils.Score;
@@ -27,6 +31,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	private final Cruciform game;
 	private final OrderedMap<Priority, Array<Entity>> entityMap = new OrderedMap<>(); 
 	public final Family family;
+	private final NinePatch patch = ImageManager.getPatch(NinePatches.BUTTON_1);
 	
 	public RenderSystem(final Cruciform game, final Batch batch, final BitmapFont font) {
 		this.family = Family.getFor(Position.class, Renderer.class);
@@ -53,11 +58,16 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 				Conf.screenWidth*0.8f, Conf.screenHeight*0.8f);
 		font.draw(batch, "Native heap: " + game.application.getNativeHeap(),
 				Conf.screenWidth*0.8f, Conf.screenHeight*0.7f);
+		draw(ImageManager.get(Picture.WEAPONS_PANEL), Conf.screenWidth*0.75f,
+				Conf.screenHeight*0.07f, 0);
 		drawPlayerWeaponInfo();
 		batch.end();
 	}
 	
 	private void drawPlayerWeaponInfo() {
+		// Adjust to be 1:1 pixel on a 1920x1080 display.
+		final float coolDownBarWidth = Conf.screenWidth/(1920/256.0f);
+		final float coolDownBarHeight = Conf.screenHeight/(1080/128.0f);
 		PlayerInput input = game.getGameState().getPlayer().getComponent(PlayerInput.class);
 		Shooter shooter = game.getGameState().getPlayer().getComponent(Shooter.class);
 		for (int i = 0; i < shooter.weapons.size(); i++) {
@@ -65,8 +75,12 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 			Weapon weapon = shooter.weapons.get(i);
 			input.actions.forEach((k, v) -> { 
 				if (v == weapon) {
+					final float x = Conf.screenWidth*0.758f;
+					final float y = Conf.screenHeight*0.11f + Conf.screenHeight*0.15f*index;
 					font.draw(batch, k.toString() + " --- " + weapon.name + ": " + weapon.getPercentReady(),
-							Conf.screenWidth*0.8f, Conf.screenHeight*0.3f + Conf.screenHeight*0.1f*index);
+							x, y);
+					patch.draw(batch, x, y, coolDownBarWidth*(weapon.getPercentReady() + 0.5f),
+							coolDownBarHeight);
 				}
 			});
 		}

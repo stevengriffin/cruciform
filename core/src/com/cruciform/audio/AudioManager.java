@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.cruciform.states.GameState;
+import com.cruciform.states.InsertCreditState;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.states.State;
 import com.cruciform.utils.Conf;
@@ -71,12 +72,22 @@ public class AudioManager {
 		}
 	}
 	
+	public static void resumeMusic(Class<? extends State> state) {
+		if (state == MainMenuState.class) {
+			initMusic(state);
+		} else if (state == GameState.class || state == InsertCreditState.class) {
+			if (currentTrackNumber >= 0) {
+				shuffledTracks.get(currentTrackNumber).play();
+			}
+		}
+	}
+	
 	public static void stopMusic(Class<? extends State> state) {
 		if (state == MainMenuState.class) {
 			tracks.get(12).stop();
-		} else if (state == GameState.class) {
+		} else if (state == GameState.class || state == InsertCreditState.class) {
 			if (currentTrackNumber >= 0) {
-				shuffledTracks.get(currentTrackNumber).stop();
+				shuffledTracks.get(currentTrackNumber).pause();
 			}
 		}
 	}

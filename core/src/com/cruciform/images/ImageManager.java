@@ -6,6 +6,7 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ImageManager {
@@ -23,13 +24,34 @@ public class ImageManager {
 		map.put(Picture.ROCKET_EXPLOSION, newTexture("rocket_explosion"));
 		map.put(Picture.SIDE_PANEL, newTexture("side_panel"));
 		map.put(Picture.BOTTOM_PANEL, newTexture("bottom_panel"));
+		map.put(Picture.WEAPONS_PANEL, newTexture("weapons_panel"));
+	}
+
+	private static Map<NinePatches, NinePatch> ninePatchMap = new HashMap<>();
+	
+	static {
+		ninePatchMap.put(NinePatches.BUTTON_1, newNinePatch("button1"));
+	}
+	
+	private static Texture instantiateTexture(String name) {
+		Texture texture = new Texture(Gdx.files.internal("images/" + name + ".png"), true);
+		texture.setFilter(TextureFilter.MipMap, TextureFilter.Linear);
+		return texture;
 	}
 	
 	private static TextureRegion newTexture(String name) {
-		Texture texture =  new Texture(Gdx.files.internal("images/" + name + ".png"), true);
-		texture.setFilter(TextureFilter.MipMap, TextureFilter.Linear);
-		TextureRegion region = new TextureRegion(texture);
-		return region;
+		return new TextureRegion(instantiateTexture(name));
+	}
+
+	private static NinePatch newNinePatch(String name) {
+		Texture texture = instantiateTexture(name);
+		NinePatch patch = new NinePatch(texture, texture.getWidth()/2 - 2, texture.getWidth()/2 - 2,
+				texture.getHeight()/2 - 2, texture.getHeight()/2 - 2);
+		return patch;
+	}
+	
+	public static NinePatch getPatch(NinePatches patch) {
+		return ninePatchMap.get(patch);
 	}
 	
 	public static TextureRegion get(Picture picture) {

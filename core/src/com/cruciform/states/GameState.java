@@ -44,6 +44,7 @@ public class GameState extends State {
 
 	@Override
 	public void show() {
+		super.show();
 		Gdx.input.setInputProcessor(game.inputSystem);
 		Timer.instance().start();
 		if (game.engine.getEntitiesFor(Family.getFor(TeamPlayer.class)).size() == 0) {

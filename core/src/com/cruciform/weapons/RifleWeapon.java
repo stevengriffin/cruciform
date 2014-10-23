@@ -108,5 +108,16 @@ public class RifleWeapon extends Weapon {
 		
 		engine.addEntity(entity);
 	}	
-	
+
+	/**
+	 * Return percent of magazine left or reload progress if empty.
+	 */
+	@Override
+	public float getPercentReady() {
+		if (bulletsFired % bulletsPerClip == 0) {
+			return coolDown.getPercent();
+		} else {
+			return 1.0f - (float) (bulletsFired % bulletsPerClip) / bulletsPerClip;
+		}
+	}
 }
