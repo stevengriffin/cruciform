@@ -59,7 +59,11 @@ public class SettingsState extends State {
 	    	}
 	    });
 	    final Array<String> modeChoices = new Array<>();
+	    int currentModeChoiceIndex = 0;
 	    for (int i = 0; i < modes.size; i++) {
+	    	if (modes.get(i).width == Conf.screenWidth && modes.get(i).height == Conf.screenHeight) {
+	    		currentModeChoiceIndex = i;
+	    	}
 	    	modeChoices.add(modes.get(i).width + " x " + modes.get(i).height);
 	    }
 	    UIManager.addSettingSlider(table, proposal.mouseSensitivity, false);
@@ -68,7 +72,7 @@ public class SettingsState extends State {
 	    UIManager.addDropDown(table, modeChoices, (index) -> {
 	    	proposal.screenHeight.set(modes.get(index).height);
 	    	proposal.screenWidth.set(modes.get(index).width);
-	    }, "Resolution");
+	    }, currentModeChoiceIndex, "Resolution");
 	    
 	    table.add(new StateButton("Save", () -> {
 	    	proposal.persist();

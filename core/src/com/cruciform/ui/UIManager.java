@@ -79,7 +79,7 @@ public class UIManager {
 	}
 	
 	public static void addDropDown(final Table table, final Array<String> choices,
-			final DropDownSetter setter, 
+			final DropDownSetter setter, final int currentIndex,
 			final String title) {
 	    final Label titleLabel = new Label(title, labelStyle);
 	    final SelectBoxStyle style = new SelectBoxStyle();
@@ -90,6 +90,7 @@ public class UIManager {
 	    style.listStyle.font = font;
 	    final SelectBox<String> dropDown = new SelectBox<String>(style);
 	    dropDown.setItems(choices);
+	    dropDown.setSelectedIndex(currentIndex);
 	    dropDown.addListener(new ClickListener() {
 	    	@Override
 	    	public void clicked(InputEvent event, float x, float y) {
