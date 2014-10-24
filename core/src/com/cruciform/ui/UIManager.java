@@ -3,6 +3,8 @@ package com.cruciform.ui;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
@@ -38,21 +40,32 @@ public class UIManager {
 	    labelStyle.font = font;
 	}
 
-	public static void addSettingSlider(Table table, Setting<Float> setting) {
+	public static void addSettingSlider(Table table, Setting<Float> setting, boolean squared) {
+		final String FORMAT_FLOAT = "%.2f";
+		float initialValue;
+		if (squared) {
+	    	initialValue = (float) Math.sqrt(setting.get()); 
+	    } else {
+	    	initialValue = setting.get();
+	    }
 	    final Label nameLabel = new Label(setting.name, labelStyle);
-	    final Label valueLabel = new Label(setting.get().toString(), labelStyle);
+	    final Label valueLabel = new Label(String.format(FORMAT_FLOAT, initialValue), labelStyle);
 	    valueLabel.setAlignment(Align.center);
 	    final SliderStyle sliderStyle = new SliderStyle();
 	    sliderStyle.background = UIManager.sliderPatch;
 	    sliderStyle.knob = UIManager.patchUp;
 	    final Slider slider = new Slider(setting.min, setting.max, 0.05f, false, sliderStyle);
-	    slider.setValue(setting.get());
+	    slider.setValue(initialValue); 
 	    slider.setSize(500, 8);
 	    slider.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				setting.set(slider.getValue());
-				valueLabel.setText(String.format("%.2f", setting.get()));
+				if (squared) {
+					setting.set(slider.getValue()*slider.getValue());
+				} else {
+					setting.set(slider.getValue());
+				}
+				valueLabel.setText(String.format(FORMAT_FLOAT, slider.getValue()));
 			}
 	    });
 	    table.add(nameLabel);
@@ -88,5 +101,22 @@ public class UIManager {
 	    });
 	    //table.add(titleLabel);
 	    table.add(dropDown);
+	}
+	
+	public static void addCheckBox(final Table table, final Setting<Boolean> setting) {
+		final CheckBoxStyle style = new CheckBoxStyle();
+		style.checkboxOff = sliderPatch;
+		style.checkboxOn = patchUp;
+		style.font = font;
+		final CheckBox checkBox = new CheckBox(setting.name, style);
+		checkBox.setChecked(setting.get());
+		checkBox.addListener(new ClickListener() {
+	    	@Override
+	    	public void clicked(InputEvent event, float x, float y) {
+	    		setting.set(checkBox.isChecked());
+	    	}
+			
+		});
+		table.add(checkBox);
 	}
 }

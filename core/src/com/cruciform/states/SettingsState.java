@@ -62,8 +62,9 @@ public class SettingsState extends State {
 	    for (int i = 0; i < modes.size; i++) {
 	    	modeChoices.add(modes.get(i).width + " x " + modes.get(i).height);
 	    }
-	    UIManager.addSettingSlider(table, proposal.mouseSensitivity);
-	    UIManager.addSettingSlider(table, proposal.volume);
+	    UIManager.addSettingSlider(table, proposal.mouseSensitivity, false);
+	    UIManager.addSettingSlider(table, proposal.volume, true);
+	    UIManager.addCheckBox(table, proposal.fullScreen);
 	    UIManager.addDropDown(table, modeChoices, (index) -> {
 	    	proposal.screenHeight.set(modes.get(index).height);
 	    	proposal.screenWidth.set(modes.get(index).width);

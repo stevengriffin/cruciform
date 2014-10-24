@@ -5,9 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cruciform.Cruciform;
-import com.cruciform.utils.Conf;
 
 public abstract class MenuState extends State {
 	private final Stage stage;
@@ -15,8 +14,8 @@ public abstract class MenuState extends State {
 	
 	public MenuState(final Cruciform game) {
 		super(game);
-	    stage = new Stage(new ScreenViewport());
-	    		//new StretchViewport(Conf.canonicalWidth, Conf.canonicalHeight));
+		Viewport viewport = new ScreenViewport();
+	    stage = new Stage(viewport);
 	    Gdx.input.setInputProcessor(stage);
 		
 		table = new Table();
@@ -26,7 +25,7 @@ public abstract class MenuState extends State {
 		
 	}
 
-	protected void addButtons(TextButton...newButtons) {
+	protected void addButtons(TextButton... newButtons) {
 		for (int i = 0; i < newButtons.length; i++) {
 			table.add(newButtons[i]);
 			table.row();
@@ -41,7 +40,8 @@ public abstract class MenuState extends State {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
-	    stage.getViewport().update(Conf.screenWidth, Conf.screenHeight, true);
+		// TODO this breaks mouse button events
+	    //stage.getViewport().update(Conf.screenWidth, Conf.screenHeight, true);
 		super.show();
 	}
 	

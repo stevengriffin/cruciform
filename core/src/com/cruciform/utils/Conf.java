@@ -1,9 +1,7 @@
 package com.cruciform.utils;
 
-import java.util.Map;
-
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Preferences;
 import com.cruciform.images.ImageManager;
 import com.esotericsoftware.minlog.Log;
@@ -84,9 +82,10 @@ public class Conf {
 			final Preferences preferences = Gdx.app.getPreferences(PREFERENCES_NAME);
 			final SettingsProposal proposal = new SettingsProposal();
 			proposal.volume.set(preferences.getFloat(proposal.volume.name, 1.0f));
-			// TODO set to reasonable default based on client PC.
-			proposal.screenWidth.set(preferences.getInteger(proposal.screenWidth.name, 1920));
-			proposal.screenHeight.set(preferences.getInteger(proposal.screenHeight.name, 1080));
+			// Set to reasonable default based on client PC.
+			DisplayMode displayMode = Gdx.graphics.getDesktopDisplayMode();
+			proposal.screenWidth.set(preferences.getInteger(proposal.screenWidth.name, displayMode.width));
+			proposal.screenHeight.set(preferences.getInteger(proposal.screenHeight.name, displayMode.height));
 			proposal.fullScreen.set(preferences.getBoolean(proposal.fullScreen.name, true));
 			proposal.mouseSensitivity.set(preferences.getFloat(proposal.mouseSensitivity.name, 0.5f));
 			return proposal;
