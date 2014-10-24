@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cruciform.Cruciform;
 import com.cruciform.utils.Conf;
@@ -14,7 +15,8 @@ public abstract class MenuState extends State {
 	
 	public MenuState(final Cruciform game) {
 		super(game);
-	    stage = new Stage(new StretchViewport(Conf.canonicalWidth, Conf.canonicalHeight));
+	    stage = new Stage(new ScreenViewport());
+	    		//new StretchViewport(Conf.canonicalWidth, Conf.canonicalHeight));
 	    Gdx.input.setInputProcessor(stage);
 		
 		table = new Table();

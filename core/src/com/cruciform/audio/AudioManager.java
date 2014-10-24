@@ -86,7 +86,7 @@ public class AudioManager {
 	}
 	
 	public static void stopMusic(Class<? extends State> state) {
-		if (state == MainMenuState.class) {
+		if (state == MainMenuState.class || state == SettingsState.class) {
 			tracks.get(12).stop();
 		} else if (state == GameState.class || state == InsertCreditState.class) {
 			if (currentTrackNumber >= 0) {

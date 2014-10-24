@@ -1,8 +1,10 @@
 package com.cruciform.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
@@ -38,10 +40,35 @@ public class SettingsState extends State {
 		Gdx.input.setInputProcessor(stage);
 	    stage.getViewport().update(Conf.screenWidth, Conf.screenHeight, true);
 		super.show();
-	    table.clear(); 
+	    table.clear();
+	    
 		final SettingsProposal proposal = SettingsProposal.fromCurrentSettings();
+	    
+		final Array<DisplayMode> modes = new Array<>(Gdx.graphics.getDisplayModes());
+	    modes.sort((mode1, mode2) -> {
+	    	if (mode1.width > mode2.width) {
+	    		return 1;
+	    	} else if (mode2.width > mode1.width) {
+	    		return -1;
+	    	} else if (mode1.height > mode2.height) {
+	    		return 1;
+	    	} else if (mode2.height > mode1.height) {
+	    		return -1;
+	    	} else {
+	    		return 0;
+	    	}
+	    });
+	    final Array<String> modeChoices = new Array<>();
+	    for (int i = 0; i < modes.size; i++) {
+	    	modeChoices.add(modes.get(i).width + " x " + modes.get(i).height);
+	    }
 	    UIManager.addSettingSlider(table, proposal.mouseSensitivity);
 	    UIManager.addSettingSlider(table, proposal.volume);
+	    UIManager.addDropDown(table, modeChoices, (index) -> {
+	    	proposal.screenHeight.set(modes.get(index).height);
+	    	proposal.screenWidth.set(modes.get(index).width);
+	    }, "Resolution");
+	    
 	    table.add(new StateButton("Save", () -> {
 	    	proposal.persist();
 	    	StateFactory.setState(MainMenuState.class, game);
