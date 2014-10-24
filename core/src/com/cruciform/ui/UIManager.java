@@ -71,7 +71,6 @@ public class UIManager {
 	    table.add(nameLabel);
 	    table.add(slider).minWidth(1000);
 	    table.add(valueLabel).minWidth(50);
-	    table.row();
 	}
 
 	public static interface DropDownSetter {
@@ -100,7 +99,8 @@ public class UIManager {
 	    		}
 	    	}
 	    });
-	    //table.add(titleLabel);
+	    table.add(titleLabel);
+	    table.row();
 	    table.add(dropDown);
 	}
 	

@@ -66,14 +66,17 @@ public class SettingsState extends State {
 	    	}
 	    	modeChoices.add(modes.get(i).width + " x " + modes.get(i).height);
 	    }
-	    UIManager.addSettingSlider(table, proposal.mouseSensitivity, false);
-	    UIManager.addSettingSlider(table, proposal.volume, true);
-	    UIManager.addCheckBox(table, proposal.fullScreen);
 	    UIManager.addDropDown(table, modeChoices, (index) -> {
 	    	proposal.screenHeight.set(modes.get(index).height);
 	    	proposal.screenWidth.set(modes.get(index).width);
 	    }, currentModeChoiceIndex, "Resolution");
-	    
+	    table.row().padLeft(200);
+	    UIManager.addSettingSlider(table, proposal.mouseSensitivity, false);
+	    table.row().padLeft(200);
+	    UIManager.addSettingSlider(table, proposal.volume, true);
+	    table.row().padLeft(200);
+	    UIManager.addCheckBox(table, proposal.fullScreen);
+	    table.row();
 	    table.add(new StateButton("Save", () -> {
 	    	proposal.persist();
 	    	StateFactory.setState(MainMenuState.class, game);
