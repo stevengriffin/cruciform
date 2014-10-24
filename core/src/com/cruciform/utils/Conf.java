@@ -125,8 +125,8 @@ public class Conf {
 	public static void setResolution() {
 		Log.debug("Setting res to " + screenWidth + " x " + screenHeight);
 		// TODO delete
-		//screenWidth = 1920;
-		//screenHeight = 1080;
+//		screenWidth = 1920;
+//		screenHeight = 1080;
 		Gdx.graphics.setDisplayMode(screenWidth, screenHeight, fullScreen);
 		final float oldScaleFactor = scaleFactor; 
 		scaleFactor = ((float) screenHeight)/canonicalHeight;

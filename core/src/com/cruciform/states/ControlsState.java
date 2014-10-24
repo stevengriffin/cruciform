@@ -2,15 +2,13 @@ package com.cruciform.states;
 
 import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
-import com.cruciform.factories.StateFactory;
 import com.cruciform.input.StateInputProcessor;
 import com.cruciform.utils.Conf;
-import com.cruciform.utils.Score;
 
-public class WinState extends State {
+public class ControlsState extends State {
 	protected final StateInputProcessor processor;
 	
-	public WinState(Cruciform game) {
+	public ControlsState(Cruciform game) {
 		super(game);
 		processor = new StateInputProcessor(this);
 	}
@@ -20,14 +18,17 @@ public class WinState extends State {
 		game.batch.begin();
 		//super.render(delta);
         
-        drawer.drawCentered("You Win!", Conf.screenCenterX, Conf.screenHeight*0.7f);
-        drawer.drawCentered("Score: " + Score.getScore(), Conf.screenCenterX, Conf.screenHeight*0.6f);
-        drawer.drawCentered("Credits Used: " + Score.getCreditsUsed(), Conf.screenCenterX, Conf.screenHeight*0.5f);
+        drawer.drawCentered("Controls", Conf.screenCenterX, Conf.screenHeight*0.7f);
+        drawer.drawCentered("Configurability coming soon!", Conf.screenCenterX, Conf.screenHeight*0.6f);
+        drawer.drawCentered("Move: Mouse or WASD (but try the mouse please!)", Conf.screenCenterX, Conf.screenHeight*0.55f);
+        drawer.drawCentered("Fire cruciform: Left click", Conf.screenCenterX, Conf.screenHeight*0.5f);
+        drawer.drawCentered("Fire rockets: Right click", Conf.screenCenterX, Conf.screenHeight*0.45f);
+        drawer.drawCentered("Fire rifle: Z", Conf.screenCenterX, Conf.screenHeight*0.4f);
+        drawer.drawCentered("Fire sweep: X", Conf.screenCenterX, Conf.screenHeight*0.35f);
+        drawer.drawCentered("Focus: Left Shift", Conf.screenCenterX, Conf.screenHeight*0.3f);
 		// TODO Make buttons instead
 		final String exitGame = "Exit To Main Menu [ESCAPE]";
-		drawer.drawCentered(exitGame, Conf.screenCenterX, Conf.screenHeight*0.4f);
-		final String newGame = "New Game [SPACE]";
-		drawer.drawCentered(newGame, Conf.screenCenterX, Conf.screenHeight*0.3f);
+		drawer.drawCentered(exitGame, Conf.screenCenterX, Conf.screenHeight*0.25f);
         game.batch.end();
 	}
 
@@ -61,11 +62,6 @@ public class WinState extends State {
 		
 	}
 
-	@Override
-	public void newGameAction() {
-		StateFactory.setAndRenewState(GameState.class, game);
-	}
-	
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub

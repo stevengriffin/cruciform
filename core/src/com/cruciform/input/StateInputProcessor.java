@@ -2,15 +2,13 @@ package com.cruciform.input;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.cruciform.factories.StateFactory;
-import com.cruciform.states.GameState;
-import com.cruciform.states.MenuState;
+import com.cruciform.states.State;
 
-public class MenuInputProcessor implements InputProcessor {
+public class StateInputProcessor implements InputProcessor {
 
-	private MenuState state;
+	private State state;
 	
-	public MenuInputProcessor(MenuState state) {
+	public StateInputProcessor(State state) {
 		this.state = state;
 	}
 	
@@ -22,7 +20,7 @@ public class MenuInputProcessor implements InputProcessor {
 		} else if (keycode == Keys.ESCAPE) {
 			state.escapeState();
 		} else if (keycode == Keys.SPACE) {
-			StateFactory.setAndRenewState(GameState.class, state.game);
+			state.newGameAction();
 		}
 		return false;
 	}

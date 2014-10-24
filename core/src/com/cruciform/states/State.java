@@ -22,6 +22,16 @@ public abstract class State implements Screen {
 		StateFactory.setState(MainMenuState.class, game);
 	}
 	
+	public void confirm() {
+		StateFactory.setState(MainMenuState.class, game);
+	}
+	
+	/**
+	 * Action when user presses new game key in this state.
+	 * Does nothing by default.
+	 */
+	public void newGameAction() {}
+	
 	@Override
 	public void show() {
 		Class<? extends State> runtimeClass = this.getClass();

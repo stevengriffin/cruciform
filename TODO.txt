@@ -4,7 +4,7 @@ For Friday:
 *Toggle fullscreen option
 Fix resolution option
 
-Controls screen (not configurable yet)
+*Controls screen (not configurable yet)
 
 *Separate in-progress assets to another folder
 

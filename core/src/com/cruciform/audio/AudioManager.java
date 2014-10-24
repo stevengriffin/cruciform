@@ -10,6 +10,7 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.cruciform.states.ControlsState;
 import com.cruciform.states.GameState;
 import com.cruciform.states.InsertCreditState;
 import com.cruciform.states.MainMenuState;
@@ -63,7 +64,8 @@ public class AudioManager {
 	}
 	
 	public static void initMusic(Class<? extends State> state) {
-		if (state == MainMenuState.class || state == SettingsState.class) {
+		if (state == MainMenuState.class || state == SettingsState.class
+				|| state == ControlsState.class) {
 			Music menuMusic = tracks.get(12);
 			menuMusic.setLooping(true);
 			menuMusic.setVolume(Conf.volume);
@@ -74,7 +76,8 @@ public class AudioManager {
 	}
 	
 	public static void resumeMusic(Class<? extends State> state) {
-		if (state == MainMenuState.class || state == SettingsState.class) {
+		if (state == MainMenuState.class || state == SettingsState.class
+				|| state == ControlsState.class) {
 			initMusic(state);
 		} else if (state == GameState.class || state == InsertCreditState.class) {
 			if (currentTrackNumber >= 0) {
@@ -86,7 +89,8 @@ public class AudioManager {
 	}
 	
 	public static void stopMusic(Class<? extends State> state) {
-		if (state == MainMenuState.class || state == SettingsState.class) {
+		if (state == MainMenuState.class || state == SettingsState.class
+				|| state == ControlsState.class) {
 			tracks.get(12).stop();
 		} else if (state == GameState.class || state == InsertCreditState.class) {
 			if (currentTrackNumber >= 0) {
