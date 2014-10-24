@@ -1,0 +1,12 @@
+For Friday:
+
+Polynomial volume
+Toggle fullscreen option
+Fix resolution option
+
+Controls screen (not configurable yet)
+
+Separate in-progress assets to another folder
+Cull unused assets
+
+Make 6 builds, w/ w/o Java 8

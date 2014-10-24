@@ -1,7 +1,10 @@
 package com.cruciform.states;
 
+import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
+import com.cruciform.images.ImageManager;
+import com.cruciform.images.Picture;
 import com.cruciform.ui.StateButton;
 
 public class MainMenuState extends MenuState {
@@ -18,7 +21,8 @@ public class MainMenuState extends MenuState {
 	@Override
 	public void render(float delta) {
 		game.batch.begin();
-		super.render(delta);
+		//super.render(delta);
+		game.batch.draw(ImageManager.get(Picture.PLAYER_SHIP_1), Gdx.input.getX(), 1080 - Gdx.input.getY());
         game.batch.end();
 	}
 
