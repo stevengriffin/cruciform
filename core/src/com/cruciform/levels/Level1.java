@@ -64,10 +64,6 @@ public class Level1 extends Level {
 				1.0f, 3, Conf.fractionX(0.1f), Conf.fractionX(0.9f)))
 				
 		});
-//		FormationFactory.createSingularShip(
-//				(x, y) -> game.shipFactory.createEnemy(x, y, EnemyTypes.RADIAL_STRAIGHT),
-//				2.0f, Conf.playCenter);
-		
 	}
 	
 }

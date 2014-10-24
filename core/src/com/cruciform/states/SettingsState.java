@@ -8,11 +8,11 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cruciform.Cruciform;
 import com.cruciform.utils.Conf;
 
-public abstract class MenuState extends State {
+public class SettingsState extends State {
 	private final Stage stage;
 	private final Table table;
 	
-	public MenuState(final Cruciform game) {
+	public SettingsState(final Cruciform game) {
 		super(game);
 	    stage = new Stage(new StretchViewport(Conf.canonicalWidth, Conf.canonicalHeight));
 	    Gdx.input.setInputProcessor(stage);
@@ -24,13 +24,6 @@ public abstract class MenuState extends State {
 		
 	}
 
-	protected void addButtons(TextButton...newButtons) {
-		for (int i = 0; i < newButtons.length; i++) {
-			table.add(newButtons[i]);
-			table.row();
-		}
-	}
-	
 	public void render (float delta) {
 	    stage.act(delta);
 	    stage.draw();
@@ -43,9 +36,19 @@ public abstract class MenuState extends State {
 		super.show();
 	}
 	
-	public abstract void confirm();
-	
 	public void dispose() {
 	    stage.dispose();
+	}
+	
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
 	}
 }

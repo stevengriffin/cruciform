@@ -41,6 +41,7 @@ import com.cruciform.systems.ShooterSystem;
 import com.cruciform.systems.SplitterSystem;
 import com.cruciform.systems.WaveSystem;
 import com.cruciform.tweening.PositionAccessor;
+import com.cruciform.ui.StateButton;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
 import com.esotericsoftware.kryo.Kryo;
@@ -66,12 +67,13 @@ public class Cruciform extends Game {
 	public void create() {
 		// Graphics
 		Conf.loadSettings(application);
-		Gdx.input.setCursorCatched(true);
+		Gdx.input.setCursorCatched(false);
 		font = new BitmapFont();
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Conf.screenWidth, Conf.screenHeight);
+		StateButton.init(this);
 		
 		// Serialization
 		kryo = new Kryo();

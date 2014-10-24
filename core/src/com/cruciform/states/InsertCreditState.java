@@ -2,6 +2,7 @@ package com.cruciform.states;
 
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
+import com.cruciform.ui.StateButton;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Score;
 
@@ -9,25 +10,21 @@ public class InsertCreditState extends MenuState {
 
 	public InsertCreditState(Cruciform game) {
 		super(game);
+		addButtons(
+			new StateButton("Insert Credit", 
+				() -> {
+					Score.useCredit();
+					StateFactory.setState(GameState.class, game);
+				}),
+			new StateButton("New Game", ExitState.class, true),
+			new StateButton("Exit to Menu", GameState.class, true));
 	}
 
 	@Override
 	public void render(float delta) {
 		game.batch.begin();
-		// TODO Make buttons instead
-		final String insertCredit = "Insert Credit [ENTER]";
-		final String exitGame = "Exit To Menu [ESCAPE]";
-		final String newGame = "New Game [SPACE]";
-        drawer.drawCentered(insertCredit, Conf.screenCenterX, Conf.screenHeight*0.5f);
-		drawer.drawCentered(exitGame, Conf.screenCenterX, Conf.screenHeight*0.4f);
-		drawer.drawCentered(newGame, Conf.screenCenterX, Conf.screenHeight*0.3f);
+		super.render(delta);
         game.batch.end();
-	}
-
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -62,7 +59,5 @@ public class InsertCreditState extends MenuState {
 
 	@Override
 	public void confirm() {
-		Score.useCredit();
-		StateFactory.setState(GameState.class, game);
 	}
 }

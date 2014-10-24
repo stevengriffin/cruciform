@@ -1,31 +1,24 @@
 package com.cruciform.states;
 
-import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
-import com.cruciform.utils.Conf;
+import com.cruciform.ui.StateButton;
 
 public class MainMenuState extends MenuState {
 
 	public MainMenuState(Cruciform game) {
 		super(game);
-		// TODO Auto-generated constructor stub
+		addButtons(
+			new StateButton("Continue", GameState.class, false),
+			new StateButton("New Game", GameState.class, true),
+			new StateButton("Quit", ExitState.class, true));
 	}
 
 	@Override
 	public void render(float delta) {
 		game.batch.begin();
-		game.font.draw(game.batch, "Cruciform", 100, 500);
-        game.font.draw(game.batch, "[ENTER] to continue", 100, 450);
-        game.font.draw(game.batch, "[SPACE] for new game", 100, 400);
-        game.font.draw(game.batch, "[ESCAPE] to exit game", 100, 350);
+		super.render(delta);
         game.batch.end();
-	}
-
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -65,8 +58,6 @@ public class MainMenuState extends MenuState {
 
 	@Override
 	public void escapeState() {
-		Conf.saveSettings(Gdx.app);
-		Gdx.app.exit();
 	}
 	
 }

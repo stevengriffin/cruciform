@@ -29,6 +29,12 @@ public abstract class State implements Screen {
 		AudioManager.resumeMusic(runtimeClass);
 	}
 	
+	/** States do not currently support resizing. */
+	@Override
+	public void resize(int width, int height) {
+	
+	}
+	
 	@Override
 	public void hide() {
 		AudioManager.stopMusic(this.getClass());

@@ -14,6 +14,7 @@ public class WinState extends MenuState {
 	@Override
 	public void render(float delta) {
 		game.batch.begin();
+		super.render(delta);
         
         drawer.drawCentered("You Win!", Conf.screenCenterX, Conf.screenHeight*0.7f);
         drawer.drawCentered("Score: " + Score.getScore(), Conf.screenCenterX, Conf.screenHeight*0.6f);

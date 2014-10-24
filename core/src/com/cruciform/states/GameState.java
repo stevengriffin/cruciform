@@ -37,14 +37,9 @@ public class GameState extends State {
 	}
 
 	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void show() {
 		super.show();
+		Gdx.input.setCursorCatched(true);
 		Gdx.input.setInputProcessor(game.inputSystem);
 		Timer.instance().start();
 		if (game.engine.getEntitiesFor(Family.getFor(TeamPlayer.class)).size() == 0) {
@@ -59,7 +54,7 @@ public class GameState extends State {
 	public void hide() {
 		super.hide();
 		Timer.instance().stop();
-		//FormationFactory.reset();
+		Gdx.input.setCursorCatched(false);
 	}
 
 	@Override
