@@ -96,9 +96,7 @@ public class Cruciform extends Game {
 		RenderSystem renderSystem = new RenderSystem(this, batch, font);
 		engine.addSystem(renderSystem);
 		engine.addEntityListener(renderSystem.family, renderSystem);
-		if (Log.DEBUG) {
-			engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
-		}
+		engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
 		engine.addSystem(new EnemyMarkerSystem(batch, shapeRenderer));
 		inputSystem = new InputSystem(this);
 		engine.addSystem(inputSystem);

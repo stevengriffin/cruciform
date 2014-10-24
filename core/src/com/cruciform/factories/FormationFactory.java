@@ -32,11 +32,10 @@ public class FormationFactory {
 	public static void createBroadFormation(final ShipFactory.ShipCreatorIndexed creator,
 			final float timeDelay, final int number, final int left, final int right) {
 		final int increment = (right - left)/(number - 1);
-		final float y = 0; // For now this is useless as it gets immediately adjusted after creation
 		schedule(() -> {
 			int i = 0;
 			for (int x = left; x <= right; x += increment) {
-				Entity ship = creator.createAt(x, y, i);
+				Entity ship = creator.createAt(x, 0, i);
 				Position position = Position.mapper.get(ship);
 				position.bounds.setPosition(position.bounds.getX(),
 						Conf.canonicalHeight + position.bounds.getBoundingRectangle().height);

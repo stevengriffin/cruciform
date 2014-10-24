@@ -20,6 +20,7 @@ public class Renderer extends AbstractComponent {
 	public Priority priority = new Priority(0); 
 	public boolean shouldRender = true;
 	public boolean renderAtPlayCoordinates = true;
+	public boolean renderAsShape = false;
 	
 	public Renderer(Entity entity) {
 		super(entity);

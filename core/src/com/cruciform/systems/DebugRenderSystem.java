@@ -11,6 +11,7 @@ import com.cruciform.components.Collider;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.utils.Conf;
+import com.esotericsoftware.minlog.Log;
 
 /**
  * Renders debug information like hitboxes.
@@ -36,7 +37,10 @@ public class DebugRenderSystem extends IteratingSystem {
 		final Position position = Position.mapper.get(entity);
 		final Renderer renderer = Renderer.mapper.get(entity);
 		shapeRenderer.setColor(debugColor);
-		draw(position.bounds.getTransformedVertices(), renderer.renderAtPlayCoordinates);
+		// Quick hack for drawing sweep
+		if (Log.DEBUG || (renderer.renderAsShape && renderer.shouldRender)) {
+			draw(position.bounds.getTransformedVertices(), renderer.renderAtPlayCoordinates);
+		}
 	}
 	
 	private void draw(float[] vertices, boolean renderAtPlayCoordinates) {

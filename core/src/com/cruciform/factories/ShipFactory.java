@@ -97,7 +97,9 @@ public class ShipFactory {
 		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_1);
 		
 		Position position = new Position(entity);
-		position.bounds = Geometry.polyRect(x, y, 20, 20);
+		position.bounds = Geometry.polyRect(x, y, 
+				renderer.image.getRegionWidth(),
+				renderer.image.getRegionHeight());
 		position.yDirection = -1;
 		position.outOfBoundsHandler = OutOfBoundsHandler.south();
 		

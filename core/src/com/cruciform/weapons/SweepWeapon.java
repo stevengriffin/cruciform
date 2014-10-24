@@ -66,7 +66,8 @@ public class SweepWeapon extends Weapon {
 		final Entity entity = new Entity();
 
 		final Renderer renderer = new Renderer(entity);
-		renderer.shouldRender = false; // TODO
+		renderer.image = null;
+		renderer.renderAsShape = true;
 		if (team == TeamPlayer.class) {
 			// Render underneath player ship.
 			renderer.priority = new Priority(-1);
