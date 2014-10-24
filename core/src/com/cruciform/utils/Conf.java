@@ -1,5 +1,7 @@
 package com.cruciform.utils;
 
+import java.util.Map;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -13,16 +15,12 @@ import com.esotericsoftware.minlog.Log;
 	Text is NOT scaled yet. **/
 public class Conf {
 	private static final String PREFERENCES_NAME = "com.cruciform.settings";
-	private static final String SCREEN_HEIGHT_NAME = "screenHeight";
-	private static final String SCREEN_WIDTH_NAME = "screenWidth";
-	private static final String FULL_SCREEN_NAME = "fullScreen";
-	private static final String VOLUME_NAME = "volume";
 	public static final int canonicalWidth = 1920;
 	public static final int canonicalHeight = 1080;
 	public static final int canonicalPlayWidth = (int) (canonicalHeight/1.2f);
 	public static final int canonicalPlayHeight = (int) (canonicalHeight*0.95f);
-	public static int screenHeight;
-	public static int screenWidth;
+	
+	// Derived settings
 	public static int playWidth;
 	public static int playLeft;
 	public static int playRight;
@@ -30,43 +28,109 @@ public class Conf {
 	public static int playBottom;
 	public static float scaleFactor = 1;
 	public static int screenCenterX;
+	
+	// Persisted settings
+	public static int screenHeight;
+	public static int screenWidth;
 	public static float volume;
 	public static boolean fullScreen = true;
+	public static float mouseSensitivity;
 
-	public static void loadSettings(Application app) {
-		Preferences prefs = app.getPreferences(PREFERENCES_NAME);
-		// TODO set to reasonable default based on client PC.
-		setResolution(prefs.getInteger(SCREEN_WIDTH_NAME, 1920),
-				prefs.getInteger(SCREEN_HEIGHT_NAME, 1080),
-				prefs.getBoolean(FULL_SCREEN_NAME, true));
-		setVolume(prefs.getFloat(VOLUME_NAME, 1.0f));
-	}
-
-	public static void saveSettings(Application app) {
-		Preferences prefs = app.getPreferences(PREFERENCES_NAME);
-		prefs.putInteger(SCREEN_WIDTH_NAME, screenWidth);
-		prefs.putInteger(SCREEN_HEIGHT_NAME, screenHeight);
-		prefs.putBoolean(FULL_SCREEN_NAME, fullScreen);
-		prefs.putFloat(VOLUME_NAME, volume);
-		prefs.flush();
+	public static class Setting<T> {
+		public final String name;
+		private T value = null;
+		public final T min;
+		public final T max;
+		
+		public Setting(final String name) {
+			this.name = name;
+			this.min = null;
+			this.max = null;
+		}
+		
+		public Setting(final String name, final T min, final T max) {
+			this.name = name;
+			this.min = min;
+			this.max = max;
+		}
+	
+		public void set(final T value) {
+			this.value = value;
+		}
+		
+		public T get() {
+			return this.value;
+		}
 	}
 	
-	public static void setVolume(float newVolume) {
-		// TODO adjust currently playing music volumes.
-		volume = newVolume;
+	public static class SettingsProposal {
+		public final Setting<Float> volume = new Setting<>("Volume", 0.0f, 1.0f);
+		public final Setting<Integer> screenWidth = new Setting<>("Screen Width");
+		public final Setting<Integer> screenHeight = new Setting<>("Screen Height");
+		public final Setting<Boolean> fullScreen = new Setting<>("Full Screen");
+		public final Setting<Float> mouseSensitivity = new Setting<>("Mouse Sensitivity", 0.05f, 2.0f);
+	
+		public static SettingsProposal fromCurrentSettings() {
+			final SettingsProposal proposal = new SettingsProposal();
+			proposal.volume.set(Conf.volume);
+			proposal.screenWidth.set(Conf.screenWidth);
+			proposal.screenHeight.set(Conf.screenHeight);
+			proposal.fullScreen.set(Conf.fullScreen);
+			proposal.mouseSensitivity.set(Conf.mouseSensitivity);
+			return proposal;
+		}
+		
+		public static SettingsProposal fromPersistedSettings() {
+			final Preferences preferences = Gdx.app.getPreferences(PREFERENCES_NAME);
+			final SettingsProposal proposal = new SettingsProposal();
+			proposal.volume.set(preferences.getFloat(proposal.volume.name, 1.0f));
+			// TODO set to reasonable default based on client PC.
+			proposal.screenWidth.set(preferences.getInteger(proposal.screenWidth.name, 1920));
+			proposal.screenHeight.set(preferences.getInteger(proposal.screenHeight.name, 1080));
+			proposal.fullScreen.set(preferences.getBoolean(proposal.fullScreen.name, true));
+			proposal.mouseSensitivity.set(preferences.getFloat(proposal.mouseSensitivity.name, 0.5f));
+			return proposal;
+		}
+	
+		public void syncWithCurrentSettings() {
+			//Log.debug("vol: " + Conf.volume + " this.vol: " + this.volume.get());
+			Log.debug(this.volume.get().getClass().toString());
+			Conf.volume = this.volume.get();
+			Conf.screenWidth = this.screenWidth.get();
+			Conf.screenHeight = this.screenHeight.get();
+			Conf.fullScreen = this.fullScreen.get();
+			Conf.mouseSensitivity = this.mouseSensitivity.get();
+			setResolution();
+		}
+		
+		public void persist() {
+			syncWithCurrentSettings();
+			final Preferences preferences = Gdx.app.getPreferences(PREFERENCES_NAME);
+			preferences.putFloat(this.volume.name, this.volume.get());
+			preferences.putInteger(this.screenWidth.name, this.screenWidth.get());
+			preferences.putInteger(this.screenHeight.name, this.screenHeight.get());
+			preferences.putBoolean(this.fullScreen.name, this.fullScreen.get());
+			preferences.putFloat(this.mouseSensitivity.name, this.mouseSensitivity.get());
+			preferences.flush();
+		}
 	}
 	
-	public static void setResolution(int width, int height, boolean isFullScreen) {
-		fullScreen = isFullScreen;
-		Gdx.graphics.setDisplayMode(width, height, fullScreen);
+	public static void loadSettings() {
+		SettingsProposal.fromPersistedSettings().syncWithCurrentSettings();
+	}
+
+	public static void saveSettings() {
+		SettingsProposal.fromCurrentSettings().persist();
+	}
+	
+	public static void setResolution() {
+		Gdx.graphics.setDisplayMode(screenWidth, screenHeight, fullScreen);
 		final float oldScaleFactor = scaleFactor; 
-		scaleFactor = ((float) height)/canonicalHeight;
+		scaleFactor = ((float) screenHeight)/canonicalHeight;
 		ImageManager.scalePatches(scaleFactor/oldScaleFactor);
 		Log.debug("sF: " + scaleFactor);
-		screenWidth = width;
-		screenHeight = height;
-		screenCenterX = width/2;
-		playWidth = (int)(height / 1.2f);
+		screenCenterX = screenWidth/2;
+		playWidth = (int)(screenHeight / 1.2f);
 		// Need at least 0.25 of width on the right.
 		playRight = Math.min(screenWidth - (screenWidth - playWidth)/2, (int) (screenWidth*0.75f));
 		playLeft = playRight - playWidth;

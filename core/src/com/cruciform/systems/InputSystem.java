@@ -19,8 +19,9 @@ import com.cruciform.utils.Conf;
 public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	private static final float ACCEL_CONSTANT = 0.0f;
+	private static final float SENSITIVITY_CONSTANT = 240.0f;
 	private PlayerInput playerInput = null;
-	private float sensitivity = 120.0f;
+	private float sensitivity;
 	private float keysSpeed = 480.0f;
 	private final Cruciform game;
 	
@@ -31,6 +32,7 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
+		sensitivity = SENSITIVITY_CONSTANT*Conf.mouseSensitivity;
 		float focusMultiplier; 
 		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Keys.SHIFT_RIGHT)) {
 			focusMultiplier = 0.5f;

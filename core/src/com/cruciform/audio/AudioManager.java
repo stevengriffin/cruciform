@@ -13,6 +13,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.cruciform.states.GameState;
 import com.cruciform.states.InsertCreditState;
 import com.cruciform.states.MainMenuState;
+import com.cruciform.states.SettingsState;
 import com.cruciform.states.State;
 import com.cruciform.utils.Conf;
 
@@ -62,7 +63,7 @@ public class AudioManager {
 	}
 	
 	public static void initMusic(Class<? extends State> state) {
-		if (state == MainMenuState.class) {
+		if (state == MainMenuState.class || state == SettingsState.class) {
 			Music menuMusic = tracks.get(12);
 			menuMusic.setLooping(true);
 			menuMusic.setVolume(Conf.volume);
@@ -73,11 +74,13 @@ public class AudioManager {
 	}
 	
 	public static void resumeMusic(Class<? extends State> state) {
-		if (state == MainMenuState.class) {
+		if (state == MainMenuState.class || state == SettingsState.class) {
 			initMusic(state);
 		} else if (state == GameState.class || state == InsertCreditState.class) {
 			if (currentTrackNumber >= 0) {
-				shuffledTracks.get(currentTrackNumber).play();
+				Music music = shuffledTracks.get(currentTrackNumber);
+				music.setVolume(Conf.volume);
+				music.play();
 			}
 		}
 	}
@@ -87,7 +90,9 @@ public class AudioManager {
 			tracks.get(12).stop();
 		} else if (state == GameState.class || state == InsertCreditState.class) {
 			if (currentTrackNumber >= 0) {
-				shuffledTracks.get(currentTrackNumber).pause();
+				Music music = shuffledTracks.get(currentTrackNumber);
+				music.setVolume(Conf.volume);
+				music.pause();
 			}
 		}
 	}

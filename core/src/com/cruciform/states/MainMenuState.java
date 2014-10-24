@@ -11,6 +11,7 @@ public class MainMenuState extends MenuState {
 		addButtons(
 			new StateButton("Continue", GameState.class, false),
 			new StateButton("New Game", GameState.class, true),
+			new StateButton("Settings", SettingsState.class, false),
 			new StateButton("Quit", ExitState.class, true));
 	}
 

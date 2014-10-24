@@ -8,7 +8,7 @@ public class ExitState extends State {
 
 	public ExitState(Cruciform game) {
 		super(game);
-		Conf.saveSettings(Gdx.app);
+		Conf.saveSettings();
 		Gdx.app.exit();
 	}
 

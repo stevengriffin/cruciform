@@ -17,11 +17,11 @@ public class InsertCreditState extends MenuState {
 					StateFactory.setState(GameState.class, game);
 				}),
 			new StateButton("New Game", ExitState.class, true),
-			new StateButton("Exit to Menu", GameState.class, true));
+			new StateButton("Exit to Menu", MainMenuState.class, false));
 	}
 
 	@Override
-	public void render(float delta) {
+	public void render(final float delta) {
 		game.batch.begin();
 		super.render(delta);
         game.batch.end();
