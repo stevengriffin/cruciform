@@ -13,6 +13,10 @@ cp CREDITS.md LICENSE.txt README.md out-linux32/
 cp CREDITS.md LICENSE.txt README.md out-windows/
 cp CREDITS.md LICENSE.txt README.md out-jar/
 
+# Windows .exe doesn't seem to work, so use a .bat file.
+cp cruciform.bat out-windows/
+rm out-windows/cruciform.exe
+
 # Zip all builds
 zip -r cruciform-linux64 out-linux64
 zip -r cruciform-linux32 out-linux32
