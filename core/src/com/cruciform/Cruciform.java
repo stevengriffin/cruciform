@@ -27,7 +27,9 @@ import com.cruciform.states.GameState;
 import com.cruciform.states.MainMenuState;
 import com.cruciform.states.State;
 import com.cruciform.systems.AISystem;
+import com.cruciform.systems.AnimatorSystem;
 import com.cruciform.systems.BlinkerSystem;
+import com.cruciform.systems.ChildPositionSystem;
 import com.cruciform.systems.CollisionSystem;
 import com.cruciform.systems.DebugRenderSystem;
 import com.cruciform.systems.EnemyMarkerSystem;
@@ -45,7 +47,6 @@ import com.cruciform.ui.StateButton;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.minlog.Log;
 
 public class Cruciform extends Game {
 	public SpriteBatch batch;
@@ -103,6 +104,8 @@ public class Cruciform extends Game {
 		engine.addSystem(new LineMoverSystem());
 		engine.addSystem(new ShooterSystem());
 		engine.addSystem(new AISystem());
+		engine.addSystem(new ChildPositionSystem());
+		engine.addSystem(new AnimatorSystem());
 		engine.addSystem(new BlinkerSystem());
 		engine.addSystem(new MovementSystem(deferrer));
 		engine.addSystem(new LifetimeSystem(deferrer));

@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Array;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.components.team.TeamPlayer;
-import com.esotericsoftware.minlog.Log;
 
 
 public class Collider extends AbstractComponent {

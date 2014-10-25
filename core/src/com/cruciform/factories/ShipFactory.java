@@ -87,6 +87,10 @@ public class ShipFactory {
 		entity.add(collider);
 		
 		engine.addEntity(entity);
+		
+		// Create graphical player effects
+		EffectFactory.createPlayerExhaust(entity, engine);
+		
 		return entity;
 	}
 	

@@ -18,6 +18,11 @@ public class ImageManager {
 		map.put(Picture.PLAYER_SHIP_1, newTexture("ship1"));
 		map.put(Picture.PLAYER_SHIP_2, newTexture("player_ship2"));
 		map.put(Picture.PLAYER_SHIP_GOLD, newTexture("player_ship_gold"));
+		map.put(Picture.PLAYER_SHIP_EXHAUST_1, newTexture("player_ship_exhaust_1"));
+		map.put(Picture.PLAYER_SHIP_EXHAUST_2, newTexture("player_ship_exhaust_2"));
+		map.put(Picture.PLAYER_SHIP_EXHAUST_3, newTexture("player_ship_exhaust_3"));
+		map.put(Picture.PLAYER_EXHAUST_CROSS, newTexture("player_exhaust_cross"));
+		map.put(Picture.PLAYER_EXHAUST_CROSS_2, newTexture("player_exhaust_cross_2"));
 		map.put(Picture.RIFLE_BULLET, newTexture("rifle_bullet"));
 		map.put(Picture.ENEMY_BULLET_ELONGATED, newTexture("enemy_bullet_elongated_1"));
 		map.put(Picture.ROCKET, newTexture("rocket"));
