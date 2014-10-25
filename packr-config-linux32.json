@@ -1,5 +1,5 @@
 {
-    "platform": "mac",
+    "platform": "linux32",
     "jdk": "/usr/lib/jvm/java-8-openjdk-amd64-linux.zip",
     "executable": "cruciform",
     "appjar": "out-jar/cruciform.jar",
@@ -8,5 +8,5 @@
        "-Xmx1G"
     ],
     "minimizejre": "soft",
-    "outdir": "out-mac"
+    "outdir": "out-linux32"
 }
