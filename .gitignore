@@ -66,6 +66,7 @@ build/
 *.jar
 *.exe
 *.app
+*.zip
 out-linux32/
 out-linux64/
 out-mac/
