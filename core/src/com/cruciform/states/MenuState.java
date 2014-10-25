@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cruciform.Cruciform;
+import com.cruciform.utils.Conf;
 
 public abstract class MenuState extends State {
 	private final Stage stage;
@@ -26,6 +27,7 @@ public abstract class MenuState extends State {
 	}
 
 	protected void addButtons(TextButton... newButtons) {
+		table.clear();
 		for (int i = 0; i < newButtons.length; i++) {
 			table.add(newButtons[i]);
 			table.row();
@@ -40,8 +42,8 @@ public abstract class MenuState extends State {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
-		// TODO this breaks mouse button events
-	    //stage.getViewport().update(Conf.screenWidth, Conf.screenHeight, true);
+		// TODO this breaks mouse button events?
+		stage.getViewport().update(Conf.screenWidth, Conf.screenHeight, true);
 		super.show();
 	}
 	

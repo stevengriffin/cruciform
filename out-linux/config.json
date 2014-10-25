@@ -1,0 +1,6 @@
+{
+   "jar": "cruciform.jar",
+   "mainClass": "com/cruciform/desktop/DesktopLauncher",
+   "vmArgs": [
+      "-Xmx1G"
+   ]}

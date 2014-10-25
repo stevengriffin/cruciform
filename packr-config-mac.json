@@ -1,0 +1,16 @@
+{
+    "platform": "mac",
+    "jdk": ".zip",
+    "executable": "myapp",
+    "appjar": "myapp.jar",
+    "mainclass": "com/my/app/MainClass",
+    "vmargs": [
+       "-Xmx1G"
+    ],
+    "resources": [
+        "pom.xml",
+        "src/main/resources"
+    ],
+    "minimizejre": "soft",
+    "outdir": "out-mac"
+}

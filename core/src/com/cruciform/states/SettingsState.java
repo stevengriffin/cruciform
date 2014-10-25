@@ -12,6 +12,7 @@ import com.cruciform.ui.StateButton;
 import com.cruciform.ui.UIManager;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Conf.SettingsProposal;
+import com.esotericsoftware.minlog.Log;
 
 public class SettingsState extends State {
 	private final Stage stage;
@@ -67,8 +68,9 @@ public class SettingsState extends State {
 	    	modeChoices.add(modes.get(i).width + " x " + modes.get(i).height);
 	    }
 	    UIManager.addDropDown(table, modeChoices, (index) -> {
-	    	proposal.screenHeight.set(modes.get(index).height);
 	    	proposal.screenWidth.set(modes.get(index).width);
+	    	proposal.screenHeight.set(modes.get(index).height);
+	    	Log.debug("index: " + index + " sw: " + proposal.screenWidth.get() + " sh: " + proposal.screenHeight.get()); 
 	    }, currentModeChoiceIndex, "Resolution");
 	    table.row().padLeft(200);
 	    UIManager.addSettingSlider(table, proposal.mouseSensitivity, false);

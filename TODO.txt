@@ -2,7 +2,7 @@ For Friday:
 
 *Polynomial volume
 *Toggle fullscreen option
-Fix resolution option
+*Fix resolution option (ish)
 
 *Controls screen (not configurable yet)
 

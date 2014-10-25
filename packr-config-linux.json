@@ -1,0 +1,12 @@
+{
+    "platform": "linux64",
+    "jdk": "/usr/lib/jvm/java-8-openjdk-amd64-linux.zip",
+    "executable": "cruciform",
+    "appjar": "cruciform.jar",
+    "mainclass": "com/cruciform/desktop/DesktopLauncher",
+    "vmargs": [
+       "-Xmx1G"
+    ],
+    "minimizejre": "soft",
+    "outdir": "out-linux"
+}

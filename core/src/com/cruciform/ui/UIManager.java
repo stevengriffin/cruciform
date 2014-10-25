@@ -90,14 +90,14 @@ public class UIManager {
 	    final SelectBox<String> dropDown = new SelectBox<String>(style);
 	    dropDown.setItems(choices);
 	    dropDown.setSelectedIndex(currentIndex);
-	    dropDown.addListener(new ClickListener() {
-	    	@Override
-	    	public void clicked(InputEvent event, float x, float y) {
+	    dropDown.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
 	    		final int index = dropDown.getSelectedIndex();
-	    		if (index != -1) {
+	    		if (index != -1 && index < choices.size) {
 	    			setter.set(index);
 	    		}
-	    	}
+			}
 	    });
 	    table.add(titleLabel);
 	    table.row();

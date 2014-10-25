@@ -10,6 +10,7 @@ import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.FormationFactory;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.levels.Level1;
+import com.cruciform.utils.Conf;
 import com.cruciform.utils.Score;
 
 public class GameState extends State {
@@ -23,9 +24,6 @@ public class GameState extends State {
 		Score.init();
 		FormationFactory.reset();
 		game.engine.removeAllEntities();
-		game.uiFactory.createSidePanel(true);
-		game.uiFactory.createSidePanel(false);
-		game.uiFactory.createBottomPanel();
 		player = new Level1(game).createAndReturnPlayer();
 	}
 
@@ -39,6 +37,7 @@ public class GameState extends State {
 	@Override
 	public void show() {
 		super.show();
+		//game.camera.setToOrtho(false, Conf.screenWidth, Conf.screenHeight);
 		Gdx.input.setCursorCatched(true);
 		Gdx.input.setInputProcessor(game.inputSystem);
 		Timer.instance().start();
@@ -48,6 +47,9 @@ public class GameState extends State {
 			health.currentHealth = health.maxHealth;
 			game.deferrer.shieldAndBlink(player, 3.0f);
 		}
+		game.uiFactory.createSidePanel(true);
+		game.uiFactory.createSidePanel(false);
+		game.uiFactory.createBottomPanel();
 	}
 
 	@Override

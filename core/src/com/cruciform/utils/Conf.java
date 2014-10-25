@@ -12,6 +12,8 @@ import com.esotericsoftware.minlog.Log;
 	Both play objects and UI objects are scaled by scaleFactor when drawn.
 	Text is NOT scaled yet. **/
 public class Conf {
+	
+	// Immutable settings
 	private static final String PREFERENCES_NAME = "com.cruciform.settings";
 	public static final int canonicalWidth = 1920;
 	public static final int canonicalHeight = 1080;
@@ -127,6 +129,8 @@ public class Conf {
 		// TODO delete
 //		screenWidth = 1920;
 //		screenHeight = 1080;
+//		screenWidth = 1440;
+//		screenHeight = 900;
 		Gdx.graphics.setDisplayMode(screenWidth, screenHeight, fullScreen);
 		final float oldScaleFactor = scaleFactor; 
 		scaleFactor = ((float) screenHeight)/canonicalHeight;

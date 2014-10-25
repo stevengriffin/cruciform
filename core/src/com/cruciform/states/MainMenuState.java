@@ -8,12 +8,6 @@ public class MainMenuState extends MenuState {
 
 	public MainMenuState(Cruciform game) {
 		super(game);
-		addButtons(
-			new StateButton("Continue", GameState.class, false),
-			new StateButton("New Game", GameState.class, true),
-			new StateButton("Settings", SettingsState.class, false),
-			new StateButton("Controls", ControlsState.class, false),
-			new StateButton("Quit", ExitState.class, true));
 	}
 
 	@Override
@@ -27,8 +21,13 @@ public class MainMenuState extends MenuState {
 
 	@Override
 	public void show() {
-		// TODO
 		super.show();
+		addButtons(
+			new StateButton("Continue", GameState.class, false),
+			new StateButton("New Game", GameState.class, true),
+			new StateButton("Settings", SettingsState.class, false),
+			new StateButton("Controls", ControlsState.class, false),
+			new StateButton("Quit", ExitState.class, true));
 	}
 	
 	@Override

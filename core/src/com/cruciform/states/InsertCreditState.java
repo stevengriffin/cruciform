@@ -16,7 +16,7 @@ public class InsertCreditState extends MenuState {
 					Score.useCredit();
 					StateFactory.setState(GameState.class, game);
 				}),
-			new StateButton("New Game", ExitState.class, true),
+			new StateButton("New Game", GameState.class, true),
 			new StateButton("Exit to Menu", MainMenuState.class, false));
 	}
 

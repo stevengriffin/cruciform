@@ -61,3 +61,12 @@ build/
 
 ## OS Specific
 .DS_Store
+
+## Binaries
+*.jar
+*.exe
+*.app
+out-linux32/
+out-linux64/
+out-mac/
+out-windows/

@@ -4,7 +4,9 @@ import com.badlogic.gdx.Screen;
 import com.cruciform.Cruciform;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.factories.StateFactory;
+import com.cruciform.utils.Conf;
 import com.cruciform.utils.TextDrawer;
+import com.esotericsoftware.minlog.Log;
 
 public abstract class State implements Screen {
 	
@@ -34,8 +36,9 @@ public abstract class State implements Screen {
 	
 	@Override
 	public void show() {
+		game.camera.setToOrtho(false, Conf.screenWidth, Conf.screenHeight);
 		Class<? extends State> runtimeClass = this.getClass();
-		System.out.println(runtimeClass.toString());
+		Log.debug(runtimeClass.toString());
 		AudioManager.resumeMusic(runtimeClass);
 	}
 	
