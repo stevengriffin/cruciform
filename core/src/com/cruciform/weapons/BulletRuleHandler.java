@@ -16,7 +16,7 @@ import com.cruciform.utils.EntityMutator;
 import com.cruciform.utils.WrappedIncrementor;
 
 public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
-	private final static float DAMAGE_TO_INSTAKILL_PLAYER = 5.0f;
+	public final static float DAMAGE_TO_INSTAKILL_PLAYER = 5.0f;
 	public float spanAngle = 360.0f;
 	public float originAngle = 0.0f;
 	public int spokes = 6;

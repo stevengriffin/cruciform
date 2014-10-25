@@ -21,6 +21,7 @@ public class EnemyMarkerSystem extends IteratingSystem {
 	public EnemyMarkerSystem(Batch batch, ShapeRenderer shapeRenderer) {
 		super(Family.getFor(Position.class, Renderer.class, TeamEnemy.class));
 		this.shapeRenderer = shapeRenderer;
+		this.priority = 170;
 	}
 
 	@Override

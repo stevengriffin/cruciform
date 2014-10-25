@@ -40,6 +40,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		this.batch = batch;
 		this.font = font;
 		this.game = game;
+		this.priority = 160;
 	}
 
 	@Override

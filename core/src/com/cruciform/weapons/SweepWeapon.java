@@ -32,7 +32,7 @@ public class SweepWeapon extends Weapon {
 	
 	public SweepWeapon(final float coolDownTime, final Engine engine, final ExplosionFactory explosionFactory,
 			final Class<? extends Team> team) {
-		super(coolDownTime, engine, team, "Sweep");
+		super(coolDownTime, engine, team, 25.0f, "Sweep");
 		this.explosionFactory = explosionFactory;
 	}
 
@@ -98,7 +98,7 @@ public class SweepWeapon extends Weapon {
 		Collider.defaultForProjectile(entity, team);
 		
 		final Damager damager = new Damager();
-		damager.damage = 25.0f;
+		damager.damage = damage;
 		entity.add(damager);
 		
 		engine.addEntity(entity);

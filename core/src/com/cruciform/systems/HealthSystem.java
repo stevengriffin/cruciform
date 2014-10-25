@@ -16,6 +16,8 @@ public class HealthSystem extends IteratingSystem {
 		super(Family.getFor(Health.class));
 		this.deferrer = deferrer;
 		this.explosionFactory = explosionFactory;
+		// Process before ChildPositionSystem
+		this.priority = 3;
 	}
 
 	@Override

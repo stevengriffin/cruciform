@@ -11,17 +11,21 @@ public abstract class Weapon implements InputAction {
 	Engine engine;
 	final Class<? extends Team> team;
 	private boolean shouldFire = false;
+	private boolean justFired = false;
 	public final String name;
+	public final float damage;
 	
 	public Weapon(final float coolDownTime, final Engine engine, final Class<? extends Team> team,
-			final String name) {
+			final float damage, final String name) {
 		coolDown = new CoolDownMetro(coolDownTime);
 		this.engine = engine;
 		this.team = team;
+		this.damage = damage;
 		this.name = name;
 	}
 	
 	public boolean update(float dt, Position firerPos) {
+		justFired = false;
 		handleUpdate(dt, firerPos);
 		if (shouldFire) {
 			fire(firerPos);
@@ -36,6 +40,7 @@ public abstract class Weapon implements InputAction {
 		boolean firedSuccessfully = coolDown.fire();
 		if (firedSuccessfully) {
 			handleFire(firerPos);
+			justFired = true;
 		}
 		return firedSuccessfully;
 	}
@@ -52,4 +57,8 @@ public abstract class Weapon implements InputAction {
 		return coolDown.getPercent();
 	}
 
+	public boolean getJustFired() {
+		return justFired;
+	}
+	
 }

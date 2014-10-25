@@ -10,7 +10,8 @@ public class Position extends AbstractComponent {
     public static final ComponentMapper<Position> mapper = ComponentMapper.getFor(Position.class);
 	public Polygon bounds;
 	public OutOfBoundsHandler outOfBoundsHandler = OutOfBoundsHandler.none();
-	public int yDirection;
+	/** Set to 1 if this entity faces the top of the screen. **/
+	public int yDirection = -1;
 	
 	public Position(Entity entity) {
 		super(entity);

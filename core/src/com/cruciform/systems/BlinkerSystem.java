@@ -10,6 +10,7 @@ public class BlinkerSystem extends IteratingSystem {
 
 	public BlinkerSystem() {
 		super(Family.getFor(Blinker.class, Renderer.class));
+		this.priority = 50;
 	}
 
 	@Override

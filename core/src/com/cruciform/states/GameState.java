@@ -6,8 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.cruciform.Cruciform;
 import com.cruciform.components.Health;
+import com.cruciform.components.Position;
 import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.FormationFactory;
+import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.levels.Level1;
 import com.cruciform.utils.Conf;
@@ -42,9 +44,8 @@ public class GameState extends State {
 		Gdx.input.setInputProcessor(game.inputSystem);
 		Timer.instance().start();
 		if (game.engine.getEntitiesFor(Family.getFor(TeamPlayer.class)).size() == 0) {
-			game.engine.addEntity(player);
-			Health health = Health.mapper.get(player);
-			health.currentHealth = health.maxHealth;
+			final Position position = Position.mapper.get(player);
+			player = game.shipFactory.createPlayer(position.bounds.getX(), position.bounds.getY());
 			game.deferrer.shieldAndBlink(player, 3.0f);
 		}
 		game.uiFactory.createSidePanel(true);

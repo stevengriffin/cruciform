@@ -33,7 +33,6 @@ public class RifleWeapon extends Weapon {
 	private static final float RECOIL_PER_BULLET = 0.5f;
 	private static final float RECOIL_RESET_RATE = 20.0f;
 	private static final float MAX_RECOIL = 20.0f;
-	public float damagePerBullet = 10.0f;
 	public float reloadTime = 5.0f;
 	/*
 	 * Setting bullets per clip to 0 will give unlimited clip size.
@@ -46,7 +45,7 @@ public class RifleWeapon extends Weapon {
 	
 	public RifleWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory,
 			Class<? extends Team> team) {
-		super(coolDownTime, engine, team, "Rifle");
+		super(coolDownTime, engine, team, 10.0f, "Rifle");
 		this.coolDownTime = coolDownTime;
 		this.recoilGapTime = coolDownTime*4;
 		this.explosionFactory = explosionFactory;
@@ -105,7 +104,7 @@ public class RifleWeapon extends Weapon {
 		Collider.defaultForProjectile(entity, team);
 		
 		Damager damager = new Damager();
-		damager.damage = damagePerBullet;
+		damager.damage = damage;
 		entity.add(damager);
 		
 		engine.addEntity(entity);

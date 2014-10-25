@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.cruciform.components.Animator;
 import com.cruciform.components.Child;
 import com.cruciform.components.Position;
+import com.cruciform.components.Recoil;
 import com.cruciform.components.Renderer;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
@@ -61,7 +62,7 @@ public class EffectFactory {
 		renderer.customYOffset = -renderer.image.getRegionHeight()-10;
 		renderer.customOffset = true;
 		// Render above background and below enemy bullets but above exhaust and player ship
-		renderer.priority = new Priority(1);
+		renderer.priority = new Priority(2);
 	
 		Animator animator = new Animator(exhaustCross);
 		animator.animation = new Animation(0.125f, ImageManager.get(Picture.PLAYER_EXHAUST_CROSS_2),
@@ -70,5 +71,30 @@ public class EffectFactory {
 		
 		engine.addEntity(exhaustCross);
 		
+	}
+	
+	public static void createPlayerBody(final float x, final float y, 
+			final Entity player, final Engine engine) {
+		// Player ship exhaust fumes
+		final Entity body = new Entity();
+		
+		final Child child = new Child(body);
+		child.parent = player;
+		
+		final Position position = new Position(body);
+		position.bounds = Geometry.polyRect(x, y, 5, 5);
+		position.yDirection = 1;
+		
+		final Renderer renderer = new Renderer(body);
+		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_GOLD_BODY);
+		renderer.customXOffset = -32.5f;
+		renderer.customYOffset = -45;
+		renderer.customOffset = true;
+		// Render below player cockpit and below exhaust
+		renderer.priority = new Priority(0);
+
+		final Recoil recoil = new Recoil(body);
+		
+		engine.addEntity(body);
 	}
 }

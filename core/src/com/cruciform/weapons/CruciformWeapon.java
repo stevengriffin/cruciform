@@ -28,7 +28,7 @@ public class CruciformWeapon extends Weapon {
 	private final static float BEAM_HEIGHT = Conf.canonicalPlayWidth*2;
 	
 	public CruciformWeapon(final Engine engine, final Class<? extends Team> team) {
-		super(COOL_DOWN_TIME, engine, team, "Cruciform");
+		super(COOL_DOWN_TIME, engine, team, 50.0f, "Cruciform");
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class CruciformWeapon extends Weapon {
 		Collider.defaultForProjectile(entity, team);
 		
 		Damager damager = new Damager();
-		damager.damage = 50.0f;
+		damager.damage = damage;
 		entity.add(damager);
 	
 		Lifetime lifetime = new Lifetime();

@@ -21,6 +21,7 @@ import com.cruciform.images.Picture;
 import com.cruciform.input.InputCode;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
+import com.cruciform.utils.Priority;
 import com.cruciform.weapons.CruciformWeapon;
 import com.cruciform.weapons.RifleWeapon;
 import com.cruciform.weapons.RocketWeapon;
@@ -52,10 +53,12 @@ public class ShipFactory {
 		position.yDirection = 1;
 		
 		Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_GOLD);
+		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_GOLD_COCKPIT);
 		renderer.customXOffset = -32.5f;
 		renderer.customYOffset = -45;
 		renderer.customOffset = true;
+		renderer.priority = new Priority(1);
+		
 		TeamPlayer team = new TeamPlayer();
 		entity.add(team);
 		
@@ -90,6 +93,8 @@ public class ShipFactory {
 		
 		// Create graphical player effects
 		EffectFactory.createPlayerExhaust(entity, engine);
+		EffectFactory.createPlayerBody(x, y, entity, engine);
+		
 		
 		return entity;
 	}

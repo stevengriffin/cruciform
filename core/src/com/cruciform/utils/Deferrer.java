@@ -35,13 +35,17 @@ public class Deferrer {
 		this.game = game;
 	}
 	
-	public void remove(Entity entity) {
+	public void remove(final Entity entity) {
 		remove(entity, RemovalUrgency.UNIMPORTANT);
+	}
+
+	public boolean entityToBeRemoved(final Entity entity) {
+		return entitiesToRemove.contains(entity);
 	}
 	
 	private static final int MAX_SPLITS = 4; // Prevent unlimited exponential growth.
 	
-	public void remove(Entity entity, RemovalUrgency urgency) {
+	public void remove(final Entity entity, final RemovalUrgency urgency) {
 		SoundEffect soundEffect = SoundEffect.mapper.get(entity);
 		if (soundEffect != null) {
 			soundEffect.sound.stop(soundEffect.id);
@@ -79,7 +83,7 @@ public class Deferrer {
 		deferredActions.clear();
 	}
 	
-	private static final float BLINK_TIME = 0.2f;
+	private static final float BLINK_TIME = 0.15f;
 	
 	public void shieldAndBlink(Entity entity, float duration) {
 		final Collider collider = (Collider) entity.remove(Collider.class);
