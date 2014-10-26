@@ -2,6 +2,7 @@ package com.cruciform.factories;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.audio.AudioManager;
@@ -34,7 +35,9 @@ public class ExplosionFactory {
 	public Entity createExplosion(final Entity deadEntity) {
 		TeamEnemy teamEnemy = TeamEnemy.mapper.get(deadEntity);
 		if (teamEnemy != null) {
-			createSouls(deadEntity, teamEnemy.soulCount);
+			for (int i = 0; i < teamEnemy.soulCount; i++) {
+				createSoul(deadEntity);
+			}
 		}
 		return createRocketExplosion(deadEntity);
 	}
@@ -77,8 +80,7 @@ public class ExplosionFactory {
 
 	private final static float SOUL_DROP_SPEED = -300.0f;
 	
-	public void createSouls(final Entity deadEntity, final int soulCount) {
-		// TODO support multiple souls
+	public void createSoul(final Entity deadEntity) {
 		final Position deadPosition = Position.mapper.get(deadEntity);
 		
 		final Entity entity = new Entity();
@@ -93,10 +95,13 @@ public class ExplosionFactory {
 				0);
 
 		final Velocity velocity = new Velocity();
+		velocity.linear.set(MathUtils.random(-100.0f, 100.0f), 
+				MathUtils.random(-100.0f, 100.0f));
+		velocity.linearDragX = 20;
 		entity.add(velocity);
 
 		final LineMover lineMover = new LineMover();
-		lineMover.absMaxVelocity = new Vector2(0, Math.abs(SOUL_DROP_SPEED));
+		lineMover.absMaxVelocity = new Vector2(Math.abs(velocity.linear.x), Math.abs(SOUL_DROP_SPEED));
 		lineMover.accel = new Vector2(0, SOUL_DROP_SPEED);
 		lineMover.accelerates = true;
 		entity.add(lineMover);

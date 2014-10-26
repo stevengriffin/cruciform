@@ -4,5 +4,5 @@ import com.badlogic.ashley.core.ComponentMapper;
 
 public class TeamEnemy extends Team {
     public static final ComponentMapper<TeamEnemy> mapper = ComponentMapper.getFor(TeamEnemy.class);
-    public int soulCount = 1;
+    public int soulCount = 5;
 }
