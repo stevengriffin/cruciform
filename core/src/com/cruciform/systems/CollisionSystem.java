@@ -93,6 +93,6 @@ public class CollisionSystem extends EntitySystem {
 		}
 		Score.incrementScore(team.pointValue);
 		deferrer.remove(other);
-		AudioManager.get(Noise.CRUCIFORM).play(Conf.volume, 2, 0);
+		AudioManager.get(Noise.CRUCIFORM).play(Conf.volume*0.2f, 2, 0);
 	}
 }
