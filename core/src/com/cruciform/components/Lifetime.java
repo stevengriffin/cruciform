@@ -19,4 +19,8 @@ public class Lifetime extends AbstractComponent {
     public boolean tick(float dt) {
     	return timeRemaining.tick(dt);
     }
+    
+    public float getPercentAlive() {
+    	return 1 - timeRemaining.getPercent();
+    }
 }

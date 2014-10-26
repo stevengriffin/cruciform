@@ -25,7 +25,7 @@ public class HealthSystem extends IteratingSystem {
 		final Health health = Health.mapper.get(entity);
 		if (health.currentHealth <= 0) {
 			deferrer.remove(entity);
-			deferrer.run(() -> explosionFactory.createRocketExplosion(entity));
+			deferrer.run(() -> explosionFactory.createExplosion(entity));
 		}
 	}
 }

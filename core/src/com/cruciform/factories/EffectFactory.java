@@ -12,11 +12,14 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.cruciform.components.Animator;
 import com.cruciform.components.Child;
+import com.cruciform.components.Collider;
 import com.cruciform.components.Lifetime;
 import com.cruciform.components.ParticleEmitter;
 import com.cruciform.components.Position;
 import com.cruciform.components.Recoil;
 import com.cruciform.components.Renderer;
+import com.cruciform.components.team.TeamPlayerBody;
+import com.cruciform.components.team.TeamSoul;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
@@ -137,7 +140,7 @@ public class EffectFactory {
 		child.parent = player;
 		
 		final Position position = new Position(body);
-		position.bounds = Geometry.polyRect(x, y, 5, 5);
+		position.bounds = Geometry.polyRect(x, y, 65, 110);
 		position.yDirection = 1;
 		
 		final Renderer renderer = new Renderer(body);
@@ -149,6 +152,12 @@ public class EffectFactory {
 		renderer.priority = new Priority(0);
 
 		new Recoil(body);
+	
+		final TeamPlayerBody team = new TeamPlayerBody();
+		body.add(team);
+		
+		final Collider collider = new Collider(body);
+		collider.teamsToCollide.add(TeamSoul.class);
 		
 		engine.addEntity(body);
 		return body;

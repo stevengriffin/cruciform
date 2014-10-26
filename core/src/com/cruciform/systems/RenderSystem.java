@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -92,9 +93,24 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	private static int LEFT = 0;
 	private static int BOTTOM = 1;
 	
-	private void processEntity(Entity entity, float deltaTime) {
+	private void processEntity(final Entity entity, final float deltaTime) {
 		final Position position = Position.mapper.get(entity);
 		final Renderer renderer = Renderer.mapper.get(entity);
+		if (renderer.alpha != 1.0f) {
+			final Color tint = batch.getColor();
+			final float masterAlpha = tint.a;
+			tint.a *= renderer.alpha;
+			batch.setColor(tint);
+			drawEntity(position, renderer, entity, deltaTime);
+			tint.a = masterAlpha;
+			batch.setColor(tint);
+		} else {
+			drawEntity(position, renderer, entity, deltaTime);
+		}
+	}
+
+	private void drawEntity(final Position position, final Renderer renderer, final Entity entity,
+			final float deltaTime) {
 		if (renderer.patch != null) {
 			drawPatch(renderer.patch, position, renderer.renderAtPlayCoordinates);
 		}
@@ -116,7 +132,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 			drawParticles(particleEmitter, deltaTime);
 		}
 	}
-
+	
 	private void draw(TextureRegion region, float x, float y, float rotation,
 			boolean renderAtPlayCoordinates) {
 		if (renderAtPlayCoordinates) {

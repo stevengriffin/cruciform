@@ -5,8 +5,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class Score {
 	private static long score;
 	private static int multiplier;
-	private static int damageForNextMultiplier;
-	private static final int DAMAGE_PER_MULT_INCREASE = 100;
+	private static int pointsForNextMultiplier;
+	private static final int POINTS_PER_MULT_INCREASE = 100;
 	private static final long MULTIPLIER_DECAY_TIME = 2000;
 	private static long lastDamagerEventTime;
 	private static int creditsUsed;
@@ -14,20 +14,24 @@ public class Score {
 	public static void init() {
 		score = 0;
 		multiplier = 1;
-		damageForNextMultiplier = 0;
+		pointsForNextMultiplier = 0;
 		lastDamagerEventTime = TimeUtils.millis();
 		creditsUsed = 1;
 	}
 	
-	public static void incrementFromDamagerEvent(final float damage, final float currentHealth) {
-		final int effectiveDamage = (int) (currentHealth > damage ? damage : currentHealth);
-		score += effectiveDamage*multiplier;
-		damageForNextMultiplier += effectiveDamage;
-		while (damageForNextMultiplier >= DAMAGE_PER_MULT_INCREASE) {
-			damageForNextMultiplier -= DAMAGE_PER_MULT_INCREASE;
+	public static void incrementScore(final float points) {
+		score += points*multiplier;
+		pointsForNextMultiplier += points;
+		while (pointsForNextMultiplier >= POINTS_PER_MULT_INCREASE) {
+			pointsForNextMultiplier -= POINTS_PER_MULT_INCREASE;
 			multiplier++;
 		}
 		lastDamagerEventTime = TimeUtils.millis();
+	}
+	
+	public static void incrementFromDamagerEvent(final float damage, final float currentHealth) {
+		final int effectiveDamage = (int) (currentHealth > damage ? damage : currentHealth);
+		incrementScore(effectiveDamage);
 	}
 	
 	public static void update() {

@@ -34,6 +34,7 @@ public class ImageManager {
 		map.put(Picture.ROCKET, newTexture("rocket"));
 		map.put(Picture.ROCKET_FAST, newTexture("rocket_fast"));
 		map.put(Picture.ROCKET_EXPLOSION, newTexture("rocket_explosion"));
+		map.put(Picture.SOUL, newTexture("soul"));
 		map.put(Picture.SIDE_PANEL, newTexture("side_panel"));
 		map.put(Picture.BOTTOM_PANEL, newTexture("bottom_panel"));
 		map.put(Picture.WEAPONS_PANEL, newTexture("weapons_panel"));

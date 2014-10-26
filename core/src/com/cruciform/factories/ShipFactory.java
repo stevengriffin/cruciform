@@ -86,8 +86,7 @@ public class ShipFactory {
 		health.currentHealth = 1;
 		entity.add(health);
 	
-		Collider collider = new Collider();
-		entity.add(collider);
+		new Collider(entity);
 		
 		engine.addEntity(entity);
 		
@@ -119,8 +118,7 @@ public class ShipFactory {
 	
 		entity.add(new Velocity());
 
-		Collider collider = new Collider();
-		entity.add(collider);
+		new Collider(entity);
 	
 		TeamEnemy team = new TeamEnemy();
 		entity.add(team);

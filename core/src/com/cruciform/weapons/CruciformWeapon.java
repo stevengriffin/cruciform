@@ -6,6 +6,7 @@ import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
+import com.cruciform.components.Fader;
 import com.cruciform.components.Lifetime;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
@@ -97,6 +98,8 @@ public class CruciformWeapon extends Weapon {
 		splitter.numberOfNewEntities = 1;
 		splitter.customSplitBehavior = CRUCIFORM_SPLIT_BEHAVIOR;
 		entity.add(splitter);
+	
+		new Fader(entity);
 		
 		engine.addEntity(entity);
 	}

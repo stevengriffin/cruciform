@@ -34,6 +34,7 @@ import com.cruciform.systems.ChildRendererSystem;
 import com.cruciform.systems.CollisionSystem;
 import com.cruciform.systems.DebugRenderSystem;
 import com.cruciform.systems.EnemyMarkerSystem;
+import com.cruciform.systems.FaderSystem;
 import com.cruciform.systems.HealthSystem;
 import com.cruciform.systems.InputSystem;
 import com.cruciform.systems.LifetimeSystem;
@@ -116,6 +117,7 @@ public class Cruciform extends Game {
 		engine.addSystem(new AISystem());
 		engine.addSystem(new AnimatorSystem());
 		engine.addSystem(new BlinkerSystem());
+		engine.addSystem(new FaderSystem());
 		engine.addSystem(new LifetimeSystem(deferrer));
 		engine.addSystem(new CollisionSystem(engine, deferrer));
 		engine.addSystem(new SplitterSystem(this));

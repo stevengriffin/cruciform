@@ -6,14 +6,13 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
-import com.cruciform.images.Picture;
 import com.cruciform.utils.Priority;
 
 public class Renderer extends AbstractComponent {
     public static final ComponentMapper<Renderer> mapper = ComponentMapper.getFor(Renderer.class);
 	public TextureRegion image = null;
 	public NinePatch patch = null;
-	public Picture imageName;
+	public float alpha = 1.0f;
 	public float customXOffset = 0;
 	public float customYOffset = 0;
 	public boolean customOffset = false;

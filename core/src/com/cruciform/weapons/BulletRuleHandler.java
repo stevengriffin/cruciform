@@ -33,9 +33,9 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 		Array<Entity> bullets = new Array<>();
 		for (float rotation = originAngle; rotation < originAngle + spanAngle;
 				rotation += spanAngle/spokes) {
-			Entity entity = new Entity();
+			final Entity entity = new Entity();
 
-			Renderer renderer = Renderer.defaultForBullet(entity, team, image);
+			final Renderer renderer = Renderer.defaultForBullet(entity, team, image);
 
 			Position.defaultForBullet(entity,
 					originX, originY,
@@ -43,16 +43,16 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 					renderer.image.getRegionHeight(),
 					rotation);
 			
-			Velocity velocity = new Velocity();
+			final Velocity velocity = new Velocity();
 			entity.add(velocity);
 			
 			Collider.defaultForProjectile(entity, team);
 		
-			Damager damager = new Damager();
+			final Damager damager = new Damager();
 			damager.damage = DAMAGE_TO_INSTAKILL_PLAYER;
 			entity.add(damager);
 		
-			TeamEnemyBullet bulletTeam = new TeamEnemyBullet();
+			final TeamEnemyBullet bulletTeam = new TeamEnemyBullet();
 			entity.add(bulletTeam);
 			
 			engine.addEntity(entity);
