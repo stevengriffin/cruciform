@@ -89,9 +89,8 @@ public class CruciformWeapon extends Weapon {
 		damager.damage = damage;
 		entity.add(damager);
 	
-		Lifetime lifetime = new Lifetime();
+		Lifetime lifetime = new Lifetime(entity);
 		lifetime.setTimeRemaining(1.5f);
-		entity.add(lifetime);
 		
 		Splitter splitter = new Splitter();
 		splitter.componentsToRemoveFromChildren.add(SoundEffect.class);

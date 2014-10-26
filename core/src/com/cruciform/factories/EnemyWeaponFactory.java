@@ -181,9 +181,8 @@ public class EnemyWeaponFactory {
 			splitter.splitOnDeletion = true;
 			entity.add(splitter);
 
-			Lifetime lifetime = new Lifetime();
+			Lifetime lifetime = new Lifetime(entity);
 			lifetime.setTimeRemaining(1);
-			entity.add(lifetime);
 
 			return entity;
 		};

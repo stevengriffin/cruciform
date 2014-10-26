@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ImageManager {
-	private static Map<Picture, TextureRegion> map = new HashMap<>();
+	private static final Map<Picture, TextureRegion> map = new HashMap<>();
 	
 	static {
 		map.put(Picture.CRUCIFORM_1, newTexture("cruciform_weapon1"));
@@ -25,7 +25,11 @@ public class ImageManager {
 		map.put(Picture.PLAYER_SHIP_EXHAUST_3, newTexture("player_ship_exhaust_3"));
 		map.put(Picture.PLAYER_EXHAUST_CROSS, newTexture("player_exhaust_cross"));
 		map.put(Picture.PLAYER_EXHAUST_CROSS_2, newTexture("player_exhaust_cross_2"));
+		map.put(Picture.PLAYER_EXHAUST_CROSS_3, newTexture("player_exhaust_cross_3"));
+		map.put(Picture.PLAYER_EXHAUST_CROSS_4, newTexture("player_exhaust_cross_4"));
+		map.put(Picture.PLAYER_EXHAUST_GLOW, newTexture("player_exhaust_glow"));
 		map.put(Picture.RIFLE_BULLET, newTexture("rifle_bullet"));
+		map.put(Picture.RIFLE_MUZZLE_FLASH, newTexture("rifle_muzzle_flash"));
 		map.put(Picture.ENEMY_BULLET_ELONGATED, newTexture("enemy_bullet_elongated_1"));
 		map.put(Picture.ROCKET, newTexture("rocket"));
 		map.put(Picture.ROCKET_FAST, newTexture("rocket_fast"));

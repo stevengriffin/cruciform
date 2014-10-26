@@ -8,12 +8,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.cruciform.Cruciform;
+import com.cruciform.components.ParticleEmitter;
 import com.cruciform.components.PlayerInput;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
@@ -25,6 +26,7 @@ import com.cruciform.utils.Conf;
 import com.cruciform.utils.Priority;
 import com.cruciform.utils.Score;
 import com.cruciform.weapons.Weapon;
+import com.esotericsoftware.minlog.Log;
 
 public class RenderSystem extends EntitySystem implements EntityListener {
 
@@ -91,8 +93,8 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	private static int BOTTOM = 1;
 	
 	private void processEntity(Entity entity, float deltaTime) {
-		Position position = Position.mapper.get(entity);
-		Renderer renderer = Renderer.mapper.get(entity);
+		final Position position = Position.mapper.get(entity);
+		final Renderer renderer = Renderer.mapper.get(entity);
 		if (renderer.patch != null) {
 			drawPatch(renderer.patch, position, renderer.renderAtPlayCoordinates);
 		}
@@ -108,6 +110,10 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 			draw(renderer.image, vertices[LEFT],
 				vertices[BOTTOM], position.bounds.getRotation(),
 				renderer.renderAtPlayCoordinates);
+		}
+		final ParticleEmitter particleEmitter = ParticleEmitter.mapper.get(entity);
+		if (particleEmitter != null) {
+			drawParticles(particleEmitter, deltaTime);
 		}
 	}
 
@@ -138,10 +144,24 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 					(rect.width+4), (rect.height+4));
 		}
 	}
+
+	private void drawParticles(final ParticleEmitter emitter, final float deltaTime) {
+		// Update and draw effects.
+		Log.debug("drawing particles");
+		for (int i = emitter.effects.size - 1; i >= 0; i--) {
+			Log.debug("drawing " + i);
+		    final PooledEffect effect = emitter.effects.get(i);
+		    effect.draw(batch, deltaTime);
+		    if (effect.isComplete()) {
+		        effect.free();
+		        emitter.effects.removeIndex(i);
+		    }
+		}	
+	}
 	
 	@Override
 	public void entityAdded(Entity entity) {
-		Renderer renderer = Renderer.mapper.get(entity);
+		final Renderer renderer = Renderer.mapper.get(entity);
 		Array<Entity> entities = entityMap.get(renderer.priority);
 		if (entities == null) {
 			entities = new Array<Entity>();

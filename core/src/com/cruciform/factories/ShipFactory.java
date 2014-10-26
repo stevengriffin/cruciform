@@ -92,8 +92,8 @@ public class ShipFactory {
 		engine.addEntity(entity);
 		
 		// Create graphical player effects
-		EffectFactory.createPlayerExhaust(entity, engine);
-		EffectFactory.createPlayerBody(x, y, entity, engine);
+		final Entity body = EffectFactory.createPlayerBody(x, y, entity, engine);
+		EffectFactory.createPlayerExhaust(entity, body, engine);
 		
 		
 		return entity;

@@ -15,6 +15,7 @@ import com.cruciform.components.Renderer;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamPlayer;
+import com.cruciform.factories.EffectFactory;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
@@ -52,7 +53,7 @@ public class RifleWeapon extends Weapon {
 	}
 
 	@Override
-	void handleUpdate(float dt, Position firerPos) {
+	void handleUpdate(final float dt, final Position firerPos) {
 		if (!recoilGap.tick(dt)) {
 			currentRecoil -= RECOIL_RESET_RATE*dt;
 		}
@@ -60,7 +61,7 @@ public class RifleWeapon extends Weapon {
 	}
 
 	@Override
-	void handleFire(Position firerPos) {
+	void handleFire(final Position firerPos) {
 		currentRecoil += RECOIL_PER_BULLET;
 		bulletsFired++;
 		if (bulletsPerClip > 0) {
@@ -85,16 +86,16 @@ public class RifleWeapon extends Weapon {
 			renderer.priority = new Priority(-1);
 		}
 		
-		Position.defaultForBullet(entity,
+		final Position position = Position.defaultForBullet(entity,
 				originX, originY,
 				renderer.image.getRegionWidth(),
 				renderer.image.getRegionHeight(),
 				-currentRecoil*directionX*directionY);
 		
-		Velocity velocity = new Velocity();
+		final Velocity velocity = new Velocity();
 		entity.add(velocity);
 		
-		LineMover lineMover = new LineMover();
+		final LineMover lineMover = new LineMover();
 		lineMover.maxVelocity = new Vector2(bulletSpeed*MathUtils.sinDeg(currentRecoil)*directionX,
 				bulletSpeed*MathUtils.cosDeg(currentRecoil)*directionY);
 		lineMover.maxRotationalVelocity = -rotationalVelocity*directionX*directionY;
@@ -103,11 +104,13 @@ public class RifleWeapon extends Weapon {
 
 		Collider.defaultForProjectile(entity, team);
 		
-		Damager damager = new Damager();
+		final Damager damager = new Damager();
 		damager.damage = damage;
 		entity.add(damager);
 		
 		engine.addEntity(entity);
+		
+		EffectFactory.createMuzzleFlash(engine, Picture.RIFLE_MUZZLE_FLASH, position);
 	}	
 
 	/**

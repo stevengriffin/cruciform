@@ -40,9 +40,8 @@ public class ExplosionFactory {
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
 	
-		final Lifetime lifetime = new Lifetime();
+		final Lifetime lifetime = new Lifetime(entity);
 		lifetime.setTimeRemaining(0.5f);
-		entity.add(lifetime);
 		
 		final Collider collider = new Collider();
 		collider.teamsToCollide.add(TeamRocket.class);

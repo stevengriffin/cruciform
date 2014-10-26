@@ -35,7 +35,7 @@ public abstract class Level {
 	public void createNextWave() {
 		if (waveIndex >= waves.size) {
 			// TODO next level
-			StateFactory.setState(WinState.class, game);
+			game.deferrer.run(() -> StateFactory.setState(WinState.class, game));
 			return;
 		}
 		Log.debug("creating wave " + waveIndex);

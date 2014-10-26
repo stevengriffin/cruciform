@@ -73,8 +73,8 @@ public class RocketWeapon extends Weapon {
 		Renderer renderer = new Renderer(entity);
 		renderer.image = image;
 		if (team == TeamPlayer.class) {
-			// Render underneath player ship.
-			renderer.priority = new Priority(-1);
+			// Render underneath player ship and exhaust.
+			renderer.priority = new Priority(-5);
 		}
 		
 		Position position = new Position(entity);

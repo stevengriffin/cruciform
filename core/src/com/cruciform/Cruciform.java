@@ -39,6 +39,7 @@ import com.cruciform.systems.InputSystem;
 import com.cruciform.systems.LifetimeSystem;
 import com.cruciform.systems.LineMoverSystem;
 import com.cruciform.systems.MovementSystem;
+import com.cruciform.systems.ParticleEmitterSystem;
 import com.cruciform.systems.RecoilSystem;
 import com.cruciform.systems.RenderSystem;
 import com.cruciform.systems.ShooterSystem;
@@ -96,11 +97,14 @@ public class Cruciform extends Game {
 		shipFactory = new ShipFactory(engine, explosionFactory);
 		
 		// Systems
-		RenderSystem renderSystem = new RenderSystem(this, batch, font);
+		final RenderSystem renderSystem = new RenderSystem(this, batch, font);
 		engine.addSystem(renderSystem);
 		engine.addEntityListener(renderSystem.family, renderSystem);
 		engine.addSystem(new DebugRenderSystem(batch, shapeRenderer));
 		engine.addSystem(new EnemyMarkerSystem(batch, shapeRenderer));
+		final ParticleEmitterSystem particleEmitterSystem = new ParticleEmitterSystem();
+		engine.addSystem(particleEmitterSystem);
+		engine.addEntityListener(ParticleEmitterSystem.family, particleEmitterSystem);
 		engine.addSystem(new ChildPositionSystem(deferrer));
 		engine.addSystem(new ChildRendererSystem());
 		engine.addSystem(new RecoilSystem());

@@ -17,11 +17,10 @@ public class CoolDownMetro {
 		this.metro = new Metro(0, coolDown, 0, false);
 	}
 
+	/** Updates the internal metro by the passed milliseconds and sets the
+        state. Returns false if it is ready to fire again.
+	 **/
 	public boolean tick(final float dt) {
-		/*
-            Updates the internal metro by the passed milliseconds and sets the
-            state.
-		 */
 		if (this.hasFired) {
 			this.hasFired = this.metro.tick(dt);
 		}
