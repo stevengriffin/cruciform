@@ -8,6 +8,7 @@ import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Geometry;
+import com.cruciform.utils.Priority;
 
 public class UIFactory {
 	private final Engine engine;
@@ -20,6 +21,7 @@ public class UIFactory {
 
 		final Renderer renderer = Renderer.defaultForUI(entity, ImageManager.get(Picture.SIDE_PANEL));
 		renderer.renderAtPlayCoordinates = false;
+		renderer.priority = new Priority(100); 
 		
 		final Position position = new Position(entity);
 		if (isLeft) {
@@ -40,6 +42,7 @@ public class UIFactory {
 
 		Renderer renderer = Renderer.defaultForUI(entity, ImageManager.get(Picture.BOTTOM_PANEL));
 		renderer.renderAtPlayCoordinates = false;
+		renderer.priority = new Priority(100); 
 		
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(Conf.playCenter - 
