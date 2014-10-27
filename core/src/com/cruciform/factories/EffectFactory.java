@@ -326,21 +326,26 @@ public class EffectFactory {
 		return entity;
 	}
 
+	private static float INTRO_DELAY = 0.75f;
+	
 	public static void scheduleMoveOutOfSight(final Entity entity) {
 		final Lifetime lifetime = new Lifetime(entity);
 		lifetime.setTimeRemaining(3.0f);
+		
+		entity.remove(LineMover.class);
+		final LineMover mover = new LineMover();
+		mover.accelerates = false;
+		mover.maxVelocity = new Vector2(0, -1000);
+		
 		Timer.schedule(new Task() {
 
 			@Override
 			public void run() {
-				final LineMover mover = new LineMover();
-				mover.accelerates = false;
-				mover.maxVelocity = new Vector2(0, -1000);
 				entity.add(mover);
 				entity.add(new Velocity());
 			}
 
-		}, 0.75f);
+		}, INTRO_DELAY);
 	}
 	
 	public static Entity createParallaxBackground(final Engine engine,
@@ -349,19 +354,26 @@ public class EffectFactory {
 
 		final Renderer renderer = new Renderer(entity);
 		renderer.customOffset = true;
-		renderer.priority = new Priority(-100);
+		renderer.priority = new Priority(-150);
 		renderer.image = ImageManager.get(Picture.PARALLAX_BG_LVL1_1);
 		renderer.renderAtPlayCoordinates = true;
 		
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(0,
-				Conf.canonicalHeight + renderer.image.getRegionHeight()*index,
+				-Conf.fractionY(0.7f) + renderer.image.getRegionHeight()*index,
 				renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
 
 		final LineMover mover = new LineMover();
 		mover.accelerates = false;
 		mover.maxVelocity = new Vector2(0, -50);
-		entity.add(mover);
+		Timer.schedule(new Task() {
+
+			@Override
+			public void run() {
+				entity.add(mover);
+			}
+
+		}, INTRO_DELAY);
 		
 		entity.add(new Velocity());
 	

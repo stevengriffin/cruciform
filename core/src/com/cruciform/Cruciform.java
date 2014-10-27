@@ -135,8 +135,7 @@ public class Cruciform extends Game {
 
 	@Override
 	public void render() {
-		// Color of intro background
-		Gdx.gl.glClearColor(14/255.0f, 14/255.0f, 37/255.0f, 1);
+		Gdx.gl.glClearColor(0, 0, 0.1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
 		super.render();

@@ -24,7 +24,7 @@ public class DebugRenderSystem extends IteratingSystem {
 	public DebugRenderSystem(Batch batch, ShapeRenderer shapeRenderer) {
 		super(Family.getFor(Position.class, Renderer.class, Collider.class));
 		this.shapeRenderer = shapeRenderer;
-		this.priority = 150;
+		this.priority = 170;
 	}
 
 	@Override
