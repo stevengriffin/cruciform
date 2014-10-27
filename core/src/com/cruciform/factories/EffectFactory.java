@@ -10,14 +10,21 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.components.Animator;
 import com.cruciform.components.Child;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Lifetime;
+import com.cruciform.components.LineMover;
+import com.cruciform.components.Parallax;
 import com.cruciform.components.ParticleEmitter;
 import com.cruciform.components.Position;
 import com.cruciform.components.Recoil;
 import com.cruciform.components.Renderer;
+import com.cruciform.components.Velocity;
 import com.cruciform.components.team.TeamPlayerBody;
 import com.cruciform.components.team.TeamSoul;
 import com.cruciform.images.ImageManager;
@@ -30,7 +37,8 @@ import com.cruciform.utils.Priority;
 public class EffectFactory {
 
 	public static enum Particles {
-		PLAYER_EXHAUST
+		PLAYER_EXHAUST,
+		LAVA_ERUPTION
 	}
 	
 	private static final Map<Particles, ParticleEffect> particlesMap = new HashMap<>();
@@ -45,6 +53,7 @@ public class EffectFactory {
 	
 	static {
 		particlesMap.put(Particles.PLAYER_EXHAUST, newParticle("player_exhaust"));
+		particlesMap.put(Particles.LAVA_ERUPTION, newParticle("lava_eruption"));
 	}
 	
 	public static void createPlayerExhaust(final Entity player, final Entity body, final Engine engine) {
@@ -131,8 +140,9 @@ public class EffectFactory {
 		engine.addEntity(glow);
 	}
 	
-	public static Entity createPlayerBody(final float x, final float y, 
-			final Entity player, final Engine engine) {
+	public static Entity createPlayerBody(final Entity player, final Engine engine) {
+		final Polygon playerBounds = Position.mapper.get(player).bounds;
+		
 		// Player ship exhaust fumes
 		final Entity body = new Entity();
 		
@@ -140,7 +150,7 @@ public class EffectFactory {
 		child.parent = player;
 		
 		final Position position = new Position(body);
-		position.bounds = Geometry.polyRect(x, y, 65, 110);
+		position.bounds = Geometry.polyRect(playerBounds.getX(), playerBounds.getY(), 65, 110);
 		position.yDirection = 1;
 		
 		final Renderer renderer = new Renderer(body);
@@ -163,6 +173,40 @@ public class EffectFactory {
 		return body;
 	}
 	
+	public static Entity createLavaOnPlayer(final Entity player, final Engine engine) {
+		// Intro lava effect
+		final Entity lava = new Entity();
+		
+		final Child child = new Child(lava);
+		child.parent = player;
+		
+		final Position position = new Position(lava);
+		position.bounds = Geometry.polyRect(0, 0, 65, 110);
+		position.yDirection = 1;
+		
+		final Renderer renderer = new Renderer(lava);
+		renderer.image = ImageManager.get(Picture.LAVA_ON_PLAYER_1);
+		renderer.customXOffset = -32.5f;
+		renderer.customYOffset = -45;
+		renderer.customOffset = true;
+		renderer.priority = new Priority(95);
+		
+		final float frameTime = 0.2f;
+		final Animator animator = new Animator(lava);
+		animator.animation = new Animation(0.2f, ImageManager.get(Picture.LAVA_ON_PLAYER_1),
+				ImageManager.get(Picture.LAVA_ON_PLAYER_2),
+				ImageManager.get(Picture.LAVA_ON_PLAYER_3),
+				ImageManager.get(Picture.LAVA_ON_PLAYER_4),
+				ImageManager.get(Picture.LAVA_ON_PLAYER_5));
+		animator.animation.setPlayMode(PlayMode.NORMAL);
+
+		final Lifetime lifetime = new Lifetime(lava);
+		lifetime.setTimeRemaining(frameTime*5);
+		
+		engine.addEntity(lava);
+		return lava;
+	}
+	
 	public static void createMuzzleFlash(final Engine engine, final Picture picture,
 			final Position bulletPosition) {
 		final Entity flash = new Entity();
@@ -183,5 +227,150 @@ public class EffectFactory {
 		lifetime.setTimeRemaining(0.01f);
 		
 		engine.addEntity(flash);
+	}
+	
+	public static Entity createLavaBurst(final Engine engine) {
+		final Entity entity = new Entity();
+
+		final Renderer renderer = new Renderer(entity);
+		renderer.priority = new Priority(99);
+		renderer.image = ImageManager.get(Picture.BURST_LAVA_1);
+		renderer.customOffset = true;
+		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
+		renderer.customYOffset = -renderer.image.getRegionHeight()/2;
+		renderer.renderAtPlayCoordinates = true;
+		
+		final float frameTime = 0.05f;
+		final Animator animator = new Animator(entity);
+		animator.animation = new Animation(frameTime, ImageManager.get(Picture.BURST_LAVA_1),
+				ImageManager.get(Picture.BURST_LAVA_2),
+				ImageManager.get(Picture.BURST_LAVA_3),
+				ImageManager.get(Picture.BURST_LAVA_4));
+		animator.animation.setPlayMode(PlayMode.NORMAL);
+		
+		final Lifetime lifetime = new Lifetime(entity);
+		lifetime.setTimeRemaining(frameTime*4);
+		
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(Conf.fractionX(0.5f),
+				Conf.fractionY(0.2f), 0, 0);
+	
+		engine.addEntity(entity);
+		createLavaEruptionParticleEffect(engine);
+		
+		return entity;
+	}
+	
+	public static Entity createLavaEruptionParticleEffect(final Engine engine) {
+		final Entity entity = new Entity();
+
+		final Renderer renderer = new Renderer(entity);
+		renderer.priority = new Priority(99);
+		renderer.image = ImageManager.get(Picture.BLANK);
+		renderer.customOffset = true;
+		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
+		renderer.customYOffset = -renderer.image.getRegionHeight()/2;
+		renderer.renderAtPlayCoordinates = true;
+		
+		final ParticleEmitter emitter = new ParticleEmitter(entity);
+		emitter.pool = new ParticleEffectPool(particlesMap.get(Particles.LAVA_ERUPTION), 20, 20);
+		// Fire only once
+		emitter.coolDown = new CoolDownMetro(1);
+		
+		final Lifetime lifetime = new Lifetime(entity);
+		lifetime.setTimeRemaining(0.5f);
+		
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(Conf.fractionX(0.5f),
+				Conf.fractionY(0.2f), 0, 0);
+	
+		engine.addEntity(entity);
+		return entity;
+	}
+	
+	public static Entity createBackground(final Engine engine) {
+		final Entity entity = new Entity();
+
+		final Renderer renderer = new Renderer(entity);
+		renderer.customOffset = true;
+		renderer.priority = new Priority(-100);
+		renderer.image = ImageManager.get(Picture.BACKGROUND_LAVA);
+		renderer.renderAtPlayCoordinates = false;
+		
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(Conf.playLeft,
+				0, Conf.playWidth, Conf.screenHeight);
+
+		scheduleMoveOutOfSight(entity);
+		
+		engine.addEntity(entity);
+		return entity;
+	}
+	
+	public static Entity createForeground(final Engine engine) {
+		final Entity entity = new Entity();
+
+		final Renderer renderer = new Renderer(entity);
+		renderer.customOffset = true;
+		renderer.priority = new Priority(90);
+		renderer.image = ImageManager.get(Picture.FOREGROUND_LAVA);
+		renderer.renderAtPlayCoordinates = false;
+		
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(Conf.playLeft,
+				0, Conf.playWidth, Conf.screenHeight);
+	
+		scheduleMoveOutOfSight(entity);
+		
+		engine.addEntity(entity);
+		return entity;
+	}
+
+	public static void scheduleMoveOutOfSight(final Entity entity) {
+		final Lifetime lifetime = new Lifetime(entity);
+		lifetime.setTimeRemaining(3.0f);
+		Timer.schedule(new Task() {
+
+			@Override
+			public void run() {
+				final LineMover mover = new LineMover();
+				mover.accelerates = false;
+				mover.maxVelocity = new Vector2(0, -1000);
+				entity.add(mover);
+				entity.add(new Velocity());
+			}
+
+		}, 0.75f);
+	}
+	
+	public static Entity createParallaxBackground(final Engine engine,
+			final Position playerPosition, final int index) {
+		final Entity entity = new Entity();
+
+		final Renderer renderer = new Renderer(entity);
+		renderer.customOffset = true;
+		renderer.priority = new Priority(-100);
+		renderer.image = ImageManager.get(Picture.PARALLAX_BG_LVL1_1);
+		renderer.renderAtPlayCoordinates = true;
+		
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(0,
+				Conf.canonicalHeight + renderer.image.getRegionHeight()*index,
+				renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+
+		final LineMover mover = new LineMover();
+		mover.accelerates = false;
+		mover.maxVelocity = new Vector2(0, -50);
+		entity.add(mover);
+		
+		entity.add(new Velocity());
+	
+		final Parallax parallax = new Parallax(entity);
+		parallax.referencePosition = playerPosition;
+		// Adjust so that lava fall doesn't create bad composition.
+		parallax.xOffset = -30;
+		
+		engine.addEntity(entity);
+		return entity;
 	}
 }

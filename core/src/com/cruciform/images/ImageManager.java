@@ -13,6 +13,7 @@ public class ImageManager {
 	private static final Map<Picture, TextureRegion> map = new HashMap<>();
 	
 	static {
+		map.put(Picture.BLANK, newTexture("blank"));
 		map.put(Picture.CRUCIFORM_1, newTexture("cruciform_weapon1"));
 		map.put(Picture.CRUCIFORM_WEAPON_CROSS, newTexture("cruciform_weapon_cross"));
 		map.put(Picture.PLAYER_SHIP_1, newTexture("ship1"));
@@ -38,6 +39,18 @@ public class ImageManager {
 		map.put(Picture.SIDE_PANEL, newTexture("side_panel"));
 		map.put(Picture.BOTTOM_PANEL, newTexture("bottom_panel"));
 		map.put(Picture.WEAPONS_PANEL, newTexture("weapons_panel"));
+		map.put(Picture.BACKGROUND_LAVA, newTexture("background_lava_pixel"));
+		map.put(Picture.FOREGROUND_LAVA, newTexture("foreground_lava_pixel"));
+		map.put(Picture.BURST_LAVA_1, newTexture("burst_lava_1"));
+		map.put(Picture.BURST_LAVA_2, newTexture("burst_lava_2"));
+		map.put(Picture.BURST_LAVA_3, newTexture("burst_lava_3"));
+		map.put(Picture.BURST_LAVA_4, newTexture("burst_lava_4"));
+		map.put(Picture.LAVA_ON_PLAYER_1, newTexture("lava_on_player_1"));
+		map.put(Picture.LAVA_ON_PLAYER_2, newTexture("lava_on_player_2"));
+		map.put(Picture.LAVA_ON_PLAYER_3, newTexture("lava_on_player_3"));
+		map.put(Picture.LAVA_ON_PLAYER_4, newTexture("lava_on_player_4"));
+		map.put(Picture.LAVA_ON_PLAYER_5, newTexture("lava_on_player_5"));
+		map.put(Picture.PARALLAX_BG_LVL1_1, newTexture("parallax_bg_lvl1_1"));
 	}
 
 	private static Map<NinePatches, NinePatch> ninePatchMap = new HashMap<>();

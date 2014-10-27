@@ -25,6 +25,13 @@ public class Position extends AbstractComponent {
 		position.outOfBoundsHandler = OutOfBoundsHandler.all();
 		return position;
 	}
+
+	public static Position defaultForPlayer(final Entity entity, final float x, final float y) {
+		Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(x, y, 5, 5);
+		position.yDirection = 1;
+		return position;
+	}
 	
 	public void incrementRotation(float degrees) {
 		bounds.rotate(bounds.getRotation() + degrees);

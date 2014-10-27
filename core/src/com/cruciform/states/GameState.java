@@ -5,14 +5,12 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.cruciform.Cruciform;
-import com.cruciform.components.Health;
 import com.cruciform.components.Position;
 import com.cruciform.components.team.TeamPlayer;
+import com.cruciform.factories.EffectFactory;
 import com.cruciform.factories.FormationFactory;
-import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.levels.Level1;
-import com.cruciform.utils.Conf;
 import com.cruciform.utils.Score;
 
 public class GameState extends State {
@@ -27,6 +25,14 @@ public class GameState extends State {
 		FormationFactory.reset();
 		game.engine.removeAllEntities();
 		player = new Level1(game).createAndReturnPlayer();
+		EffectFactory.createLavaOnPlayer(player, game.engine);
+		EffectFactory.createBackground(game.engine);
+		EffectFactory.createForeground(game.engine);
+		EffectFactory.createLavaBurst(game.engine);
+		// Hack to create a bunch of "looping" backgrounds.
+		for (int i = 0; i < 20; i++) {
+			EffectFactory.createParallaxBackground(game.engine, Position.mapper.get(player), i);
+		}
 	}
 
 	@Override
@@ -45,7 +51,9 @@ public class GameState extends State {
 		Timer.instance().start();
 		if (game.engine.getEntitiesFor(Family.getFor(TeamPlayer.class)).size() == 0) {
 			final Position position = Position.mapper.get(player);
-			player = game.shipFactory.createPlayer(position.bounds.getX(), position.bounds.getY());
+			final Entity newPlayer = new Entity();
+			newPlayer.add(position);
+			player = game.shipFactory.createPlayer(newPlayer, false);
 			game.deferrer.shieldAndBlink(player, 3.0f);
 		}
 		game.uiFactory.createSidePanel(true);

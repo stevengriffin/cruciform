@@ -3,6 +3,7 @@ package com.cruciform.levels;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.Cruciform;
+import com.cruciform.components.Position;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.states.WinState;
 import com.cruciform.utils.Conf;
@@ -29,7 +30,9 @@ public abstract class Level {
 	}
 	
 	public Entity createAndReturnPlayer() {
-		return game.shipFactory.createPlayer(Conf.fractionX(0.5f), Conf.canonicalHeight*0.1f);
+		final Entity player = new Entity();
+		Position.defaultForPlayer(player, Conf.fractionX(0.5f), Conf.canonicalHeight*0.1f);
+		return game.shipFactory.createPlayer(player, true);
 	}
 	
 	public void createNextWave() {

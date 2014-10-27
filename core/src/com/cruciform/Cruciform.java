@@ -40,6 +40,7 @@ import com.cruciform.systems.InputSystem;
 import com.cruciform.systems.LifetimeSystem;
 import com.cruciform.systems.LineMoverSystem;
 import com.cruciform.systems.MovementSystem;
+import com.cruciform.systems.ParallaxSystem;
 import com.cruciform.systems.ParticleEmitterSystem;
 import com.cruciform.systems.RecoilSystem;
 import com.cruciform.systems.RenderSystem;
@@ -113,6 +114,7 @@ public class Cruciform extends Game {
 		inputSystem = new InputSystem(this);
 		engine.addSystem(inputSystem);
 		engine.addSystem(new LineMoverSystem());
+		engine.addSystem(new ParallaxSystem());
 		engine.addSystem(new ShooterSystem());
 		engine.addSystem(new AISystem());
 		engine.addSystem(new AnimatorSystem());
@@ -133,7 +135,8 @@ public class Cruciform extends Game {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0.1f, 1);
+		// Color of intro background
+		Gdx.gl.glClearColor(14/255.0f, 14/255.0f, 37/255.0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
 		super.render();

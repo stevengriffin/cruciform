@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.components.AI;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Health;
@@ -45,12 +47,7 @@ public class ShipFactory {
 	    this.weaponFactory = new EnemyWeaponFactory(engine, explosionFactory);
 	}
 	
-	public Entity createPlayer(float x, float y) {
-		Entity entity = new Entity();
-		
-		Position position = new Position(entity);
-		position.bounds = Geometry.polyRect(x, y, 5, 5);
-		position.yDirection = 1;
+	public Entity createPlayer(final Entity entity, final boolean playIntro) {
 		
 		Renderer renderer = new Renderer(entity);
 		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_GOLD_COCKPIT);
@@ -67,21 +64,54 @@ public class ShipFactory {
 		RifleWeapon rifle = new RifleWeapon(0.05f, engine, explosionFactory, team.getClass());
 		SweepWeapon sweep = new SweepWeapon(2.0f, engine, explosionFactory, team.getClass());
 		
-		Shooter shooter = new Shooter();
+		final Shooter shooter = new Shooter();
 		shooter.weapons.add(cruciform);
 		shooter.weapons.add(rocket);
 		shooter.weapons.add(rifle);
 		shooter.weapons.add(sweep);
 		entity.add(shooter);
-		
-		PlayerInput playerInput = new PlayerInput();
+	
+		final PlayerInput playerInput = new PlayerInput();
 		playerInput.actions.put(InputCode.fromButton(Input.Buttons.LEFT), cruciform);
 		playerInput.actions.put(InputCode.fromButton(Input.Buttons.RIGHT), rocket);
 		playerInput.actions.put(InputCode.fromKey(Input.Keys.Z), rifle);
 		playerInput.actions.put(InputCode.fromKey(Input.Keys.X), sweep);
-		entity.add(playerInput);
+	
+		if (playIntro) {
+			// Don't add playerInput until intro animation is finished.
+			// Move the ship up quickly.
+			final LineMover mover = new LineMover();
+			mover.accelerates = false;
+			mover.maxVelocity = new Vector2(0, 1000);
+			entity.add(mover);
 
-		Health health = new Health();
+			entity.add(new Velocity());
+			// Move ship back towards center of screen after awhile.
+			Timer.schedule(new Task() {
+
+				@Override
+				public void run() {
+					mover.maxVelocity.set(0, -1000);
+				}
+
+			}, 0.75f);
+			
+			// Allow player to control ship and end intro animation.
+			Timer.schedule(new Task() {
+
+				@Override
+				public void run() {
+					entity.remove(Velocity.class);
+					entity.remove(LineMover.class);
+					entity.add(playerInput);
+				}
+
+			}, 1);
+		} else {
+			entity.add(playerInput);
+		}
+		
+		final Health health = new Health();
 		health.maxHealth = 1;
 		health.currentHealth = 1;
 		entity.add(health);
@@ -91,7 +121,7 @@ public class ShipFactory {
 		engine.addEntity(entity);
 		
 		// Create graphical player effects
-		final Entity body = EffectFactory.createPlayerBody(x, y, entity, engine);
+		final Entity body = EffectFactory.createPlayerBody(entity, engine);
 		EffectFactory.createPlayerExhaust(entity, body, engine);
 		
 		

@@ -71,6 +71,9 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		final float coolDownBarWidth = Conf.screenWidth/(1920/256.0f);
 		final float coolDownBarHeight = Conf.screenHeight/(1080/128.0f);
 		PlayerInput input = game.getGameState().getPlayer().getComponent(PlayerInput.class);
+		if (input == null) {
+			return;
+		}
 		Shooter shooter = game.getGameState().getPlayer().getComponent(Shooter.class);
 		for (int i = 0; i < shooter.weapons.size(); i++) {
 			final int index = i;
