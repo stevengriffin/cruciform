@@ -106,6 +106,7 @@ public class RifleWeapon extends Weapon {
 		
 		final Damager damager = new Damager();
 		damager.damage = damage;
+		damager.exploder = (bullet) -> explosionFactory.createRifleExplosion(bullet);
 		entity.add(damager);
 		
 		engine.addEntity(entity);

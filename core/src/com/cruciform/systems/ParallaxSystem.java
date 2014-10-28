@@ -6,7 +6,6 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.cruciform.components.Parallax;
 import com.cruciform.components.Position;
 import com.cruciform.utils.Conf;
-import com.esotericsoftware.minlog.Log;
 
 public class ParallaxSystem extends IteratingSystem {
 
@@ -21,7 +20,6 @@ public class ParallaxSystem extends IteratingSystem {
 		final float maxOffset = (position.bounds.getBoundingRectangle().width - 
 				Conf.canonicalPlayWidth)/2;
 		final float fractionOfPlayWidth = -parallax.referencePosition.bounds.getX()/Conf.canonicalPlayWidth;
-		Log.debug("mO: " + maxOffset + " fPW: " + fractionOfPlayWidth + " prod: " + maxOffset*fractionOfPlayWidth);
 		position.bounds.setPosition(parallax.xOffset + parallax.xMult*maxOffset*fractionOfPlayWidth,
 				position.bounds.getY());
 	}

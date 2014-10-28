@@ -16,6 +16,7 @@ import com.cruciform.components.Splitter;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.components.team.TeamSoul;
+import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
 import com.cruciform.utils.Score;
@@ -26,11 +27,14 @@ public class CollisionSystem extends EntitySystem {
 	private final Engine engine;
 	private final ImmutableArray<Entity> entities;
 	private final Deferrer deferrer;
+	private final ExplosionFactory explosionFactory;
 	
-	public CollisionSystem(final Engine engine, final Deferrer deferrer) {
+	public CollisionSystem(final Engine engine, final Deferrer deferrer, 
+			final ExplosionFactory explosionFactory) {
 		this.entities = engine.getEntitiesFor(Family.getFor(Collider.class, Position.class));
 		this.engine = engine;
 		this.deferrer = deferrer;
+		this.explosionFactory = explosionFactory;
 	}
 
 	@Override
@@ -71,6 +75,7 @@ public class CollisionSystem extends EntitySystem {
 			}
 			victimHealth.currentHealth -= damager.damage;
 			Log.debug("Damaged for " + damager.damage);
+			explosionFactory.createExplosion(culprit);
 		}
 	}
 	

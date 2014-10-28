@@ -111,6 +111,7 @@ public class RocketWeapon extends Weapon {
 		
 		Damager damager = new Damager();
 		damager.damage = 100.0f;
+		damager.exploder = (rocket) -> explosionFactory.createRocketExplosion(rocket);
 		entity.add(damager);
 		
 		engine.addEntity(entity);

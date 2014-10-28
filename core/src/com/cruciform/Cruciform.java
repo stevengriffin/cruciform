@@ -121,7 +121,7 @@ public class Cruciform extends Game {
 		engine.addSystem(new BlinkerSystem());
 		engine.addSystem(new FaderSystem());
 		engine.addSystem(new LifetimeSystem(deferrer));
-		engine.addSystem(new CollisionSystem(engine, deferrer));
+		engine.addSystem(new CollisionSystem(engine, deferrer, explosionFactory));
 		engine.addSystem(new SplitterSystem(this));
 		engine.addSystem(new WaveSystem(engine));
 		engine.addSystem(new HealthSystem(explosionFactory, deferrer));

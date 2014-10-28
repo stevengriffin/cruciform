@@ -166,9 +166,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 
 	private void drawParticles(final ParticleEmitter emitter, final float deltaTime) {
 		// Update and draw effects.
-		Log.debug("drawing particles");
 		for (int i = emitter.effects.size - 1; i >= 0; i--) {
-			Log.debug("drawing " + i);
 		    final PooledEffect effect = emitter.effects.get(i);
 		    effect.draw(batch, deltaTime);
 		    if (effect.isComplete()) {

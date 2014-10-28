@@ -10,6 +10,7 @@ import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Fader;
+import com.cruciform.components.Health;
 import com.cruciform.components.Lifetime;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
@@ -25,6 +26,10 @@ import com.cruciform.utils.Conf;
 import com.cruciform.utils.Geometry;
 
 public class ExplosionFactory {
+	
+	public interface Exploder {
+		Entity explode(final Entity explosionCreator);
+	}
 
 	private final Engine engine;
 	
@@ -32,14 +37,22 @@ public class ExplosionFactory {
 		this.engine = engine;
 	}
 
-	public Entity createExplosion(final Entity deadEntity) {
-		TeamEnemy teamEnemy = TeamEnemy.mapper.get(deadEntity);
+	public Entity createExplosion(final Entity explosionCreator) {
+		final TeamEnemy teamEnemy = TeamEnemy.mapper.get(explosionCreator);
 		if (teamEnemy != null) {
 			for (int i = 0; i < teamEnemy.soulCount; i++) {
-				createSoul(deadEntity);
+				createSoul(explosionCreator);
 			}
 		}
-		return createRocketExplosion(deadEntity);
+		final Damager damager = Damager.mapper.get(explosionCreator);
+		if (damager != null && damager.exploder != null) {
+			return damager.exploder.explode(explosionCreator);
+		}
+		final Health health = Health.mapper.get(explosionCreator);
+		if (health != null && health.deathExploder != null) {
+			return health.deathExploder.explode(explosionCreator);
+		}
+		return null;
 	}
 	
 	public Entity createRocketExplosion(final Entity lastRocketFired) {
@@ -78,6 +91,34 @@ public class ExplosionFactory {
 		return entity;
 	}
 
+	public Entity createRifleExplosion(final Entity bullet) {
+		final Position oldPos = Position.mapper.get(bullet);
+		final Rectangle rect = oldPos.bounds.getBoundingRectangle();
+		final float x = rect.x;
+		final float y = rect.y;
+		
+		final Entity entity = new Entity();
+		
+		final Renderer renderer = new Renderer(entity);
+		renderer.image = ImageManager.get(Picture.RIFLE_MUZZLE_FLASH);
+
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+		position.bounds.setRotation(MathUtils.random(0, 360));
+		
+		final Lifetime lifetime = new Lifetime(entity);
+		lifetime.setTimeRemaining(0.1f);
+		
+		// TODO bullet hit noise
+//		final SoundEffect soundEffect = new SoundEffect();
+//		soundEffect.sound = AudioManager.get(Noise.ROCKET_EXPLOSION);
+//		soundEffect.id = soundEffect.sound.play(.5f * Conf.volume);
+//		entity.add(soundEffect);
+		
+		engine.addEntity(entity);
+		return entity;
+	}
+	
 	private final static float SOUL_DROP_SPEED = -300.0f;
 	
 	public void createSoul(final Entity deadEntity) {
