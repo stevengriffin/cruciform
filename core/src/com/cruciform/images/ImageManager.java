@@ -13,6 +13,7 @@ public class ImageManager {
 	private static final Map<Picture, TextureRegion> map = new HashMap<>();
 	
 	static {
+		// TODO refactor to simple TextureRegion fields
 		map.put(Picture.BLANK, newTexture("blank"));
 		map.put(Picture.CRUCIFORM_1, newTexture("cruciform_weapon1"));
 		map.put(Picture.CRUCIFORM_WEAPON_CROSS, newTexture("cruciform_weapon_cross"));
@@ -51,6 +52,7 @@ public class ImageManager {
 		map.put(Picture.LAVA_ON_PLAYER_4, newTexture("lava_on_player_4"));
 		map.put(Picture.LAVA_ON_PLAYER_5, newTexture("lava_on_player_5"));
 		map.put(Picture.PARALLAX_BG_LVL1_1, newTexture("parallax_bg_lvl1_1"));
+		map.put(Picture.BG_PIXEL_PARTICLE_EFFECT, newTexture("bg_pixel_particle_effect"));
 	}
 
 	private static Map<NinePatches, NinePatch> ninePatchMap = new HashMap<>();

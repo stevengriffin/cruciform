@@ -53,7 +53,7 @@ public class EffectFactory {
 	
 	static {
 		particlesMap.put(Particles.PLAYER_EXHAUST, newParticle("player_exhaust"));
-		particlesMap.put(Particles.LAVA_ERUPTION, newParticle("lava_eruption"));
+		particlesMap.put(Particles.LAVA_ERUPTION, newParticle("lava_eruption_pixel"));
 	}
 	
 	public static void createPlayerExhaust(final Entity player, final Entity body, final Engine engine) {
