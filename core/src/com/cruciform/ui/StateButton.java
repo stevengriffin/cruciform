@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.states.State;
-import com.cruciform.utils.Conf;
 
 public class StateButton extends TextButton {
 

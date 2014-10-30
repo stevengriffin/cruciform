@@ -10,6 +10,7 @@ public class Score {
 	private static final long MULTIPLIER_DECAY_TIME = 2000;
 	private static long lastDamagerEventTime;
 	private static int creditsUsed;
+	private static long graze;
 	
 	public static void init() {
 		score = 0;
@@ -17,6 +18,7 @@ public class Score {
 		pointsForNextMultiplier = 0;
 		lastDamagerEventTime = TimeUtils.millis();
 		creditsUsed = 1;
+		graze = 0;
 	}
 	
 	public static void incrementScore(final float points) {
@@ -29,6 +31,12 @@ public class Score {
 		lastDamagerEventTime = TimeUtils.millis();
 	}
 	
+	
+	public static void incrementGraze(final float points) {
+		graze++;
+		incrementScore(points);
+	}
+		
 	public static void incrementFromDamagerEvent(final float damage, final float currentHealth) {
 		final int effectiveDamage = (int) (currentHealth > damage ? damage : currentHealth);
 		incrementScore(effectiveDamage);
@@ -43,6 +51,10 @@ public class Score {
 	
 	public static long getScore() {
 		return score;
+	}
+	
+	public static long getGraze() {
+		return graze;
 	}
 	
 	public static int getMultiplier() {

@@ -14,6 +14,7 @@ public class AISystem extends IteratingSystem {
 		super(Family.getFor(Position.class, Shooter.class, AI.class));
 	}
 	
+	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 		Position position = Position.mapper.get(entity);
 		Shooter shooter = Shooter.mapper.get(entity);

@@ -1,7 +1,9 @@
 package com.cruciform.utils;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.Preferences;
 import com.cruciform.images.ImageManager;
 import com.esotericsoftware.minlog.Log;
@@ -38,37 +40,46 @@ public class Conf {
 
 	public static class Setting<T> {
 		public final String name;
-		private T value = null;
-		public final T min;
-		public final T max;
+		@Nullable private T value = null;
+		@Nullable public final T min;
+		@Nullable public final T max;
+		@NonNull private final T defaultValue;
 		
-		public Setting(final String name) {
+		public Setting(final String name, @NonNull final T defaultValue) {
 			this.name = name;
 			this.min = null;
 			this.max = null;
+			this.defaultValue = defaultValue;
 		}
 		
-		public Setting(final String name, final T min, final T max) {
+		public Setting(final String name, @NonNull final T defaultValue, final T min, final T max) {
 			this.name = name;
 			this.min = min;
 			this.max = max;
+			this.defaultValue = defaultValue;
 		}
 	
-		public void set(final T value) {
+		public void set(final @Nullable T value) {
 			this.value = value;
 		}
 		
-		public T get() {
-			return this.value;
+		public @NonNull T get() {
+			if (this.value != null) {
+				return this.value;
+			} else {
+				return this.defaultValue;
+			}
 		}
 	}
 	
 	public static class SettingsProposal {
-		public final Setting<Float> volume = new Setting<>("Volume", 0.0f, 1.0f);
-		public final Setting<Integer> screenWidth = new Setting<>("Screen Width");
-		public final Setting<Integer> screenHeight = new Setting<>("Screen Height");
-		public final Setting<Boolean> fullScreen = new Setting<>("Full Screen");
-		public final Setting<Float> mouseSensitivity = new Setting<>("Mouse Sensitivity", 0.05f, 2.0f);
+		public final Setting<Float> volume = new Setting<Float>("Volume", 1.0f, 0.0f, 1.0f);
+		public final Setting<Integer> screenWidth = new Setting<Integer>("Screen Width",
+				new Integer(Gdx.graphics.getDesktopDisplayMode().width));
+		public final Setting<Integer> screenHeight = new Setting<Integer>("Screen Height",
+				new Integer(Gdx.graphics.getDesktopDisplayMode().height));
+		public final Setting<Boolean> fullScreen = new Setting<Boolean>("Full Screen", true);
+		public final Setting<Float> mouseSensitivity = new Setting<Float>("Mouse Sensitivity", 0.5f, 0.05f, 2.0f);
 	
 		public static SettingsProposal fromCurrentSettings() {
 			final SettingsProposal proposal = new SettingsProposal();
@@ -83,13 +94,11 @@ public class Conf {
 		public static SettingsProposal fromPersistedSettings() {
 			final Preferences preferences = Gdx.app.getPreferences(PREFERENCES_NAME);
 			final SettingsProposal proposal = new SettingsProposal();
-			proposal.volume.set(preferences.getFloat(proposal.volume.name, 1.0f));
-			// Set to reasonable default based on client PC.
-			DisplayMode displayMode = Gdx.graphics.getDesktopDisplayMode();
-			proposal.screenWidth.set(preferences.getInteger(proposal.screenWidth.name, displayMode.width));
-			proposal.screenHeight.set(preferences.getInteger(proposal.screenHeight.name, displayMode.height));
-			proposal.fullScreen.set(preferences.getBoolean(proposal.fullScreen.name, true));
-			proposal.mouseSensitivity.set(preferences.getFloat(proposal.mouseSensitivity.name, 0.5f));
+			proposal.volume.set(preferences.getFloat(proposal.volume.name));
+			proposal.screenWidth.set(preferences.getInteger(proposal.screenWidth.name));
+			proposal.screenHeight.set(preferences.getInteger(proposal.screenHeight.name));
+			proposal.fullScreen.set(preferences.getBoolean(proposal.fullScreen.name));
+			proposal.mouseSensitivity.set(preferences.getFloat(proposal.mouseSensitivity.name));
 			return proposal;
 		}
 	

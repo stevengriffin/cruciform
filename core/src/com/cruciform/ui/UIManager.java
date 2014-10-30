@@ -54,6 +54,7 @@ public class UIManager {
 	    final SliderStyle sliderStyle = new SliderStyle();
 	    sliderStyle.background = UIManager.sliderPatch;
 	    sliderStyle.knob = UIManager.patchUp;
+	    assert setting.min != null && setting.max != null;
 	    final Slider slider = new Slider(setting.min, setting.max, 0.05f, false, sliderStyle);
 	    slider.setValue(initialValue); 
 	    slider.setSize(500, 8);

@@ -21,6 +21,7 @@ public class FormationFactory {
 	private static void schedule(final Runnable formationTask, final float timeDelay) {
 		activeFormationTasks++;
 		Timer.schedule(new Task() {
+			@Override
 			public void run() {
 				formationTask.run();
 				activeFormationTasks--;

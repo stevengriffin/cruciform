@@ -22,6 +22,7 @@ public class WinState extends State {
         
         drawer.drawCentered("You Win!", Conf.screenCenterX, Conf.screenHeight*0.7f);
         drawer.drawCentered("Score: " + Score.getScore(), Conf.screenCenterX, Conf.screenHeight*0.6f);
+        drawer.drawCentered("Graze: " + Score.getGraze(), Conf.screenCenterX, Conf.screenHeight*0.55f);
         drawer.drawCentered("Credits Used: " + Score.getCreditsUsed(), Conf.screenCenterX, Conf.screenHeight*0.5f);
 		// TODO Make buttons instead
 		final String exitGame = "Exit To Main Menu [ESCAPE]";

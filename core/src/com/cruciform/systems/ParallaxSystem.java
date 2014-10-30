@@ -13,6 +13,7 @@ public class ParallaxSystem extends IteratingSystem {
 		super(Family.getFor(Position.class, Parallax.class));
 	}
 	
+	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 		final Position position = Position.mapper.get(entity);
 		final Parallax parallax = Parallax.mapper.get(entity);

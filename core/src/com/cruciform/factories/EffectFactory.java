@@ -1,8 +1,5 @@
 package com.cruciform.factories;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
@@ -36,13 +33,6 @@ import com.cruciform.utils.Priority;
 
 public class EffectFactory {
 
-	public static enum Particles {
-		PLAYER_EXHAUST,
-		LAVA_ERUPTION
-	}
-	
-	private static final Map<Particles, ParticleEffect> particlesMap = new HashMap<>();
-
 	private static ParticleEffect newParticle(String name) {
 		final ParticleEffect effect = new ParticleEffect();
 		effect.load(Gdx.files.internal("effects/" + name + ".p"), Gdx.files.internal("images"));
@@ -51,10 +41,9 @@ public class EffectFactory {
 		return effect;
 	}
 	
-	static {
-		particlesMap.put(Particles.PLAYER_EXHAUST, newParticle("player_exhaust"));
-		particlesMap.put(Particles.LAVA_ERUPTION, newParticle("lava_eruption_pixel"));
-	}
+	public static final ParticleEffect PLAYER_EXHAUST = newParticle("player_exhaust");
+	public static final ParticleEffect LAVA_ERUPTION = newParticle("lava_eruption_pixel");
+	public static final ParticleEffect RIFLE_FLASH = newParticle("rifle_flash");
 	
 	public static void createPlayerExhaust(final Entity player, final Entity body, final Engine engine) {
 		// Player ship exhaust fumes
@@ -81,7 +70,7 @@ public class EffectFactory {
 		animator.animation.setPlayMode(PlayMode.LOOP);
 	
 		final ParticleEmitter emitter = new ParticleEmitter(exhaust);
-		emitter.pool = new ParticleEffectPool(particlesMap.get(Particles.PLAYER_EXHAUST), 20, 20);
+		emitter.pool = new ParticleEffectPool(PLAYER_EXHAUST, 20, 20);
 		emitter.coolDown = new CoolDownMetro(3.0f);
 		
 		engine.addEntity(exhaust);
@@ -273,7 +262,7 @@ public class EffectFactory {
 		renderer.renderAtPlayCoordinates = true;
 		
 		final ParticleEmitter emitter = new ParticleEmitter(entity);
-		emitter.pool = new ParticleEffectPool(particlesMap.get(Particles.LAVA_ERUPTION), 20, 20);
+		emitter.pool = new ParticleEffectPool(LAVA_ERUPTION, 20, 20);
 		// Fire only once
 		emitter.coolDown = new CoolDownMetro(1);
 		
@@ -381,6 +370,27 @@ public class EffectFactory {
 		parallax.referencePosition = playerPosition;
 		// Adjust so that lava fall doesn't create bad composition.
 		parallax.xOffset = -30;
+		
+		engine.addEntity(entity);
+		return entity;
+	}
+	
+	public static Entity createParticleEmitter(final Engine engine, final float x, final float y,
+			final ParticleEffect effect, final float timeRemaining, final float emitterCoolDown) {
+		final Entity entity = new Entity();
+		
+		final Renderer renderer = new Renderer(entity);
+		renderer.image = ImageManager.get(Picture.BLANK);
+
+		final ParticleEmitter emitter = new ParticleEmitter(entity);
+		emitter.pool = new ParticleEffectPool(effect, 20, 20);
+		emitter.coolDown = new CoolDownMetro(emitterCoolDown);
+		
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(x, y, 0, 0);
+		
+		final Lifetime lifetime = new Lifetime(entity);
+		lifetime.setTimeRemaining(timeRemaining);
 		
 		engine.addEntity(entity);
 		return entity;

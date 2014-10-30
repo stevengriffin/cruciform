@@ -31,7 +31,7 @@ public class GameState extends State {
 		EffectFactory.createLavaBurst(game.engine);
 		// Hack to create a bunch of "looping" backgrounds.
 		for (int i = 0; i < 20; i++) {
-			final Entity bg = EffectFactory.createParallaxBackground(
+			EffectFactory.createParallaxBackground(
 					game.engine, Position.mapper.get(player), i);
 		}
 	}

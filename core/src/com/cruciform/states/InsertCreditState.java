@@ -3,7 +3,6 @@ package com.cruciform.states;
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.ui.StateButton;
-import com.cruciform.utils.Conf;
 import com.cruciform.utils.Score;
 
 public class InsertCreditState extends MenuState {

@@ -27,7 +27,6 @@ import com.cruciform.utils.Conf;
 import com.cruciform.utils.Priority;
 import com.cruciform.utils.Score;
 import com.cruciform.weapons.Weapon;
-import com.esotericsoftware.minlog.Log;
 
 public class RenderSystem extends EntitySystem implements EntityListener {
 
@@ -58,8 +57,10 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.9f);
 		font.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
 				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.85f);
-		font.draw(batch, "Credits Used: " + Score.getCreditsUsed(),
+		font.draw(batch, "Graze: " + Score.getGraze(),
 				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.8f);
+		font.draw(batch, "Credits Used: " + Score.getCreditsUsed(),
+				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.75f);
 		draw(ImageManager.get(Picture.WEAPONS_PANEL), Conf.fractionXLeftUI(0.05f),
 				Conf.screenHeight*0.07f, 0, false);
 		drawPlayerWeaponInfo();

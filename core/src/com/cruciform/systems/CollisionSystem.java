@@ -15,6 +15,7 @@ import com.cruciform.components.Position;
 import com.cruciform.components.Splitter;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
+import com.cruciform.components.team.TeamPlayerBody;
 import com.cruciform.components.team.TeamSoul;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.utils.Conf;
@@ -59,6 +60,7 @@ public class CollisionSystem extends EntitySystem {
 						performSplitterEvent(entity, other);
 						performSplitterEvent(other, entity);
 						performScoreEvent(entity, other);
+						performGrazeEvent(entity, other);
 					}
 				}
 			}
@@ -99,5 +101,13 @@ public class CollisionSystem extends EntitySystem {
 		Score.incrementScore(team.pointValue);
 		deferrer.remove(other);
 		AudioManager.get(Noise.CRUCIFORM).play(Conf.volume*0.2f, 2, 0);
+	}
+	
+	private void performGrazeEvent(final Entity entity, final Entity other) {
+		final TeamPlayerBody team = TeamPlayerBody.mapper.get(other);
+		if (team == null) {
+			return;
+		}
+		Score.incrementGraze(team.pointValue);
 	}
 }

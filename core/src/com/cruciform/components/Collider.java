@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.components.team.TeamPlayer;
+import com.cruciform.components.team.TeamPlayerBody;
 
 
 public class Collider extends AbstractComponent {
@@ -25,6 +26,7 @@ public class Collider extends AbstractComponent {
 		Collider collider = new Collider(entity);
 		if (team == TeamEnemy.class) {
 			collider.teamsToCollide.add(TeamPlayer.class);
+			collider.teamsToCollide.add(TeamPlayerBody.class);
 		} else {
 			collider.teamsToCollide.add(TeamEnemy.class);
 		}

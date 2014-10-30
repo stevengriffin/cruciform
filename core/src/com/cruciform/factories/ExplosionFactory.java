@@ -116,6 +116,9 @@ public class ExplosionFactory {
 //		entity.add(soundEffect);
 		
 		engine.addEntity(entity);
+		
+		EffectFactory.createParticleEmitter(engine, x, y, EffectFactory.RIFLE_FLASH, 1.0f, 2.0f);
+		
 		return entity;
 	}
 	

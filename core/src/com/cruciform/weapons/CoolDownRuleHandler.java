@@ -19,12 +19,13 @@ public class CoolDownRuleHandler extends AbstractRuleHandler<CoolDownMutator> {
 	}
 	
 	public CoolDownMetro updateCoolDown(CoolDownMetro currentCoolDown) {
-		Array<CoolDownMutator> rules = map.get(pattern.getIndex());
+		final Array<CoolDownMutator> rules = map.get(pattern.getIndex());
+		CoolDownMetro newCoolDown = currentCoolDown;
 		if (rules != null) {
 			for (int j = 0; j < rules.size; j++) {
-				currentCoolDown = rules.get(j).mutate(currentCoolDown, pattern.getIndex());
+				newCoolDown = rules.get(j).mutate(newCoolDown, pattern.getIndex());
 			}
-			return currentCoolDown;
+			return newCoolDown;
 		} else {
 			return defaultCoolDown;
 		}

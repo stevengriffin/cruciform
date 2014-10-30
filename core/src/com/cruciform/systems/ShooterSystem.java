@@ -12,6 +12,7 @@ public class ShooterSystem extends IteratingSystem {
 		super(Family.getFor(Position.class, Shooter.class));
 	}
 	
+	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 		Position position = Position.mapper.get(entity);
 		Shooter shooter = Shooter.mapper.get(entity);

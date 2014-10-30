@@ -19,6 +19,7 @@ public class ChildPositionSystem extends IteratingSystem {
 		this.priority = 5;
 	}
 	
+	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
 		final Child child = Child.mapper.get(entity);
 		if (deferrer.entityToBeRemoved(child.parent)) {

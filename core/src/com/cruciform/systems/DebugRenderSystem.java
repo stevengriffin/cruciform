@@ -34,6 +34,7 @@ public class DebugRenderSystem extends IteratingSystem {
 		shapeRenderer.end();
 	}
 	
+	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 		final Position position = Position.mapper.get(entity);
 		final Renderer renderer = Renderer.mapper.get(entity);

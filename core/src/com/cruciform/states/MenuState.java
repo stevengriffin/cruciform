@@ -34,6 +34,7 @@ public abstract class MenuState extends State {
 		}
 	}
 	
+	@Override
 	public void render (float delta) {
 	    stage.act(delta);
 	    stage.draw();
@@ -47,8 +48,7 @@ public abstract class MenuState extends State {
 		super.show();
 	}
 	
-	public abstract void confirm();
-	
+	@Override
 	public void dispose() {
 	    stage.dispose();
 	}

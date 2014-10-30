@@ -62,7 +62,7 @@ public class ShipFactory {
 		CruciformWeapon cruciform = new CruciformWeapon(engine, team.getClass());
 		RocketWeapon rocket = new RocketWeapon(0.1f, engine, explosionFactory, team.getClass());
 		RifleWeapon rifle = new RifleWeapon(0.05f, engine, explosionFactory, team.getClass());
-		SweepWeapon sweep = new SweepWeapon(2.0f, engine, explosionFactory, team.getClass());
+		SweepWeapon sweep = new SweepWeapon(2.0f, engine, team.getClass());
 		
 		final Shooter shooter = new Shooter();
 		shooter.weapons.add(cruciform);

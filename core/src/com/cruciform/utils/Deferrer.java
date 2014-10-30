@@ -53,6 +53,7 @@ public class Deferrer {
 		TeamPlayer teamPlayer = TeamPlayer.mapper.get(entity);
 		if (teamPlayer != null) {
 			Timer.schedule(new Task() {
+				@Override
 				public void run() {
 					StateFactory.setState(InsertCreditState.class, game);
 				}
@@ -95,6 +96,7 @@ public class Deferrer {
 		blinker.metro = new Metro(BLINK_TIME, BLINK_TIME, 0.0f, false);
 		entity.add(blinker);
 		Timer.schedule(new Task() {
+			@Override
 			public void run() {
 				entity.add(collider);
 				entity.remove(Blinker.class);

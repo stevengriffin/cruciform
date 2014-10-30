@@ -14,7 +14,6 @@ import com.cruciform.components.SoundEffect;
 import com.cruciform.components.Velocity;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamPlayer;
-import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
@@ -22,7 +21,6 @@ import com.cruciform.utils.Priority;
 
 public class SweepWeapon extends Weapon {
 
-	private final ExplosionFactory explosionFactory;
 	public float volume = 0.2f;
 	public float sweepSpeed = 800.0f;
 	public float widthMax = 32*4;
@@ -30,10 +28,9 @@ public class SweepWeapon extends Weapon {
 	public int shotGrowthMultiplier = 1;
 	private Entity lastSweepFired = null;
 	
-	public SweepWeapon(final float coolDownTime, final Engine engine, final ExplosionFactory explosionFactory,
+	public SweepWeapon(final float coolDownTime, final Engine engine,
 			final Class<? extends Team> team) {
 		super(coolDownTime, engine, team, 25.0f, "Sweep");
-		this.explosionFactory = explosionFactory;
 	}
 
 	// TODO: Are these accurate?

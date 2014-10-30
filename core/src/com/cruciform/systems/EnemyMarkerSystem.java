@@ -31,6 +31,7 @@ public class EnemyMarkerSystem extends IteratingSystem {
 		shapeRenderer.end();
 	}
 	
+	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 		Position position = Position.mapper.get(entity);
 		shapeRenderer.setColor(markerColor);

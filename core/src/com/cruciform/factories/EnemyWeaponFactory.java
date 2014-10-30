@@ -82,7 +82,7 @@ public class EnemyWeaponFactory {
 		bulletRuleHandler.addRule(createLineMoverBehavior(rotationalVelocity, bulletSpeed));
 		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
 		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(3.0f), patternMax);
-		RadialWeapon radial = new RadialWeapon(coolDown, engine, explosionFactory,
+		RadialWeapon radial = new RadialWeapon(coolDown, engine,
 				bulletRuleHandler, coolDownRuleHandler);
 		return radial;
 	}
@@ -98,7 +98,7 @@ public class EnemyWeaponFactory {
 		bulletRuleHandler.addRule(createPentagramBehavior());
 		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
 		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(3.0f), patternMax);
-		RadialWeapon radial = new RadialWeapon(coolDown, engine, explosionFactory,
+		RadialWeapon radial = new RadialWeapon(coolDown, engine,
 				bulletRuleHandler, coolDownRuleHandler);
 		return radial;
 	}
@@ -112,7 +112,7 @@ public class EnemyWeaponFactory {
 		bulletRuleHandler.addRule(createLineMoverBehavior(rotationalVelocity, bulletSpeed));
 		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
 		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(2.0f), 3);
-		RadialWeapon radial = new RadialWeapon(2.0f, engine, explosionFactory, bulletRuleHandler, coolDownRuleHandler);
+		RadialWeapon radial = new RadialWeapon(2.0f, engine, bulletRuleHandler, coolDownRuleHandler);
 		return radial;
 	}
 	
@@ -125,7 +125,7 @@ public class EnemyWeaponFactory {
 		bulletRuleHandler.addRule(createLineMoverBehavior(rotationalVelocity, bulletSpeed));
 		CoolDownRuleHandler coolDownRuleHandler = new CoolDownRuleHandler(incrementor);
 		coolDownRuleHandler.addRule((cD, index) -> CoolDownMetro.asPrefired(2.0f), patternMax);
-		RadialWeapon radial = new RadialWeapon(coolDown, engine, explosionFactory,
+		RadialWeapon radial = new RadialWeapon(coolDown, engine,
 				bulletRuleHandler, coolDownRuleHandler);
 		return radial;
 	}

@@ -12,6 +12,7 @@ public class AnimatorSystem extends IteratingSystem {
 		super(Family.getFor(Animator.class, Renderer.class));
 	}
 	
+	@Override
 	public void processEntity(Entity entity, float deltaTime) {
 		Animator animator = Animator.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);

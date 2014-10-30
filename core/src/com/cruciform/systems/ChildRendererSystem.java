@@ -13,6 +13,7 @@ public class ChildRendererSystem extends IteratingSystem {
 		this.priority = 6;
 	}
 	
+	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
 		final Child child = Child.mapper.get(entity);
 		final Renderer childRenderer = Renderer.mapper.get(entity);

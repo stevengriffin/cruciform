@@ -31,6 +31,7 @@ public class SettingsState extends State {
 	   
 	}
 
+	@Override
 	public void render (float delta) {
 	    stage.act(delta);
 	    stage.draw();
@@ -86,6 +87,7 @@ public class SettingsState extends State {
 	    new StateButton("Cancel", MainMenuState.class, false));
 	}
 	
+	@Override
 	public void dispose() {
 	    stage.dispose();
 	}

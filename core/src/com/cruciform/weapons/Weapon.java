@@ -45,10 +45,12 @@ public abstract class Weapon implements InputAction {
 		return firedSuccessfully;
 	}
 	
+	@Override
 	public void setFiring(boolean shouldFire) {
 		this.shouldFire  = shouldFire;
 	}
 
+	@Override
 	public boolean getFiring() {
 		return shouldFire;
 	}
