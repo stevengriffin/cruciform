@@ -125,9 +125,10 @@ public class RocketWeapon extends Weapon {
 	@Override
 	public void setFiring(boolean shouldFire) {
 		super.setFiring(shouldFire);
-		if (!shouldFire && isFastRocket()) {
+		if (!shouldFire && isFastRocket() && Position.mapper.get(lastRocketFired) != null) {
 			explosionFactory.createRocketExplosion(lastRocketFired);
 			engine.removeEntity(lastRocketFired);
+			lastRocketFired.remove(Position.class);
 		}
 	}
 	

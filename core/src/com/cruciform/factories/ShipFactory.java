@@ -56,13 +56,13 @@ public class ShipFactory {
 		renderer.customOffset = true;
 		renderer.priority = new Priority(1);
 		
-		TeamPlayer team = new TeamPlayer();
+		final TeamPlayer team = new TeamPlayer();
 		entity.add(team);
 		
-		CruciformWeapon cruciform = new CruciformWeapon(engine, team.getClass());
-		RocketWeapon rocket = new RocketWeapon(0.1f, engine, explosionFactory, team.getClass());
-		RifleWeapon rifle = new RifleWeapon(0.05f, engine, explosionFactory, team.getClass());
-		SweepWeapon sweep = new SweepWeapon(2.0f, engine, team.getClass());
+		final CruciformWeapon cruciform = new CruciformWeapon(engine, team.getClass());
+		final RocketWeapon rocket = new RocketWeapon(0.1f, engine, explosionFactory, team.getClass());
+		final RifleWeapon rifle = new RifleWeapon(0.05f, engine, explosionFactory, team.getClass());
+		final SweepWeapon sweep = new SweepWeapon(2.0f, engine, team.getClass());
 		
 		final Shooter shooter = new Shooter();
 		shooter.weapons.add(cruciform);
