@@ -1,0 +1,42 @@
+jre/lib/rt/java/sql
+jre/lib/rt/nio
+
+jre/lib/rt/com/sun/corba
+jre/lib/rt/com/sun/jmx
+jre/lib/rt/com/sun/jndi
+jre/lib/rt/com/sun/media
+jre/lib/rt/com/sun/naming
+jre/lib/rt/com/sun/rowset
+jre/lib/rt/com/sun/script
+jre/lib/rt/sun/applet
+jre/lib/rt/sun/corba
+jre/lib/rt/sun/management
+
+jre/lib/rt/com/sun/java/swing
+# Dangerous, need XML for preferences saving.
+jre/lib/rt/com/sun/xml/internal/bind/v2
+jre/lib/rt/com/sun/xml/internal/ws
+
+
+jre/lib/zi
+
+jre/lib/images
+
+# This caches classloading for the JRE.
+jre/lib/amd64/server/classes.jsa
+
+# JS runtime for embedding JS in Java.
+/jre/lib/ext/nashorn.jar
+
+jre/man
+
+jre/bin/keytool
+jre/bin/jjs
+jre/bin/orbd
+jre/bin/rmid
+jre/bin/servertool
+jre/bin/unpack200
+jre/bin/pack200
+jre/bin/policytool
+jre/bin/rmiregistry
+jre/bin/tnameserv

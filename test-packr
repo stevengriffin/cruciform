@@ -1,0 +1,2 @@
+java -jar packr.jar packr-config-linux64.json
+out-linux64/cruciform

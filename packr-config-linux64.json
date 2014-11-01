@@ -7,6 +7,6 @@
     "vmargs": [
        "-Xmx1G"
     ],
-    "minimizejre": "soft",
+    "minimizejre": "minimizejre-linux64",
     "outdir": "out-linux64"
 }

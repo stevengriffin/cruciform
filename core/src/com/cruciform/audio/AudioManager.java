@@ -22,18 +22,18 @@ public class AudioManager {
 	
 	private static Map<Noise, Sound> map = new HashMap<>();
 	private static List<Music> tracks = Arrays.asList(
-			newMusic("track1.mp3"),
-			newMusic("track2.mp3"),
-			newMusic("track3.mp3"),
-			newMusic("track4.mp3"),
+//			newMusic("track1.mp3"),
+//			newMusic("track2.mp3"),
+//			newMusic("track3.mp3"),
+//			newMusic("track4.mp3"),
 			newMusic("track5.mp3"),
-			newMusic("track6.mp3"),
-			newMusic("track7.mp3"),
-			newMusic("track8.mp3"),
-			newMusic("track9.mp3"),
-			newMusic("track10.mp3"),
-			newMusic("track11.mp3"),
-			newMusic("track12.mp3"),
+//			newMusic("track6.mp3"),
+//			newMusic("track7.mp3"),
+//			newMusic("track8.mp3"),
+//			newMusic("track9.mp3"),
+//			newMusic("track10.mp3"),
+//			newMusic("track11.mp3"),
+//			newMusic("track12.mp3"),
 			newMusic("track13.mp3"));
 	private static List<Music> shuffledTracks;
 	private static int currentTrackNumber = -1;
@@ -66,7 +66,7 @@ public class AudioManager {
 	public static void initMusic(Class<? extends State> state) {
 		if (state == MainMenuState.class || state == SettingsState.class
 				|| state == ControlsState.class) {
-			Music menuMusic = tracks.get(12);
+			Music menuMusic = tracks.get(tracks.size() - 1);
 			menuMusic.setLooping(true);
 			menuMusic.setVolume(Conf.volume);
 			menuMusic.play();
@@ -91,7 +91,7 @@ public class AudioManager {
 	public static void stopMusic(Class<? extends State> state) {
 		if (state == MainMenuState.class || state == SettingsState.class
 				|| state == ControlsState.class) {
-			tracks.get(12).stop();
+			tracks.get(tracks.size() - 1).stop();
 		} else if (state == GameState.class || state == InsertCreditState.class) {
 			if (currentTrackNumber >= 0) {
 				Music music = shuffledTracks.get(currentTrackNumber);
