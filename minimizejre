@@ -33,18 +33,3 @@ jre/lib/ext/nashorn.jar
 
 jre/man
 
-# i386/windows only, experimental
-jre/lib/applet
-jre/lib/deploy
-jre/lib/deploy.jar
-jre/lib/fonts
-jre/lib/javaws.jar
-jre/lib/javaws.pck
-jre/lib/plugin.jar
-jre/lib/plugin.pack
-jre/lib/jfxswt.jar
-
-# windows only, see http://stackoverflow.com/questions/4387266/reducing-size-of-jre
-bin/wsdetect.dll
-bin/deploy.dll
-bin/jp2iexp.dll

@@ -7,6 +7,6 @@
     "vmargs": [
        "-Xmx1G"
     ],
-    "minimizejre": "minimizejre-linux64",
+    "minimizejre": "minimizejre",
     "outdir": "out-linux64"
 }
