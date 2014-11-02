@@ -95,7 +95,7 @@ public class Cruciform extends Game {
 		// Factories
 		deferrer = new Deferrer(engine, this);
 		uiFactory = new UIFactory(engine);
-		explosionFactory = new ExplosionFactory(engine);
+		explosionFactory = new ExplosionFactory(this);
 		shipFactory = new ShipFactory(engine, explosionFactory);
 		
 		// Systems

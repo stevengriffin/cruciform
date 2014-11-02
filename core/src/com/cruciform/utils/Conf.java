@@ -168,10 +168,10 @@ public class Conf {
 	}
 	
 	public static float playToScreenX(float x) {
-		return x*scaleFactor + playLeft;
+		return x*scaleFactor + playLeft + GameCamera.getX();
 	}
 	public static float playToScreenY(float y) {
-		return y*Conf.scaleFactor + Conf.playBottom;
+		return y*Conf.scaleFactor + Conf.playBottom + GameCamera.getY();
 	}
 	
 }

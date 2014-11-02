@@ -264,10 +264,10 @@ public class EffectFactory {
 		final ParticleEmitter emitter = new ParticleEmitter(entity);
 		emitter.pool = new ParticleEffectPool(LAVA_ERUPTION, 20, 20);
 		// Fire only once
-		emitter.coolDown = new CoolDownMetro(1);
+		emitter.coolDown = new CoolDownMetro(2);
 		
 		final Lifetime lifetime = new Lifetime(entity);
-		lifetime.setTimeRemaining(0.5f);
+		lifetime.setTimeRemaining(1.0f);
 		
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(Conf.fractionX(0.5f),

@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.cruciform.Cruciform;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;
@@ -23,6 +24,7 @@ import com.cruciform.components.team.TeamSoul;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
+import com.cruciform.utils.GameCamera;
 import com.cruciform.utils.Geometry;
 
 public class ExplosionFactory {
@@ -32,9 +34,11 @@ public class ExplosionFactory {
 	}
 
 	private final Engine engine;
+	private final Cruciform game;
 	
-	public ExplosionFactory(final Engine engine) {
-		this.engine = engine;
+	public ExplosionFactory(final Cruciform game) {
+		this.engine = game.engine;
+		this.game = game;
 	}
 
 	public Entity createExplosion(final Entity explosionCreator) {
@@ -88,6 +92,9 @@ public class ExplosionFactory {
 		new Fader(entity);
 		
 		engine.addEntity(entity);
+		
+		GameCamera.shake(GameCamera.SMALL_SHAKE);
+		
 		return entity;
 	}
 
