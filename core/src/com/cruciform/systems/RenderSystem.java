@@ -22,7 +22,6 @@ import com.cruciform.components.Renderer;
 import com.cruciform.components.Shooter;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.NinePatches;
-import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Priority;
 import com.cruciform.utils.Score;
@@ -61,7 +60,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.8f);
 		font.draw(batch, "Credits Used: " + Score.getCreditsUsed(),
 				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.75f);
-		draw(ImageManager.get(Picture.WEAPONS_PANEL), Conf.fractionXLeftUI(0.05f),
+		draw(ImageManager.WEAPONS_PANEL, Conf.fractionXLeftUI(0.05f),
 				Conf.screenHeight*0.07f, 0, false);
 		drawPlayerWeaponInfo();
 		batch.end();

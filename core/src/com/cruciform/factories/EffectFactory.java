@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
@@ -25,7 +26,6 @@ import com.cruciform.components.Velocity;
 import com.cruciform.components.team.TeamPlayerBody;
 import com.cruciform.components.team.TeamSoul;
 import com.cruciform.images.ImageManager;
-import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
@@ -56,7 +56,7 @@ public class EffectFactory {
 		position.bounds = Geometry.polyRect(0, 0, 0, 0);
 		
 		final Renderer renderer = new Renderer(exhaust);
-		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_EXHAUST_1);
+		renderer.image = ImageManager.PLAYER_SHIP_EXHAUST_1;
 		renderer.customXOffset = -32.5f;
 		renderer.customYOffset = -renderer.image.getRegionHeight();
 		renderer.customOffset = true;
@@ -64,9 +64,9 @@ public class EffectFactory {
 		renderer.priority = new Priority(-4);
 	
 		final Animator animator = new Animator(exhaust);
-		animator.animation = new Animation(0.125f, ImageManager.get(Picture.PLAYER_SHIP_EXHAUST_1),
-				ImageManager.get(Picture.PLAYER_SHIP_EXHAUST_2),
-				ImageManager.get(Picture.PLAYER_SHIP_EXHAUST_3));
+		animator.animation = new Animation(0.125f, ImageManager.PLAYER_SHIP_EXHAUST_1,
+				ImageManager.PLAYER_SHIP_EXHAUST_2,
+				ImageManager.PLAYER_SHIP_EXHAUST_3);
 		animator.animation.setPlayMode(PlayMode.LOOP);
 	
 		final ParticleEmitter emitter = new ParticleEmitter(exhaust);
@@ -93,7 +93,7 @@ public class EffectFactory {
 		position.bounds = Geometry.polyRect(0, 0, 0, 0);
 		
 		final Renderer renderer = new Renderer(exhaustCross);
-		renderer.image = ImageManager.get(Picture.PLAYER_EXHAUST_CROSS);
+		renderer.image = ImageManager.PLAYER_EXHAUST_CROSS;
 		renderer.customXOffset = xOffset;
 		renderer.customYOffset = -renderer.image.getRegionHeight()-10;
 		renderer.customOffset = true;
@@ -101,9 +101,9 @@ public class EffectFactory {
 		renderer.priority = new Priority(2);
 	
 		final Animator animator = new Animator(exhaustCross);
-		animator.animation = new Animation(0.3f, ImageManager.get(Picture.PLAYER_EXHAUST_CROSS_2),
-				ImageManager.get(Picture.PLAYER_EXHAUST_CROSS_3),
-				ImageManager.get(Picture.PLAYER_EXHAUST_CROSS_4));
+		animator.animation = new Animation(0.3f, ImageManager.PLAYER_EXHAUST_CROSS_2,
+				ImageManager.PLAYER_EXHAUST_CROSS_3,
+				ImageManager.PLAYER_EXHAUST_CROSS_4);
 		animator.animation.setPlayMode(PlayMode.LOOP);
 		
 		engine.addEntity(exhaustCross);
@@ -119,7 +119,7 @@ public class EffectFactory {
 		position.bounds = Geometry.polyRect(0, 0, 0, 0);
 		
 		final Renderer renderer = new Renderer(glow);
-		renderer.image = ImageManager.get(Picture.PLAYER_EXHAUST_GLOW);
+		renderer.image = ImageManager.PLAYER_EXHAUST_GLOW;
 		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
 		renderer.customYOffset = -renderer.image.getRegionHeight();
 		renderer.customOffset = true;
@@ -143,7 +143,7 @@ public class EffectFactory {
 		position.yDirection = 1;
 		
 		final Renderer renderer = new Renderer(body);
-		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_GOLD_BODY);
+		renderer.image = ImageManager.PLAYER_SHIP_GOLD_BODY;
 		renderer.customXOffset = -32.5f;
 		renderer.customYOffset = -45;
 		renderer.customOffset = true;
@@ -174,7 +174,7 @@ public class EffectFactory {
 		position.yDirection = 1;
 		
 		final Renderer renderer = new Renderer(lava);
-		renderer.image = ImageManager.get(Picture.LAVA_ON_PLAYER_1);
+		renderer.image = ImageManager.LAVA_ON_PLAYER_1;
 		renderer.customXOffset = -32.5f;
 		renderer.customYOffset = -45;
 		renderer.customOffset = true;
@@ -182,11 +182,11 @@ public class EffectFactory {
 		
 		final float frameTime = 0.2f;
 		final Animator animator = new Animator(lava);
-		animator.animation = new Animation(0.2f, ImageManager.get(Picture.LAVA_ON_PLAYER_1),
-				ImageManager.get(Picture.LAVA_ON_PLAYER_2),
-				ImageManager.get(Picture.LAVA_ON_PLAYER_3),
-				ImageManager.get(Picture.LAVA_ON_PLAYER_4),
-				ImageManager.get(Picture.LAVA_ON_PLAYER_5));
+		animator.animation = new Animation(0.2f, ImageManager.LAVA_ON_PLAYER_1,
+				ImageManager.LAVA_ON_PLAYER_2,
+				ImageManager.LAVA_ON_PLAYER_3,
+				ImageManager.LAVA_ON_PLAYER_4,
+				ImageManager.LAVA_ON_PLAYER_5);
 		animator.animation.setPlayMode(PlayMode.NORMAL);
 
 		final Lifetime lifetime = new Lifetime(lava);
@@ -196,7 +196,7 @@ public class EffectFactory {
 		return lava;
 	}
 	
-	public static void createMuzzleFlash(final Engine engine, final Picture picture,
+	public static void createMuzzleFlash(final Engine engine, final TextureRegion image,
 			final Position bulletPosition) {
 		final Entity flash = new Entity();
 		
@@ -205,7 +205,7 @@ public class EffectFactory {
 				bulletPosition.bounds.getY(), 0, 0);
 		
 		final Renderer renderer = new Renderer(flash);
-		renderer.image = ImageManager.get(picture);
+		renderer.image = image;
 		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
 		renderer.customYOffset = 5;
 		renderer.customOffset = true;
@@ -223,7 +223,7 @@ public class EffectFactory {
 
 		final Renderer renderer = new Renderer(entity);
 		renderer.priority = new Priority(99);
-		renderer.image = ImageManager.get(Picture.BURST_LAVA_1);
+		renderer.image = ImageManager.BURST_LAVA_1;
 		renderer.customOffset = true;
 		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
 		renderer.customYOffset = -renderer.image.getRegionHeight()/2;
@@ -231,10 +231,10 @@ public class EffectFactory {
 		
 		final float frameTime = 0.05f;
 		final Animator animator = new Animator(entity);
-		animator.animation = new Animation(frameTime, ImageManager.get(Picture.BURST_LAVA_1),
-				ImageManager.get(Picture.BURST_LAVA_2),
-				ImageManager.get(Picture.BURST_LAVA_3),
-				ImageManager.get(Picture.BURST_LAVA_4));
+		animator.animation = new Animation(frameTime, ImageManager.BURST_LAVA_1,
+				ImageManager.BURST_LAVA_2,
+				ImageManager.BURST_LAVA_3,
+				ImageManager.BURST_LAVA_4);
 		animator.animation.setPlayMode(PlayMode.NORMAL);
 		
 		final Lifetime lifetime = new Lifetime(entity);
@@ -255,7 +255,7 @@ public class EffectFactory {
 
 		final Renderer renderer = new Renderer(entity);
 		renderer.priority = new Priority(99);
-		renderer.image = ImageManager.get(Picture.BLANK);
+		renderer.image = ImageManager.BLANK;
 		renderer.customOffset = true;
 		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
 		renderer.customYOffset = -renderer.image.getRegionHeight()/2;
@@ -283,7 +283,7 @@ public class EffectFactory {
 		final Renderer renderer = new Renderer(entity);
 		renderer.customOffset = true;
 		renderer.priority = new Priority(-100);
-		renderer.image = ImageManager.get(Picture.BACKGROUND_LAVA);
+		renderer.image = ImageManager.BACKGROUND_LAVA;
 		renderer.renderAtPlayCoordinates = false;
 		
 		final Position position = new Position(entity);
@@ -302,7 +302,7 @@ public class EffectFactory {
 		final Renderer renderer = new Renderer(entity);
 		renderer.customOffset = true;
 		renderer.priority = new Priority(90);
-		renderer.image = ImageManager.get(Picture.FOREGROUND_LAVA);
+		renderer.image = ImageManager.FOREGROUND_LAVA;
 		renderer.renderAtPlayCoordinates = false;
 		
 		final Position position = new Position(entity);
@@ -344,7 +344,7 @@ public class EffectFactory {
 		final Renderer renderer = new Renderer(entity);
 		renderer.customOffset = true;
 		renderer.priority = new Priority(-150);
-		renderer.image = ImageManager.get(Picture.PARALLAX_BG_LVL1_1);
+		renderer.image = ImageManager.PARALLAX_BG_LVL1_1;
 		renderer.renderAtPlayCoordinates = true;
 		
 		final Position position = new Position(entity);
@@ -380,7 +380,7 @@ public class EffectFactory {
 		final Entity entity = new Entity();
 		
 		final Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.get(Picture.BLANK);
+		renderer.image = ImageManager.BLANK;
 
 		final ParticleEmitter emitter = new ParticleEmitter(entity);
 		emitter.pool = new ParticleEffectPool(effect, 20, 20);

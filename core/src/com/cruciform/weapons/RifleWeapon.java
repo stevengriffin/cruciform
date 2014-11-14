@@ -18,14 +18,13 @@ import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.EffectFactory;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.images.ImageManager;
-import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Priority;
 
 public class RifleWeapon extends Weapon {
 
-	private static final TextureRegion RIFLE_BULLET_IMAGE = ImageManager.get(Picture.RIFLE_BULLET);
+	private static final TextureRegion RIFLE_BULLET_IMAGE = ImageManager.RIFLE_BULLET;
 	private final ExplosionFactory explosionFactory;
 	private float currentRecoil = 0.0f;
 	public float rotationalVelocity = 0;
@@ -111,7 +110,7 @@ public class RifleWeapon extends Weapon {
 		
 		engine.addEntity(entity);
 		
-		EffectFactory.createMuzzleFlash(engine, Picture.RIFLE_MUZZLE_FLASH, position);
+		EffectFactory.createMuzzleFlash(engine, ImageManager.RIFLE_MUZZLE_FLASH, position);
 	}	
 
 	/**

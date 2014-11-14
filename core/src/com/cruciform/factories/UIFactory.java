@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.images.ImageManager;
-import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.Priority;
@@ -19,7 +18,7 @@ public class UIFactory {
 	public Entity createSidePanel(boolean isLeft) {
 		final Entity entity = new Entity();
 
-		final Renderer renderer = Renderer.defaultForUI(entity, ImageManager.get(Picture.SIDE_PANEL));
+		final Renderer renderer = Renderer.defaultForUI(entity, ImageManager.SIDE_PANEL);
 		renderer.renderAtPlayCoordinates = false;
 		renderer.priority = new Priority(100); 
 		
@@ -40,7 +39,7 @@ public class UIFactory {
 	public Entity createBottomPanel() {
 		final Entity entity = new Entity();
 
-		Renderer renderer = Renderer.defaultForUI(entity, ImageManager.get(Picture.BOTTOM_PANEL));
+		Renderer renderer = Renderer.defaultForUI(entity, ImageManager.BOTTOM_PANEL);
 		renderer.renderAtPlayCoordinates = false;
 		renderer.priority = new Priority(100); 
 		

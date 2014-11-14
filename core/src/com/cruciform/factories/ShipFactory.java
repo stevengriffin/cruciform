@@ -19,7 +19,6 @@ import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.enemies.EnemyTypes;
 import com.cruciform.images.ImageManager;
-import com.cruciform.images.Picture;
 import com.cruciform.input.InputCode;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
@@ -50,7 +49,7 @@ public class ShipFactory {
 	public Entity createPlayer(final Entity entity, final boolean playIntro) {
 		
 		Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_GOLD_COCKPIT);
+		renderer.image = ImageManager.PLAYER_SHIP_GOLD_COCKPIT;
 		renderer.customXOffset = -32.5f;
 		renderer.customYOffset = -45;
 		renderer.customOffset = true;
@@ -133,7 +132,7 @@ public class ShipFactory {
 		Entity entity = new Entity();
 		
 		Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.get(Picture.PLAYER_SHIP_1);
+		renderer.image = ImageManager.GHOST_1;
 		
 		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, 

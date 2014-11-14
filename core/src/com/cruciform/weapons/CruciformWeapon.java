@@ -15,7 +15,6 @@ import com.cruciform.components.Splitter;
 import com.cruciform.components.team.Team;
 import com.cruciform.images.ImageManager;
 import com.cruciform.images.NinePatches;
-import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.EntityMutator;
 import com.cruciform.utils.Geometry;
@@ -49,7 +48,7 @@ public class CruciformWeapon extends Weapon {
 			final Splitter splitter = Splitter.mapper.get(entity);
 			final Position position = Position.mapper.get(entity);
 			final Renderer renderer = Renderer.mapper.get(entity);
-			renderer.image = ImageManager.get(Picture.CRUCIFORM_WEAPON_CROSS);
+			renderer.image = ImageManager.CRUCIFORM_WEAPON_CROSS;
 			renderer.customOffset = true;
 			renderer.customXOffset = renderer.image.getRegionWidth()/2;
 			renderer.customYOffset = -renderer.image.getRegionHeight()/2;

@@ -7,12 +7,11 @@ import com.cruciform.audio.Noise;
 import com.cruciform.components.Position;
 import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.images.ImageManager;
-import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 
 public class RadialWeapon extends Weapon {
 
-	private static final TextureRegion BULLET_IMAGE = ImageManager.get(Picture.ENEMY_BULLET_ELONGATED);
+	private static final TextureRegion BULLET_IMAGE = ImageManager.ENEMY_BULLET_ELONGATED;
 	public float volume = 0.0f;
 	public final BulletRuleHandler bulletRuleHandler;
 	private final CoolDownRuleHandler coolDownRuleHandler; 

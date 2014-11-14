@@ -22,7 +22,6 @@ import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.components.team.TeamRocket;
 import com.cruciform.components.team.TeamSoul;
 import com.cruciform.images.ImageManager;
-import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.GameCamera;
 import com.cruciform.utils.Geometry;
@@ -68,7 +67,7 @@ public class ExplosionFactory {
 		final Entity entity = new Entity();
 		
 		final Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.get(Picture.ROCKET_EXPLOSION);
+		renderer.image = ImageManager.ROCKET_EXPLOSION;
 
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
@@ -107,7 +106,7 @@ public class ExplosionFactory {
 		final Entity entity = new Entity();
 		
 		final Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.get(Picture.RIFLE_MUZZLE_FLASH);
+		renderer.image = ImageManager.RIFLE_MUZZLE_FLASH;
 
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
@@ -137,7 +136,7 @@ public class ExplosionFactory {
 		final Entity entity = new Entity();
 
 		final Renderer renderer = Renderer.defaultForBullet(entity, TeamSoul.class,
-				ImageManager.get(Picture.SOUL));
+				ImageManager.SOUL);
 
 		Position.defaultForBullet(entity,
 				deadPosition.bounds.getX(), deadPosition.bounds.getY(),

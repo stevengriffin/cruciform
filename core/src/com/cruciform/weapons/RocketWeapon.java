@@ -19,7 +19,6 @@ import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.components.team.TeamRocket;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.images.ImageManager;
-import com.cruciform.images.Picture;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
@@ -28,8 +27,8 @@ import com.cruciform.utils.Priority;
 
 public class RocketWeapon extends Weapon {
 
-	private static final TextureRegion ROCKET_IMAGE = ImageManager.get(Picture.ROCKET);
-	private static final TextureRegion FAST_ROCKET_IMAGE = ImageManager.get(Picture.ROCKET_FAST);
+	private static final TextureRegion ROCKET_IMAGE = ImageManager.ROCKET;
+	private static final TextureRegion FAST_ROCKET_IMAGE = ImageManager.ROCKET_FAST;
 	private final ExplosionFactory explosionFactory;
 	private Entity lastRocketFired;
 	private int timesFired = -1;
