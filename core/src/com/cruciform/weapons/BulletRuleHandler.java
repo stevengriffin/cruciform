@@ -30,9 +30,20 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 	public Array<Entity> createBullets(final float originX, final float originY, 
 			final TextureRegion image, final Class<? extends Team> team) {
 		incrementPattern();
+		Array<Entity> bullets = constructDefaultBullets(originX, originY,
+				image, team);
+		mutateBullets(bullets);
+		return bullets;
+	}
+
+	/** Evenly distribute default bullets across span. **/
+	private Array<Entity> constructDefaultBullets(final float originX,
+			final float originY, final TextureRegion image,
+			final Class<? extends Team> team) {
 		Array<Entity> bullets = new Array<>();
-		for (float rotation = originAngle; rotation < originAngle + spanAngle;
-				rotation += spanAngle/spokes) {
+		final float rotationIncrement = calculateRotationIncrement();
+		for (float rotation = originAngle; rotation <= originAngle + spanAngle;
+				rotation += rotationIncrement) {
 			final Entity entity = new Entity();
 
 			final Renderer renderer = Renderer.defaultForBullet(entity, team, image);
@@ -58,10 +69,21 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 			engine.addEntity(entity);
 			bullets.add(entity);
 		}
-		mutateBullets(bullets);
 		return bullets;
 	}
-	
+
+	private float calculateRotationIncrement() {
+		final float rotationIncrement;
+		if (spanAngle == 360) {
+			rotationIncrement = spanAngle/spokes;
+		} else if (spokes > 1) {
+			rotationIncrement = spanAngle/(spokes - 1);
+		} else {
+			rotationIncrement = spanAngle*2;
+		}
+		return rotationIncrement;
+	}
+
 	private void mutateBullets(Array<Entity> bullets) {
 		Array<EntityMutator> rules = map.get(pattern.getIndex());
 		if (rules != null) {

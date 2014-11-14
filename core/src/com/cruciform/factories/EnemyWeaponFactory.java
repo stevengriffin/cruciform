@@ -27,7 +27,7 @@ public class EnemyWeaponFactory {
 
 	private final Engine engine;
 	private final ExplosionFactory explosionFactory;
-	private static final float ANGLE_DOWN = 190;
+	private static final float ANGLE_DOWN = 270;
 	
 	public EnemyWeaponFactory(final Engine engine, final ExplosionFactory explosionFactory) {
 		this.engine = engine;
@@ -49,9 +49,9 @@ public class EnemyWeaponFactory {
 				weapon.bulletRuleHandler.spanAngle = 60;
 				return new Weapon[] { weapon };
 			case RADIAL_SPIRALER:
-				return new Weapon[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f, 60.0f) };
+				return new Weapon[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f, 0.0f) };
 			case RADIAL_SPIRALER_SOLID:
-				return new Weapon[] { createSpiralingRadialWeapon(120, 12, 12, 0.1f, 20.0f) };
+				return new Weapon[] { createSpiralingRadialWeapon(120, 12, 12, 0.1f, 0.0f) };
 			case RADIAL_STRAIGHT:
 				return new Weapon[] { createStraightRadialWeapon(480, 3, 30, 0.2f) };
 			case RADIAL_SPLITTER:
@@ -161,8 +161,8 @@ public class EnemyWeaponFactory {
 			final LineMover mover = LineMover.mapper.get(entity);
 			final Position position = Position.mapper.get(entity);
 			float rotation = index == 0 ?
-					mover.maxVelocity.angle() - 30 + 270: mover.maxVelocity.angle() + 30 + 270;
-			position.bounds.rotate(rotation);
+					mover.maxVelocity.angle() - 30: mover.maxVelocity.angle() + 30;
+			position.bounds.setRotation(rotation);
 
 			mover.maxVelocity = Geometry.rotatedVector(rotation, mover.maxVelocity.len());
 

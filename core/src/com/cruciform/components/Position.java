@@ -21,7 +21,7 @@ public class Position extends AbstractComponent {
 			float rotation) {
 		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, height, width);
-		position.bounds.rotate(rotation);
+		position.bounds.setRotation(rotation);
 		position.outOfBoundsHandler = OutOfBoundsHandler.all();
 		return position;
 	}

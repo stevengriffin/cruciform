@@ -23,7 +23,10 @@ public class Geometry {
 	}
 	
 	public static Vector2 rotatedVector(float rotation, float speed) {
-		return new Vector2(speed*MathUtils.sinDeg(rotation),
-				speed*MathUtils.cosDeg(rotation));
+		final Vector2 vec = new Vector2(speed, 0);
+		vec.rotate(rotation);
+		return vec;
+//		return new Vector2(speed*MathUtils.cosDeg(rotation),
+//				speed*MathUtils.sinDeg(rotation));
 	}
 }
