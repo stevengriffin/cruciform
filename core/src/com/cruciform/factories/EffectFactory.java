@@ -64,10 +64,10 @@ public class EffectFactory {
 		renderer.priority = new Priority(-4);
 	
 		final Animator animator = new Animator(exhaust);
-		animator.animation = new Animation(0.125f, ImageManager.PLAYER_SHIP_EXHAUST_1,
+		animator.currentAnimation = new Animation(0.125f, ImageManager.PLAYER_SHIP_EXHAUST_1,
 				ImageManager.PLAYER_SHIP_EXHAUST_2,
 				ImageManager.PLAYER_SHIP_EXHAUST_3);
-		animator.animation.setPlayMode(PlayMode.LOOP);
+		animator.currentAnimation.setPlayMode(PlayMode.LOOP);
 	
 		final ParticleEmitter emitter = new ParticleEmitter(exhaust);
 		emitter.pool = new ParticleEffectPool(PLAYER_EXHAUST, 20, 20);
@@ -101,10 +101,10 @@ public class EffectFactory {
 		renderer.priority = new Priority(2);
 	
 		final Animator animator = new Animator(exhaustCross);
-		animator.animation = new Animation(0.3f, ImageManager.PLAYER_EXHAUST_CROSS_2,
+		animator.currentAnimation = new Animation(0.3f, ImageManager.PLAYER_EXHAUST_CROSS_2,
 				ImageManager.PLAYER_EXHAUST_CROSS_3,
 				ImageManager.PLAYER_EXHAUST_CROSS_4);
-		animator.animation.setPlayMode(PlayMode.LOOP);
+		animator.currentAnimation.setPlayMode(PlayMode.LOOP);
 		
 		engine.addEntity(exhaustCross);
 	}
@@ -182,12 +182,12 @@ public class EffectFactory {
 		
 		final float frameTime = 0.2f;
 		final Animator animator = new Animator(lava);
-		animator.animation = new Animation(0.2f, ImageManager.LAVA_ON_PLAYER_1,
+		animator.currentAnimation = new Animation(0.2f, ImageManager.LAVA_ON_PLAYER_1,
 				ImageManager.LAVA_ON_PLAYER_2,
 				ImageManager.LAVA_ON_PLAYER_3,
 				ImageManager.LAVA_ON_PLAYER_4,
 				ImageManager.LAVA_ON_PLAYER_5);
-		animator.animation.setPlayMode(PlayMode.NORMAL);
+		animator.currentAnimation.setPlayMode(PlayMode.NORMAL);
 
 		final Lifetime lifetime = new Lifetime(lava);
 		lifetime.setTimeRemaining(frameTime*5);
@@ -231,11 +231,11 @@ public class EffectFactory {
 		
 		final float frameTime = 0.05f;
 		final Animator animator = new Animator(entity);
-		animator.animation = new Animation(frameTime, ImageManager.BURST_LAVA_1,
+		animator.currentAnimation = new Animation(frameTime, ImageManager.BURST_LAVA_1,
 				ImageManager.BURST_LAVA_2,
 				ImageManager.BURST_LAVA_3,
 				ImageManager.BURST_LAVA_4);
-		animator.animation.setPlayMode(PlayMode.NORMAL);
+		animator.currentAnimation.setPlayMode(PlayMode.NORMAL);
 		
 		final Lifetime lifetime = new Lifetime(entity);
 		lifetime.setTimeRemaining(frameTime*4);

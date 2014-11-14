@@ -3,10 +3,13 @@ package com.cruciform.factories;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.components.AI;
+import com.cruciform.components.Animator;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Health;
 import com.cruciform.components.LineMover;
@@ -140,6 +143,14 @@ public class ShipFactory {
 				renderer.image.getRegionHeight());
 		position.yDirection = -1;
 		position.outOfBoundsHandler = OutOfBoundsHandler.south();
+		
+		final Animator animator = new Animator(entity);
+		animator.animations.put(Animator.States.IDLE,
+				new Animation(0.125f, ImageManager.GHOST_1));
+		animator.animations.put(Animator.States.FIRING,
+				new Animation(0.125f, ImageManager.GHOST_1_FIRING));
+		animator.currentAnimation = animator.animations.get(Animator.States.IDLE);
+		animator.currentAnimation.setPlayMode(PlayMode.LOOP);
 		
 		LineMover lineMover = new LineMover();
 		lineMover.maxVelocity = new Vector2(0.0f, -100.0f);

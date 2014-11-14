@@ -50,6 +50,7 @@ public class ImageManager {
 	public static final TextureRegion PARALLAX_BG_LVL1_1 = newTexture("parallax_bg_lvl1_1");
 	public static final TextureRegion BG_PIXEL_PARTICLE_EFFECT = newTexture("bg_pixel_particle_effect");
 	public static final TextureRegion GHOST_1 = newTexture("ghost_1");
+	public static final TextureRegion GHOST_1_FIRING = newTexture("ghost_1_firing");
 
 	private static Map<NinePatches, NinePatch> ninePatchMap = new HashMap<>();
 

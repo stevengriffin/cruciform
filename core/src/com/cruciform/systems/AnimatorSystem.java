@@ -17,6 +17,6 @@ public class AnimatorSystem extends IteratingSystem {
 		Animator animator = Animator.mapper.get(entity);
 		Renderer renderer = Renderer.mapper.get(entity);
 		animator.stateTime += deltaTime;
-		renderer.image = animator.animation.getKeyFrame(animator.stateTime);
+		renderer.image = animator.currentAnimation.getKeyFrame(animator.stateTime);
 	}
 }
