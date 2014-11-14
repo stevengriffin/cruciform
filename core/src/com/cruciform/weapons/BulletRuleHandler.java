@@ -72,16 +72,21 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 		return bullets;
 	}
 
+	/**
+	 * Calculates the angle between each bullet.
+	 * If the bullets are fired in a full circle, we shouldn't duplicate
+	 * the "ends" of the pattern.
+	 * If there's only one bullet, we return a suitably large value that will
+	 * exit the bullet construction for loop on the second iteration.
+	 */
 	private float calculateRotationIncrement() {
-		final float rotationIncrement;
 		if (spanAngle == 360) {
-			rotationIncrement = spanAngle/spokes;
+			return spanAngle/spokes;
 		} else if (spokes > 1) {
-			rotationIncrement = spanAngle/(spokes - 1);
+			return spanAngle/(spokes - 1);
 		} else {
-			rotationIncrement = spanAngle*2;
+			return spanAngle*2;
 		}
-		return rotationIncrement;
 	}
 
 	private void mutateBullets(Array<Entity> bullets) {
