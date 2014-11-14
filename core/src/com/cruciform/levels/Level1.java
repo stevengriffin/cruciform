@@ -37,7 +37,7 @@ public class Level1 extends Level {
                 	pathFactory.createBentPath(entity, i % 2 == 1);
                 	return entity;
                 },
-				1.0f, 4, Conf.fractionX(0.1f), Conf.fractionX(0.9f))),
+				1.0f, 4, Conf.fractionX(0.4f), Conf.fractionX(0.6f))),
 				
 				() -> (FormationFactory.createSingularShip(
 				(x, y) -> game.shipFactory.createEnemy(x, y, EnemyTypes.RADIAL_SPLITTER),

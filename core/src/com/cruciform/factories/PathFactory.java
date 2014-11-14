@@ -28,16 +28,14 @@ public class PathFactory {
 			xMove1 = -xMove1;
 			xMove2 = -xMove2;
 		}
-		entity.remove(LineMover.class);
-		entity.remove(Velocity.class);
-		Position position = Position.mapper.get(entity);
+		Position position = prepareEntity(entity);
 		
 		Tween.to(position, PositionAccessor.POSITION_Y, 1.0f)
 		.targetRelative(yMove1*2)
 		.start(game.tweenManager);
 		
 		Timeline.createSequence()
-		.delay(0.3f)
+		.delay(1.0f)
 		.push(Tween.to(position, PositionAccessor.POSITION_XY, 3.0f)
 			.targetRelative(xMove1, yMove1))
 		.pushPause(1.0f)
@@ -45,5 +43,12 @@ public class PathFactory {
 			.targetRelative(xMove2, yMove2))
 		.repeatYoyo(Tween.INFINITY, 0.3f)
 			.start(game.tweenManager);
+	}
+
+	private Position prepareEntity(final Entity entity) {
+		entity.remove(LineMover.class);
+		entity.remove(Velocity.class);
+		Position position = Position.mapper.get(entity);
+		return position;
 	}
 }
