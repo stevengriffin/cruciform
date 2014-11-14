@@ -7,7 +7,7 @@ import com.cruciform.input.InputAction;
 import com.cruciform.utils.CoolDownMetro;
 
 public abstract class Weapon implements InputAction {
-	CoolDownMetro coolDown;
+	public CoolDownMetro coolDown;
 	Engine engine;
 	final Class<? extends Team> team;
 	private boolean shouldFire = false;

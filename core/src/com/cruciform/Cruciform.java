@@ -18,7 +18,6 @@ import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.Splitter;
 import com.cruciform.factories.ExplosionFactory;
-import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.UIFactory;
 import com.cruciform.serialization.ColliderSerializer;
 import com.cruciform.serialization.RendererSerializer;
@@ -45,6 +44,7 @@ import com.cruciform.systems.ParallaxSystem;
 import com.cruciform.systems.ParticleEmitterSystem;
 import com.cruciform.systems.RecoilSystem;
 import com.cruciform.systems.RenderSystem;
+import com.cruciform.systems.SeekerSystem;
 import com.cruciform.systems.ShooterSystem;
 import com.cruciform.systems.SplitterSystem;
 import com.cruciform.systems.WaveSystem;
@@ -60,7 +60,6 @@ public class Cruciform extends Game {
 	public OrthographicCamera camera;
 	public Pixmap pixmap;
 	public Engine engine;
-	public ShipFactory shipFactory;
 	public ExplosionFactory explosionFactory;
 	public UIFactory uiFactory;
 	public ShapeRenderer shapeRenderer;
@@ -97,7 +96,6 @@ public class Cruciform extends Game {
 		deferrer = new Deferrer(engine, this);
 		uiFactory = new UIFactory(engine);
 		explosionFactory = new ExplosionFactory(this);
-		shipFactory = new ShipFactory(engine, explosionFactory);
 		
 		// Systems
 		final RenderSystem renderSystem = new RenderSystem(this, batch, font);
@@ -125,6 +123,7 @@ public class Cruciform extends Game {
 		engine.addSystem(new LifetimeSystem(deferrer));
 		engine.addSystem(new CollisionSystem(engine, deferrer, explosionFactory));
 		engine.addSystem(new SplitterSystem(this));
+		engine.addSystem(new SeekerSystem(this));
 		engine.addSystem(new WaveSystem(engine));
 		engine.addSystem(new HealthSystem(explosionFactory, deferrer));
 	

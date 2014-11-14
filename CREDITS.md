@@ -1,4 +1,4 @@
-Source code: Steven Griffin
+Source code and art: Steven Griffin
 
 Link: https://github.com/stevengriffin/cruciform
 
@@ -47,3 +47,11 @@ Author: Cameron
 License: http://creativecommons.org/publicdomain/zero/1.0/
 
 Link: http://freesound.org/people/lensflare8642/sounds/145206/
+
+bullet_click
+
+Author: Dustyroom Studio
+
+License: http://creativecommons.org/publicdomain/zero/1.0/
+
+Link: dustyroom.com

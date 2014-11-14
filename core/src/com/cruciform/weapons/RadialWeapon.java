@@ -6,23 +6,24 @@ import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
 import com.cruciform.components.Position;
 import com.cruciform.components.team.TeamEnemy;
-import com.cruciform.images.ImageManager;
 import com.cruciform.utils.Conf;
 
 public class RadialWeapon extends Weapon {
 
-	private static final TextureRegion BULLET_IMAGE = ImageManager.ENEMY_BULLET_ELONGATED;
-	public float volume = 0.0f;
+	private final TextureRegion bulletImage;
+	public float volume = 0.05f;
 	public final BulletRuleHandler bulletRuleHandler;
 	private final CoolDownRuleHandler coolDownRuleHandler; 
 	
 	public RadialWeapon(float coolDownTime, Engine engine,
 			BulletRuleHandler ruleHandler,
-			CoolDownRuleHandler coolDownRuleHandler) {
+			CoolDownRuleHandler coolDownRuleHandler,
+			TextureRegion bulletImage) {
 		super(coolDownTime, engine, TeamEnemy.class, BulletRuleHandler.DAMAGE_TO_INSTAKILL_PLAYER, "Radial");
 		this.bulletRuleHandler = ruleHandler;
 		this.coolDownRuleHandler = coolDownRuleHandler;
 		this.coolDownRuleHandler.setDefaultDoolDown(coolDown);
+		this.bulletImage = bulletImage;
 	}
 
 	@Override
@@ -31,8 +32,8 @@ public class RadialWeapon extends Weapon {
 
 	@Override
 	void handleFire(Position firerPos) {
-		AudioManager.get(Noise.RIFLE_FIRE).play(Conf.volume*volume);
-		bulletRuleHandler.createBullets(firerPos.bounds.getX(), firerPos.bounds.getY(), BULLET_IMAGE, team);
+		AudioManager.get(Noise.BULLET_CLICK).play(Conf.volume*volume);
+		bulletRuleHandler.createBullets(firerPos.bounds.getX(), firerPos.bounds.getY(), bulletImage, team);
 		coolDown = coolDownRuleHandler.updateCoolDown(coolDown);
 	}
 }

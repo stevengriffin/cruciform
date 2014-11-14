@@ -3,6 +3,7 @@ package com.cruciform.components;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
 
@@ -35,6 +36,10 @@ public class Position extends AbstractComponent {
 	
 	public void incrementRotation(float degrees) {
 		bounds.rotate(bounds.getRotation() + degrees);
+	}
+
+	public Vector2 getCenter() {
+		return new Vector2(bounds.getX(), bounds.getY());
 	}
 	
 }

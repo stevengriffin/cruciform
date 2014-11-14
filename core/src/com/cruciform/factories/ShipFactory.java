@@ -23,6 +23,7 @@ import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.enemies.EnemyTypes;
 import com.cruciform.images.ImageManager;
 import com.cruciform.input.InputCode;
+import com.cruciform.states.GameState;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
 import com.cruciform.utils.Priority;
@@ -43,10 +44,11 @@ public class ShipFactory {
 		public Entity createAt(float x, float y, float i);
 	}
 	
-	public ShipFactory(final Engine engine, final ExplosionFactory explosionFactory) {
+	public ShipFactory(final Engine engine, final ExplosionFactory explosionFactory,
+			GameState gameState) {
 		this.engine = engine;
 		this.explosionFactory = explosionFactory;
-	    this.weaponFactory = new EnemyWeaponFactory(engine, explosionFactory);
+	    this.weaponFactory = new EnemyWeaponFactory(engine, explosionFactory, gameState);
 	}
 	
 	public Entity createPlayer(final Entity entity, final boolean playIntro) {

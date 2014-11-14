@@ -9,6 +9,7 @@ import com.cruciform.components.Position;
 import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.EffectFactory;
 import com.cruciform.factories.FormationFactory;
+import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.levels.Level1;
 import com.cruciform.utils.Score;
@@ -16,6 +17,7 @@ import com.cruciform.utils.Score;
 public class GameState extends State {
 
 	private Entity player;
+	public final ShipFactory shipFactory;
 	
 	public GameState(Cruciform game) {
 		super(game);
@@ -24,7 +26,8 @@ public class GameState extends State {
 		Score.init();
 		FormationFactory.reset();
 		game.engine.removeAllEntities();
-		player = new Level1(game).createAndReturnPlayer();
+		shipFactory = new ShipFactory(game.engine, game.explosionFactory, this);
+		player = new Level1(game, shipFactory).createAndReturnPlayer();
 		EffectFactory.createLavaOnPlayer(player, game.engine);
 		EffectFactory.createBackground(game.engine);
 		EffectFactory.createForeground(game.engine);
@@ -54,7 +57,7 @@ public class GameState extends State {
 			final Position position = Position.mapper.get(player);
 			final Entity newPlayer = new Entity();
 			newPlayer.add(position);
-			player = game.shipFactory.createPlayer(newPlayer, false);
+			player = shipFactory.createPlayer(newPlayer, false);
 			game.deferrer.shieldAndBlink(player, 3.0f);
 		}
 		game.uiFactory.createSidePanel(true);

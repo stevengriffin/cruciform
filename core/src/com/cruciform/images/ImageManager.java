@@ -29,6 +29,7 @@ public class ImageManager {
 	public static final TextureRegion RIFLE_BULLET = newTexture("rifle_bullet");
 	public static final TextureRegion RIFLE_MUZZLE_FLASH = newTexture("rifle_muzzle_flash");
 	public static final TextureRegion ENEMY_BULLET_ELONGATED = newTexture("enemy_bullet_elongated_violet");
+	public static final TextureRegion ENEMY_BULLET_DIAMOND = newTexture("enemy_bullet_diamond_green");
 	public static final TextureRegion ROCKET = newTexture("rocket");
 	public static final TextureRegion ROCKET_FAST = newTexture("rocket_fast");
 	public static final TextureRegion ROCKET_EXPLOSION = newTexture("rocket_explosion");

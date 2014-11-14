@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.Cruciform;
 import com.cruciform.components.Position;
+import com.cruciform.factories.ShipFactory;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.states.WinState;
 import com.cruciform.utils.Conf;
@@ -18,13 +19,15 @@ public abstract class Level {
 	Array<Wave> waves;
 	private int waveIndex = 0;
 	final Cruciform game;
+	final ShipFactory shipFactory;
 	
 	public static Level getCurrentLevel() {
 		return currentLevel;
 	}
 	
-	public Level(final Cruciform game) {
+	public Level(final Cruciform game, final ShipFactory shipFactory) {
 		this.game = game;
+		this.shipFactory = shipFactory;
 		currentLevel = this;
 		waves = new Array<Wave>();
 	}
@@ -32,7 +35,7 @@ public abstract class Level {
 	public Entity createAndReturnPlayer() {
 		final Entity player = new Entity();
 		Position.defaultForPlayer(player, Conf.fractionX(0.5f), Conf.canonicalHeight*0.1f);
-		return game.shipFactory.createPlayer(player, true);
+		return shipFactory.createPlayer(player, true);
 	}
 	
 	public void createNextWave() {
