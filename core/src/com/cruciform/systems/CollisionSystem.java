@@ -20,6 +20,7 @@ import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.components.team.TeamPlayerBody;
 import com.cruciform.components.team.TeamSoul;
+import com.cruciform.factories.EffectFactory;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
@@ -78,7 +79,11 @@ public class CollisionSystem extends EntitySystem {
 			final TeamEnemy enemy = TeamEnemy.mapper.get(victim);
 			if (enemy != null) {
 				Score.incrementFromDamagerEvent(damager.damage, victimHealth.currentHealth);
-				tintEntity(victimHealth, Renderer.mapper.get(victim));
+				final Renderer renderer = Renderer.mapper.get(victim);
+				if (renderer != null) {
+					tintEntity(victimHealth, renderer);
+					EffectFactory.createBlood(engine, culprit, victim, renderer);
+				}
 			}
 			victimHealth.currentHealth -= damager.damage;
 			Log.debug("Damaged for " + damager.damage);
@@ -89,11 +94,10 @@ public class CollisionSystem extends EntitySystem {
 	private static final Color TINT_COLOR = new Color(0.7f, 0.3f, 0.5f, 1.0f);
 	
 	private void tintEntity(Health health, Renderer renderer) {
-		if (renderer == null) { return; }
 		renderer.tint = TINT_COLOR;
 		deferrer.runIfComplete(() -> renderer.tint = null, () -> health.lastTimeDamaged, 0.2f);  
 	}
-	
+
 	private void performSplitterEvent(final Entity entity, final Entity other) {
 		final Splitter splitter = Splitter.mapper.get(entity);
 		if (splitter != null && splitter.splitOnCollision) {

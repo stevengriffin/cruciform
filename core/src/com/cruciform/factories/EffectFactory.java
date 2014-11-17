@@ -3,11 +3,15 @@ package com.cruciform.factories;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
@@ -30,6 +34,7 @@ import com.cruciform.utils.Conf;
 import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.Priority;
+import com.esotericsoftware.minlog.Log;
 
 public class EffectFactory {
 
@@ -106,6 +111,7 @@ public class EffectFactory {
 	}
 	
 	private static void createGlow(final Entity ship, final Engine engine) {
+		// TODO Rarely refuses to die when player does. Race condition?
 		final Entity glow = new Entity();
 		
 		final Child child = new Child(glow);
@@ -384,4 +390,68 @@ public class EffectFactory {
 		engine.addEntity(entity);
 		return entity;
 	}
+	
+	public static Entity createBlood(Engine engine, Entity culprit, Entity victim,
+			Renderer victimRenderer) {
+		// TODO: Multiple for larger damage weapons?
+		final Position culpritPosition = Position.mapper.get(culprit);
+		final TextureData data = victimRenderer.image.getTexture().getTextureData();
+		data.prepare();
+		final Pixmap pixels = data.consumePixmap();
+		
+		final Entity entity = new Entity();
+		
+		final Child child = new Child(entity);
+		child.parent = victim;
+		
+		final Renderer bloodRenderer = new Renderer(entity);
+		// Draw above enemy.
+		bloodRenderer.priority = new Priority(1);
+		bloodRenderer.image = ImageManager.ENEMY_BLOOD;
+		bloodRenderer.image.flip(MathUtils.randomBoolean(), MathUtils.randomBoolean());
+		bloodRenderer.customOffset = true;
+		
+		final Position bloodPosition = new Position(entity);
+		bloodPosition.bounds = Geometry.polyRect(0, 0, victimRenderer.image.getRegionWidth(),
+				victimRenderer.image.getRegionHeight());
+		
+		modifyBloodOffset(engine, pixels, entity, bloodRenderer);
+		
+		if (data.disposePixmap()) {
+			pixels.dispose();
+		}
+		return entity;
+	}
+
+	/** Attempts to find a random offset for the blood splatter that is made of solid pixels
+	 * on the parent entity. */
+	private static void modifyBloodOffset(Engine engine, Pixmap pixels, Entity entity, 
+			Renderer bloodRenderer) {
+		for (int i = 0; i < 10; i++) {
+			final int x = MathUtils.random(0, pixels.getWidth() - bloodRenderer.image.getRegionWidth());
+			final int y = MathUtils.random(0, pixels.getHeight() - bloodRenderer.image.getRegionHeight());
+			if (isSolidPixels(x, y, pixels, bloodRenderer.image)) {
+				Log.debug("pixels were solid");
+				bloodRenderer.customXOffset = -pixels.getWidth()/2 + x;
+				bloodRenderer.customYOffset = -pixels.getHeight()/2 + y;
+				engine.addEntity(entity);
+				return;
+			}
+		}
+	}
+	
+	private static boolean isSolidPixels(int left, int top, Pixmap pixels, TextureRegion textureToTestAgainst) {
+		// TODO false positives
+		for (int x = left; x < left + textureToTestAgainst.getRegionWidth(); x++) {
+			for (int y = top; y < top + textureToTestAgainst.getRegionHeight(); y++) {
+				final Color pixelColor = new Color(pixels.getPixel(x, y));
+				if (pixelColor.a == 0) {
+					Log.debug("pixel at " + x + ", " + y + " coord: " + left + ", " + top);
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 }

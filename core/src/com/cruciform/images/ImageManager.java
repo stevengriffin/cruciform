@@ -17,8 +17,6 @@ public class ImageManager {
 	public static final TextureRegion PLAYER_SHIP_GOLD = newTexture("player_ship_gold");
 	public static final TextureRegion PLAYER_SHIP_GOLD_BODY = newTexture("player_ship_gold_body");
 	public static final TextureRegion PLAYER_SHIP_GOLD_COCKPIT = newTexture("player_ship_gold_cockpit");
-	public static final TextureRegion[] PLAYER_SHIP_EXHAUST = newTextureArray("player_ship_exhaust", 3);
-	public static final TextureRegion[] PLAYER_EXHAUST_CROSS = newTextureArray("player_exhaust_cross", 3);
 	public static final TextureRegion PLAYER_EXHAUST_GLOW = newTexture("player_exhaust_glow");
 	public static final TextureRegion RIFLE_BULLET = newTexture("rifle_bullet");
 	public static final TextureRegion RIFLE_MUZZLE_FLASH = newTexture("rifle_muzzle_flash");
@@ -28,19 +26,23 @@ public class ImageManager {
 	public static final TextureRegion ROCKET_FAST = newTexture("rocket_fast");
 	public static final TextureRegion ROCKET_EXPLOSION = newTexture("rocket_explosion");
 	public static final TextureRegion SOUL = newTexture("soul");
+	public static final TextureRegion ENEMY_BLOOD = newTexture("enemy_blood");
 	public static final TextureRegion SIDE_PANEL = newTexture("side_panel");
 	public static final TextureRegion BOTTOM_PANEL = newTexture("bottom_panel");
 	public static final TextureRegion WEAPONS_PANEL = newTexture("weapons_panel");
 	public static final TextureRegion BACKGROUND_LAVA = newTexture("background_lava_pixel");
 	public static final TextureRegion FOREGROUND_LAVA = newTexture("foreground_lava_pixel");
-	public static final TextureRegion[] BURST_LAVA = newTextureArray("burst_lava", 4);
-	public static final TextureRegion[] LAVA_ON_PLAYER = newTextureArray("lava_on_player", 5);
 	public static final TextureRegion PARALLAX_BG_LVL1_1 = newTexture("parallax_bg_lvl1_1");
 	public static final TextureRegion BG_PIXEL_PARTICLE_EFFECT = newTexture("bg_pixel_particle_effect");
 	public static final TextureRegion GHOST_1 = newTexture("ghost_1");
 	public static final TextureRegion GHOST_1_FIRING = newTexture("ghost_1_firing");
+	
+	public static final TextureRegion[] BURST_LAVA = newTextureArray("burst_lava", 4);
+	public static final TextureRegion[] LAVA_ON_PLAYER = newTextureArray("lava_on_player", 5);
 	public static final TextureRegion[] PENTAGRAM_EXPLOSION =
 			newTextureArray("pentagram_explosion", 11);
+	public static final TextureRegion[] PLAYER_SHIP_EXHAUST = newTextureArray("player_ship_exhaust", 3);
+	public static final TextureRegion[] PLAYER_EXHAUST_CROSS = newTextureArray("player_exhaust_cross", 3);
 
 	private static Map<NinePatches, NinePatch> ninePatchMap = new HashMap<>();
 
