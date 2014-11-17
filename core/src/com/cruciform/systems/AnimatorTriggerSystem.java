@@ -9,12 +9,16 @@ import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.components.Animator;
 import com.cruciform.components.Shooter;
 import com.cruciform.components.team.TeamEnemy;
+import com.cruciform.utils.Deferrer;
 
 /** Handles setting the animation of an enemy if it has just fired a weapon. **/
 public class AnimatorTriggerSystem extends IteratingSystem {
 
-	public AnimatorTriggerSystem() {
+	private final Deferrer deferrer;
+	
+	public AnimatorTriggerSystem(Deferrer deferrer) {
 		super(Family.getFor(Shooter.class, Animator.class, TeamEnemy.class));
+		this.deferrer = deferrer;
 	}
 	
 	@Override
@@ -25,13 +29,9 @@ public class AnimatorTriggerSystem extends IteratingSystem {
 			if (w.getJustFired()) {
 				animator.currentAnimation = animator.animations.get(Animator.States.FIRING);
 				animator.currentAnimation.setPlayMode(PlayMode.LOOP);
-				Timer.schedule(new Task() {
-					@Override
-					public void run() {
-						animator.currentAnimation = animator.animations.get(Animator.States.IDLE);
-					}
-					
-				}, 0.6f);
+				deferrer.runIfComplete(
+					() -> animator.currentAnimation = animator.animations.get(Animator.States.IDLE),
+					() -> w.getLastTimeFired(), 0.6f);
 			}
 		});
 	}

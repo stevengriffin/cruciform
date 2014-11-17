@@ -1,6 +1,7 @@
 package com.cruciform.weapons;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.cruciform.components.Position;
 import com.cruciform.components.team.Team;
 import com.cruciform.input.InputAction;
@@ -12,6 +13,7 @@ public abstract class Weapon implements InputAction {
 	final Class<? extends Team> team;
 	private boolean shouldFire = false;
 	private boolean justFired = false;
+	private long lastTimeFired = 0;
 	public final String name;
 	public final float damage;
 	
@@ -41,6 +43,7 @@ public abstract class Weapon implements InputAction {
 		if (firedSuccessfully) {
 			handleFire(firerPos);
 			justFired = true;
+			lastTimeFired = TimeUtils.millis();
 		}
 		return firedSuccessfully;
 	}
@@ -62,5 +65,8 @@ public abstract class Weapon implements InputAction {
 	public boolean getJustFired() {
 		return justFired;
 	}
-	
+
+	public long getLastTimeFired() {
+		return lastTimeFired;
+	}
 }

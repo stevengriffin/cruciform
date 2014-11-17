@@ -2,6 +2,7 @@ package com.cruciform.components;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cruciform.components.team.Team;
@@ -13,6 +14,7 @@ public class Renderer extends AbstractComponent {
 	public TextureRegion image = null;
 	public NinePatch patch = null;
 	public float alpha = 1.0f;
+	public Color tint = null;
 	public float customXOffset = 0;
 	public float customYOffset = 0;
 	public boolean customOffset = false;

@@ -5,13 +5,16 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Health;
 import com.cruciform.components.Position;
+import com.cruciform.components.Renderer;
 import com.cruciform.components.Splitter;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
@@ -71,9 +74,11 @@ public class CollisionSystem extends EntitySystem {
 		final Health victimHealth = Health.mapper.get(victim);
 		final Damager damager = Damager.mapper.get(culprit);
 		if (victimHealth != null && damager != null) {
+			victimHealth.lastTimeDamaged = TimeUtils.millis();
 			final TeamEnemy enemy = TeamEnemy.mapper.get(victim);
 			if (enemy != null) {
 				Score.incrementFromDamagerEvent(damager.damage, victimHealth.currentHealth);
+				tintEntity(victimHealth, Renderer.mapper.get(victim));
 			}
 			victimHealth.currentHealth -= damager.damage;
 			Log.debug("Damaged for " + damager.damage);
@@ -81,12 +86,19 @@ public class CollisionSystem extends EntitySystem {
 		}
 	}
 	
+	private static final Color TINT_COLOR = new Color(0.7f, 0.3f, 0.5f, 1.0f);
+	
+	private void tintEntity(Health health, Renderer renderer) {
+		if (renderer == null) { return; }
+		renderer.tint = TINT_COLOR;
+		deferrer.runIfComplete(() -> renderer.tint = null, () -> health.lastTimeDamaged, 0.2f);  
+	}
+	
 	private void performSplitterEvent(final Entity entity, final Entity other) {
 		final Splitter splitter = Splitter.mapper.get(entity);
 		if (splitter != null && splitter.splitOnCollision) {
 			splitter.splitOnNextUpdate = true;
 			final float newY = Position.mapper.get(other).bounds.getY();
-			// TODO refactor
 			if (splitter.collisionY == 0.0f || splitter.collisionY > newY) {
 				splitter.collisionY = newY;
 			}

@@ -117,7 +117,7 @@ public class Cruciform extends Game {
 		engine.addSystem(new ShooterSystem());
 		engine.addSystem(new AISystem());
 		engine.addSystem(new AnimatorSystem());
-		engine.addSystem(new AnimatorTriggerSystem());
+		engine.addSystem(new AnimatorTriggerSystem(deferrer));
 		engine.addSystem(new BlinkerSystem());
 		engine.addSystem(new FaderSystem());
 		engine.addSystem(new LifetimeSystem(deferrer));

@@ -8,4 +8,5 @@ public class Health extends AbstractComponent {
     public float maxHealth = 0;
     public float currentHealth = 0;
     public Exploder deathExploder = null;
+    public long lastTimeDamaged = 0;
 }

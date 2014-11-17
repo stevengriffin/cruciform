@@ -99,12 +99,24 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	private void processEntity(final Entity entity, final float deltaTime) {
 		final Position position = Position.mapper.get(entity);
 		final Renderer renderer = Renderer.mapper.get(entity);
-		if (renderer.alpha != 1.0f) {
+		if (renderer.alpha != 1.0f || renderer.tint != null) {
 			final Color tint = batch.getColor();
+			final float masterR = tint.r;
+			final float masterG = tint.g;
+			final float masterB = tint.b;
 			final float masterAlpha = tint.a;
+			if (renderer.tint != null) {
+				tint.r = renderer.tint.r;
+				tint.g = renderer.tint.b;
+				tint.b = renderer.tint.b;
+				tint.a = renderer.tint.a;
+			}
 			tint.a *= renderer.alpha;
 			batch.setColor(tint);
 			drawEntity(position, renderer, entity, deltaTime);
+			tint.r = masterR;
+			tint.g = masterG;
+			tint.b = masterB;
 			tint.a = masterAlpha;
 			batch.setColor(tint);
 		} else {

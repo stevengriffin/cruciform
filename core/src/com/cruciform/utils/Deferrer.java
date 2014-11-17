@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.Cruciform;
@@ -103,5 +104,25 @@ public class Deferrer {
 				renderer.shouldRender = true;
 			}
 		}, duration);
+	}
+
+	/** Closure to store a modifiable time. **/
+	public interface LastActionTime {
+		public long get();
+	}
+	
+	/** Runs an action if it is ready. Used for things like turning off tints from bullet hits. **/
+	public void runIfComplete(Runnable action, LastActionTime lastActionTime, float delay) {
+		Timer.schedule(new Task() {
+
+			@Override
+			public void run() {
+				if (TimeUtils.timeSinceMillis(lastActionTime.get()) >
+						Math.max(delay*0.9f, delay - 0.01f)*1000) {
+					action.run();
+				}
+			}
+
+		}, delay);
 	}
 }
