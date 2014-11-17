@@ -121,7 +121,7 @@ public class ExplosionFactory {
 		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
 	
 		SoundEffect soundEffect = new SoundEffect();
-		soundEffect.sound = AudioManager.get(Noise.ROCKET_EXPLOSION);
+		soundEffect.sound = AudioManager.get(Noise.ENEMY_SCREAM);
 		soundEffect.id = soundEffect.sound.play(.5f * Conf.volume);
 		entity.add(soundEffect);
 

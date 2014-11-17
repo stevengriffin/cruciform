@@ -8,6 +8,7 @@ import com.cruciform.components.Position;
 import com.cruciform.components.Recoil;
 import com.cruciform.utils.Deferrer;
 import com.cruciform.utils.Deferrer.RemovalUrgency;
+import com.esotericsoftware.minlog.Log;
 
 public class ChildPositionSystem extends IteratingSystem {
 
@@ -23,6 +24,7 @@ public class ChildPositionSystem extends IteratingSystem {
 	public void processEntity(final Entity entity, final float deltaTime) {
 		final Child child = Child.mapper.get(entity);
 		if (deferrer.entityToBeRemoved(child.parent)) {
+			Log.debug("removing entity");
 			deferrer.remove(entity, RemovalUrgency.UNIMPORTANT);
 		}
 		final Position childPosition = Position.mapper.get(entity);

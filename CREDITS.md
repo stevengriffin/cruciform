@@ -55,3 +55,13 @@ Author: Dustyroom Studio
 License: http://creativecommons.org/publicdomain/zero/1.0/
 
 Link: dustyroom.com
+
+enemy_scream
+
+Author: thanvannispen
+
+License: http://creativecommons.org/licenses/by/3.0/
+
+Link: http://freesound.org/people/thanvannispen/sounds/94586/
+
+Changes: Cut off end, faded out, adjusted.

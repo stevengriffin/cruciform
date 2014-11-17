@@ -46,6 +46,7 @@ public class AudioManager {
 		map.put(Noise.RIFLE_BULLET, newSound("rifle_bullet.mp3"));
 		map.put(Noise.RIFLE_FIRE, newSound("rifle_fire_single_deep.mp3"));
 		map.put(Noise.BULLET_CLICK, newSound("bullet_click.ogg"));
+		map.put(Noise.ENEMY_SCREAM, newSound("enemy_scream.ogg"));
 		shuffledTracks = new ArrayList<>(tracks);
 		Collections.shuffle(shuffledTracks);
 	}
