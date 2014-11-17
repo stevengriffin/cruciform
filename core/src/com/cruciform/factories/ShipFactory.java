@@ -174,7 +174,7 @@ public class ShipFactory {
 		Health health = new Health();
 		health.maxHealth = 100;
 		health.currentHealth = 100;
-		health.deathExploder = (deadEntity) -> explosionFactory.createRocketExplosion(deadEntity);
+		health.deathExploder = (deadEntity) -> explosionFactory.createEnemyExplosion(deadEntity);
 		entity.add(health);
 	
 		engine.addEntity(entity);

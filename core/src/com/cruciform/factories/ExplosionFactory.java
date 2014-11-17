@@ -2,12 +2,16 @@ package com.cruciform.factories;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.Cruciform;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
+import com.cruciform.components.Animator;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Damager;
 import com.cruciform.components.Fader;
@@ -97,6 +101,49 @@ public class ExplosionFactory {
 		return entity;
 	}
 
+	public Entity createEnemyExplosion(final Entity deadEnemy) {
+		final float frameTime = 0.1f;
+		
+		final Position oldPos = Position.mapper.get(deadEnemy);
+		Rectangle rect = oldPos.bounds.getBoundingRectangle();
+		final float x = rect.x + rect.width/2;
+		final float y = rect.y + rect.height;
+		
+		final Entity entity = new Entity();
+		
+		final Renderer renderer = new Renderer(entity);
+		renderer.image = ImageManager.PENTAGRAM_EXPLOSION[0];
+
+		final Animator animator = new Animator(entity);
+		animator.currentAnimation = new Animation(frameTime, ImageManager.PENTAGRAM_EXPLOSION);
+		
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+	
+		SoundEffect soundEffect = new SoundEffect();
+		soundEffect.sound = AudioManager.get(Noise.ROCKET_EXPLOSION);
+		soundEffect.id = soundEffect.sound.play(.5f * Conf.volume);
+		entity.add(soundEffect);
+
+		// Fade out explosion after it's half over.
+		Timer.schedule(new Task() {
+
+			@Override
+			public void run() {
+				final Lifetime lifetime = new Lifetime(entity);
+				lifetime.setTimeRemaining(frameTime*(ImageManager.PENTAGRAM_EXPLOSION.length/2 + 1));
+				new Fader(entity);
+			}
+			
+		}, frameTime*ImageManager.PENTAGRAM_EXPLOSION.length/2);
+		
+		engine.addEntity(entity);
+		
+		GameCamera.shake(GameCamera.SMALL_SHAKE);
+		
+		return entity;
+	}
+	
 	public Entity createRifleExplosion(final Entity bullet) {
 		final Position oldPos = Position.mapper.get(bullet);
 		final Rectangle rect = oldPos.bounds.getBoundingRectangle();

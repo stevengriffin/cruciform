@@ -13,18 +13,12 @@ public class ImageManager {
 	public static final TextureRegion BLANK = newTexture("blank");
 	public static final TextureRegion CRUCIFORM_1 = newTexture("cruciform_weapon1");
 	public static final TextureRegion CRUCIFORM_WEAPON_CROSS = newTexture("cruciform_weapon_cross");
-	public static final TextureRegion PLAYER_SHIP_1 = newTexture("ship1");
 	public static final TextureRegion PLAYER_SHIP_2 = newTexture("player_ship2");
 	public static final TextureRegion PLAYER_SHIP_GOLD = newTexture("player_ship_gold");
 	public static final TextureRegion PLAYER_SHIP_GOLD_BODY = newTexture("player_ship_gold_body");
 	public static final TextureRegion PLAYER_SHIP_GOLD_COCKPIT = newTexture("player_ship_gold_cockpit");
-	public static final TextureRegion PLAYER_SHIP_EXHAUST_1 = newTexture("player_ship_exhaust_1");
-	public static final TextureRegion PLAYER_SHIP_EXHAUST_2 = newTexture("player_ship_exhaust_2");
-	public static final TextureRegion PLAYER_SHIP_EXHAUST_3 = newTexture("player_ship_exhaust_3");
-	public static final TextureRegion PLAYER_EXHAUST_CROSS = newTexture("player_exhaust_cross");
-	public static final TextureRegion PLAYER_EXHAUST_CROSS_2 = newTexture("player_exhaust_cross_2");
-	public static final TextureRegion PLAYER_EXHAUST_CROSS_3 = newTexture("player_exhaust_cross_3");
-	public static final TextureRegion PLAYER_EXHAUST_CROSS_4 = newTexture("player_exhaust_cross_4");
+	public static final TextureRegion[] PLAYER_SHIP_EXHAUST = newTextureArray("player_ship_exhaust", 3);
+	public static final TextureRegion[] PLAYER_EXHAUST_CROSS = newTextureArray("player_exhaust_cross", 3);
 	public static final TextureRegion PLAYER_EXHAUST_GLOW = newTexture("player_exhaust_glow");
 	public static final TextureRegion RIFLE_BULLET = newTexture("rifle_bullet");
 	public static final TextureRegion RIFLE_MUZZLE_FLASH = newTexture("rifle_muzzle_flash");
@@ -39,19 +33,14 @@ public class ImageManager {
 	public static final TextureRegion WEAPONS_PANEL = newTexture("weapons_panel");
 	public static final TextureRegion BACKGROUND_LAVA = newTexture("background_lava_pixel");
 	public static final TextureRegion FOREGROUND_LAVA = newTexture("foreground_lava_pixel");
-	public static final TextureRegion BURST_LAVA_1 = newTexture("burst_lava_1");
-	public static final TextureRegion BURST_LAVA_2 = newTexture("burst_lava_2");
-	public static final TextureRegion BURST_LAVA_3 = newTexture("burst_lava_3");
-	public static final TextureRegion BURST_LAVA_4 = newTexture("burst_lava_4");
-	public static final TextureRegion LAVA_ON_PLAYER_1 = newTexture("lava_on_player_1");
-	public static final TextureRegion LAVA_ON_PLAYER_2 = newTexture("lava_on_player_2");
-	public static final TextureRegion LAVA_ON_PLAYER_3 = newTexture("lava_on_player_3");
-	public static final TextureRegion LAVA_ON_PLAYER_4 = newTexture("lava_on_player_4");
-	public static final TextureRegion LAVA_ON_PLAYER_5 = newTexture("lava_on_player_5");
+	public static final TextureRegion[] BURST_LAVA = newTextureArray("burst_lava", 4);
+	public static final TextureRegion[] LAVA_ON_PLAYER = newTextureArray("lava_on_player", 5);
 	public static final TextureRegion PARALLAX_BG_LVL1_1 = newTexture("parallax_bg_lvl1_1");
 	public static final TextureRegion BG_PIXEL_PARTICLE_EFFECT = newTexture("bg_pixel_particle_effect");
 	public static final TextureRegion GHOST_1 = newTexture("ghost_1");
 	public static final TextureRegion GHOST_1_FIRING = newTexture("ghost_1_firing");
+	public static final TextureRegion[] PENTAGRAM_EXPLOSION =
+			newTextureArray("pentagram_explosion", 11);
 
 	private static Map<NinePatches, NinePatch> ninePatchMap = new HashMap<>();
 
@@ -73,6 +62,14 @@ public class ImageManager {
 		return new TextureRegion(instantiateTexture(name));
 	}
 
+	private static TextureRegion[] newTextureArray(String prefix, int numberOfTextures) {
+		TextureRegion[] textures = new TextureRegion[numberOfTextures];
+		for (int i = 1; i <= numberOfTextures; i++) {
+			textures[i - 1] = newTexture(prefix + "_" + i);
+		}
+		return textures;
+	}
+	
 	private static NinePatch newNinePatch(String name) {
 		Texture texture = instantiateTexture(name);
 		NinePatch patch = new NinePatch(texture, texture.getWidth()/2 - 2, texture.getWidth()/2 - 2,

@@ -56,7 +56,7 @@ public class EffectFactory {
 		position.bounds = Geometry.polyRect(0, 0, 0, 0);
 		
 		final Renderer renderer = new Renderer(exhaust);
-		renderer.image = ImageManager.PLAYER_SHIP_EXHAUST_1;
+		renderer.image = ImageManager.PLAYER_SHIP_EXHAUST[0];
 		renderer.customXOffset = -32.5f;
 		renderer.customYOffset = -renderer.image.getRegionHeight();
 		renderer.customOffset = true;
@@ -64,9 +64,7 @@ public class EffectFactory {
 		renderer.priority = new Priority(-4);
 	
 		final Animator animator = new Animator(exhaust);
-		animator.currentAnimation = new Animation(0.125f, ImageManager.PLAYER_SHIP_EXHAUST_1,
-				ImageManager.PLAYER_SHIP_EXHAUST_2,
-				ImageManager.PLAYER_SHIP_EXHAUST_3);
+		animator.currentAnimation = new Animation(0.125f, ImageManager.PLAYER_SHIP_EXHAUST);
 		animator.currentAnimation.setPlayMode(PlayMode.LOOP);
 	
 		final ParticleEmitter emitter = new ParticleEmitter(exhaust);
@@ -93,7 +91,7 @@ public class EffectFactory {
 		position.bounds = Geometry.polyRect(0, 0, 0, 0);
 		
 		final Renderer renderer = new Renderer(exhaustCross);
-		renderer.image = ImageManager.PLAYER_EXHAUST_CROSS;
+		renderer.image = ImageManager.PLAYER_EXHAUST_CROSS[0];
 		renderer.customXOffset = xOffset;
 		renderer.customYOffset = -renderer.image.getRegionHeight()-10;
 		renderer.customOffset = true;
@@ -101,9 +99,7 @@ public class EffectFactory {
 		renderer.priority = new Priority(2);
 	
 		final Animator animator = new Animator(exhaustCross);
-		animator.currentAnimation = new Animation(0.3f, ImageManager.PLAYER_EXHAUST_CROSS_2,
-				ImageManager.PLAYER_EXHAUST_CROSS_3,
-				ImageManager.PLAYER_EXHAUST_CROSS_4);
+		animator.currentAnimation = new Animation(0.3f, ImageManager.PLAYER_EXHAUST_CROSS);
 		animator.currentAnimation.setPlayMode(PlayMode.LOOP);
 		
 		engine.addEntity(exhaustCross);
@@ -174,7 +170,7 @@ public class EffectFactory {
 		position.yDirection = 1;
 		
 		final Renderer renderer = new Renderer(lava);
-		renderer.image = ImageManager.LAVA_ON_PLAYER_1;
+		renderer.image = ImageManager.LAVA_ON_PLAYER[0];
 		renderer.customXOffset = -32.5f;
 		renderer.customYOffset = -45;
 		renderer.customOffset = true;
@@ -182,11 +178,7 @@ public class EffectFactory {
 		
 		final float frameTime = 0.2f;
 		final Animator animator = new Animator(lava);
-		animator.currentAnimation = new Animation(0.2f, ImageManager.LAVA_ON_PLAYER_1,
-				ImageManager.LAVA_ON_PLAYER_2,
-				ImageManager.LAVA_ON_PLAYER_3,
-				ImageManager.LAVA_ON_PLAYER_4,
-				ImageManager.LAVA_ON_PLAYER_5);
+		animator.currentAnimation = new Animation(0.2f, ImageManager.LAVA_ON_PLAYER);
 		animator.currentAnimation.setPlayMode(PlayMode.NORMAL);
 
 		final Lifetime lifetime = new Lifetime(lava);
@@ -223,7 +215,7 @@ public class EffectFactory {
 
 		final Renderer renderer = new Renderer(entity);
 		renderer.priority = new Priority(99);
-		renderer.image = ImageManager.BURST_LAVA_1;
+		renderer.image = ImageManager.BURST_LAVA[0];
 		renderer.customOffset = true;
 		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
 		renderer.customYOffset = -renderer.image.getRegionHeight()/2;
@@ -231,10 +223,7 @@ public class EffectFactory {
 		
 		final float frameTime = 0.05f;
 		final Animator animator = new Animator(entity);
-		animator.currentAnimation = new Animation(frameTime, ImageManager.BURST_LAVA_1,
-				ImageManager.BURST_LAVA_2,
-				ImageManager.BURST_LAVA_3,
-				ImageManager.BURST_LAVA_4);
+		animator.currentAnimation = new Animation(frameTime, ImageManager.BURST_LAVA);
 		animator.currentAnimation.setPlayMode(PlayMode.NORMAL);
 		
 		final Lifetime lifetime = new Lifetime(entity);
