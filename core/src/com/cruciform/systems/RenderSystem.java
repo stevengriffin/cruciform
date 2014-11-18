@@ -81,7 +81,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 					final float x = Conf.fractionXLeftUI(0.075f);
 					final float y = Conf.screenHeight*0.11f + Conf.screenHeight*0.15f*index;
 					font.draw(batch, k.toString() + " --- " + weapon.name + ": " + weapon.getPercentReady(),
-							x, y);
+							Conf.fractionXLeftUI(0.1f), y - Conf.screenHeight*0.01f);
 					patch.draw(batch, x, y, Math.max(
 							coolDownBarWidth*(weapon.getPercentReady() + 0.5f),
 							coolDownBarHeight),
