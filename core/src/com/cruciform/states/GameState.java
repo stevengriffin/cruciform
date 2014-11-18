@@ -60,9 +60,10 @@ public class GameState extends State {
 			player = shipFactory.createPlayer(newPlayer, false);
 			game.deferrer.shieldAndBlink(player, 3.0f);
 		}
-		game.uiFactory.createSidePanel(true);
-		game.uiFactory.createSidePanel(false);
-		game.uiFactory.createBottomPanel();
+//		game.uiFactory.createSidePanel(true);
+//		game.uiFactory.createSidePanel(false);
+//		game.uiFactory.createBottomPanel();
+		game.uiFactory.createUIBackground();
 	}
 
 	@Override

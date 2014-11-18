@@ -27,9 +27,7 @@ public class ImageManager {
 	public static final TextureRegion ROCKET_EXPLOSION = newTexture("rocket_explosion");
 	public static final TextureRegion SOUL = newTexture("soul");
 	public static final TextureRegion ENEMY_BLOOD = newTexture("enemy_blood");
-	public static final TextureRegion SIDE_PANEL = newTexture("side_panel");
-	public static final TextureRegion BOTTOM_PANEL = newTexture("bottom_panel");
-	public static final TextureRegion WEAPONS_PANEL = newTexture("weapons_panel");
+	public static final TextureRegion UI_BG = newTexture("ui_bg");
 	public static final TextureRegion BACKGROUND_LAVA = newTexture("background_lava_pixel");
 	public static final TextureRegion FOREGROUND_LAVA = newTexture("foreground_lava_pixel");
 	public static final TextureRegion PARALLAX_BG_LVL1_1 = newTexture("parallax_bg_lvl1_1");
