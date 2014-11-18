@@ -100,6 +100,41 @@ public class ExplosionFactory {
 		
 		return entity;
 	}
+	
+	public Entity createPlayerExplosion(final Entity deadPlayer) {
+		final float frameTime = 0.1f;
+		
+		final Position oldPos = Position.mapper.get(deadPlayer);
+		Rectangle rect = oldPos.bounds.getBoundingRectangle();
+		final float x = rect.x + rect.width/2;
+		final float y = rect.y + rect.height;
+		
+		final Entity entity = new Entity();
+		
+		final Renderer renderer = new Renderer(entity);
+		renderer.image = ImageManager.PLAYER_EXPLOSION[0];
+
+		final Animator animator = new Animator(entity);
+		animator.currentAnimation = new Animation(frameTime, ImageManager.PLAYER_EXPLOSION);
+		
+		final Position position = new Position(entity);
+		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+	
+		SoundEffect soundEffect = new SoundEffect();
+		soundEffect.sound = AudioManager.get(Noise.CRUCIFORM);
+		soundEffect.id = soundEffect.sound.play(.5f * Conf.volume);
+		entity.add(soundEffect);
+
+		// Fade out explosion after it's half over.
+		fadeOutAfterDelay(entity, frameTime*ImageManager.PLAYER_EXPLOSION.length/2,
+				frameTime*(ImageManager.PLAYER_EXPLOSION.length/2 + 1));
+		
+		engine.addEntity(entity);
+		
+		GameCamera.shake(GameCamera.SMALL_SHAKE);
+		
+		return entity;
+	}
 
 	public Entity createEnemyExplosion(final Entity deadEnemy) {
 		final float frameTime = 0.1f;
@@ -126,22 +161,27 @@ public class ExplosionFactory {
 		entity.add(soundEffect);
 
 		// Fade out explosion after it's half over.
-		Timer.schedule(new Task() {
-
-			@Override
-			public void run() {
-				final Lifetime lifetime = new Lifetime(entity);
-				lifetime.setTimeRemaining(frameTime*(ImageManager.PENTAGRAM_EXPLOSION.length/2 + 1));
-				new Fader(entity);
-			}
-			
-		}, frameTime*ImageManager.PENTAGRAM_EXPLOSION.length/2);
+		fadeOutAfterDelay(entity, frameTime*ImageManager.PENTAGRAM_EXPLOSION.length/2,
+				frameTime*(ImageManager.PENTAGRAM_EXPLOSION.length/2 + 1));
 		
 		engine.addEntity(entity);
 		
 		GameCamera.shake(GameCamera.SMALL_SHAKE);
 		
 		return entity;
+	}
+
+	private void fadeOutAfterDelay(Entity entity, float delay, float lifeDelay) {
+		Timer.schedule(new Task() {
+
+			@Override
+			public void run() {
+				final Lifetime lifetime = new Lifetime(entity);
+				lifetime.setTimeRemaining(lifeDelay);
+				new Fader(entity);
+			}
+			
+		}, delay);
 	}
 	
 	public Entity createRifleExplosion(final Entity bullet) {

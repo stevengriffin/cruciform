@@ -58,7 +58,7 @@ public class Deferrer {
 				public void run() {
 					StateFactory.setState(InsertCreditState.class, game);
 				}
-			}, 1.0f);
+			}, 2.5f);
 		}
 		if (urgency != RemovalUrgency.URGENT) {
 			Splitter splitter = Splitter.mapper.get(entity);

@@ -41,6 +41,8 @@ public class ImageManager {
 	public static final TextureRegion[] LAVA_ON_PLAYER = newTextureArray("lava_on_player", 5);
 	public static final TextureRegion[] PENTAGRAM_EXPLOSION =
 			newTextureArray("pentagram_explosion", 11);
+	public static final TextureRegion[] PLAYER_EXPLOSION =
+			newTextureArray("player_explosion", 20);
 	public static final TextureRegion[] PLAYER_SHIP_EXHAUST = newTextureArray("player_ship_exhaust", 3);
 	public static final TextureRegion[] PLAYER_EXHAUST_CROSS = newTextureArray("player_exhaust_cross", 3);
 

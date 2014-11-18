@@ -393,7 +393,8 @@ public class EffectFactory {
 	
 	public static Entity createBlood(Engine engine, Entity culprit, Entity victim,
 			Renderer victimRenderer) {
-		// TODO: Multiple for larger damage weapons?
+		// TODO Multiple for larger damage weapons?
+		// TODO Factor in projectile position
 		final Position culpritPosition = Position.mapper.get(culprit);
 		final TextureData data = victimRenderer.image.getTexture().getTextureData();
 		data.prepare();
@@ -433,7 +434,7 @@ public class EffectFactory {
 			if (isSolidPixels(x, y, pixels, bloodRenderer.image)) {
 				Log.debug("pixels were solid");
 				bloodRenderer.customXOffset = -pixels.getWidth()/2 + x;
-				bloodRenderer.customYOffset = -pixels.getHeight()/2 + y;
+				bloodRenderer.customYOffset = -pixels.getHeight()/2 + y - bloodRenderer.image.getRegionHeight();
 				engine.addEntity(entity);
 				return;
 			}
