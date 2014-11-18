@@ -120,7 +120,7 @@ public class ExplosionFactory {
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
 	
-		SoundEffect soundEffect = new SoundEffect();
+		final SoundEffect soundEffect = new SoundEffect();
 		soundEffect.sound = AudioManager.get(Noise.CRUCIFORM);
 		soundEffect.id = soundEffect.sound.play(.5f * Conf.volume);
 		entity.add(soundEffect);
@@ -155,7 +155,7 @@ public class ExplosionFactory {
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
 	
-		SoundEffect soundEffect = new SoundEffect();
+		final SoundEffect soundEffect = new SoundEffect();
 		soundEffect.sound = AudioManager.get(Noise.ENEMY_SCREAM);
 		soundEffect.id = soundEffect.sound.play(.5f * Conf.volume);
 		entity.add(soundEffect);
