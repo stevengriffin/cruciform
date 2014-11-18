@@ -16,7 +16,7 @@ public abstract class State implements Screen {
 	
 	public State(final Cruciform game) {
 		this.game = game;
-		this.drawer = new TextDrawer(game.batch, game.font);
+		this.drawer = new TextDrawer(game.batch, game.fontSmallLight);
 		AudioManager.initMusic(this.getClass());
 	}
 	

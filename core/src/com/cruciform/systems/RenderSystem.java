@@ -53,13 +53,13 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 			}
 		}
 		font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(),
-				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.9f);
-		font.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
-				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.85f);
+				Conf.fractionXLeftUI(0.1f), Conf.screenHeight*0.95f);
+		game.fontLarge.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
+				Conf.fractionXLeftUI(0.1f), Conf.screenHeight*0.9f);
 		font.draw(batch, "Graze: " + Score.getGraze(),
-				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.8f);
+				Conf.fractionXLeftUI(0.1f), Conf.screenHeight*0.85f);
 		font.draw(batch, "Credits Used: " + Score.getCreditsUsed(),
-				Conf.fractionXLeftUI(0.05f), Conf.screenHeight*0.75f);
+				Conf.fractionXLeftUI(0.1f), Conf.screenHeight*0.8f);
 		drawPlayerWeaponInfo();
 		batch.end();
 	}
