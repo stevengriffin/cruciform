@@ -131,7 +131,7 @@ public class ExplosionFactory {
 		
 		engine.addEntity(entity);
 		
-		GameCamera.shake(GameCamera.SMALL_SHAKE);
+		GameCamera.shake(GameCamera.LARGE_SHAKE);
 		
 		return entity;
 	}
