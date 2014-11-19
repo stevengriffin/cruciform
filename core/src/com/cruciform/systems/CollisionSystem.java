@@ -20,7 +20,6 @@ import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.components.team.TeamPlayerBody;
 import com.cruciform.components.team.TeamSoul;
-import com.cruciform.factories.EffectFactory;
 import com.cruciform.factories.ExplosionFactory;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
@@ -82,7 +81,6 @@ public class CollisionSystem extends EntitySystem {
 				final Renderer renderer = Renderer.mapper.get(victim);
 				if (renderer != null) {
 					tintEntity(victimHealth, renderer);
-					EffectFactory.createBlood(engine, culprit, victim, renderer);
 				}
 			}
 			victimHealth.currentHealth -= damager.damage;
