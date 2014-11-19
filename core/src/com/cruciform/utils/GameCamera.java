@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 public class GameCamera {
 	
 	public static final float SMALL_SHAKE = 5.0f; 
-	public static final float LARGE_SHAKE = 100.0f; 
+	public static final float LARGE_SHAKE = 50.0f; 
 	
 	private static float x = 0;
 	private static float y = 0;
