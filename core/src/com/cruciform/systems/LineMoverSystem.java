@@ -10,13 +10,13 @@ import com.cruciform.components.Velocity;
 public class LineMoverSystem extends IteratingSystem {
 
 	public LineMoverSystem() {
-		super(Family.getFor(LineMover.class, Velocity.class));
+		super(Family.all(LineMover.class, Velocity.class).get());
 	}
 
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		LineMover lineMover = LineMover.mapper.get(entity);
-		Velocity velocity = Velocity.mapper.get(entity);
+		LineMover lineMover = LineMover.mapper.getSafe(entity);
+		Velocity velocity = Velocity.mapper.getSafe(entity);
 		if (lineMover.accelerates) {
 			velocity.linear.x = MathUtils.clamp(velocity.linear.x + lineMover.accel.x*deltaTime,
 					-lineMover.absMaxVelocity.x, lineMover.absMaxVelocity.x);

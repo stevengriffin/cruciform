@@ -1,8 +1,12 @@
 package com.cruciform.input;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
+
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
 
+@NonNullByDefault
 public class InputCode {
 	/** Avoid hash collisions with key codes. **/
 	private static final int MOUSE_BUTTON_OFFSET = 1000;
@@ -28,7 +32,7 @@ public class InputCode {
 	}
 
 	@Override
-	public boolean equals(Object other) {
+	public boolean equals(@Nullable Object other) {
 		InputCode otherCode = (InputCode) other;
 		if (otherCode == null) {
 			return false;
@@ -37,7 +41,7 @@ public class InputCode {
 	}
 
 	@Override
-	public String toString() {
+	public @Nullable String toString() {
 		if (isKey) {
 			return Input.Keys.toString(code);
 		} else {

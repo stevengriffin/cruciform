@@ -13,7 +13,7 @@ public class HealthSystem extends IteratingSystem {
 	private final ExplosionFactory explosionFactory;
 	
 	public HealthSystem(final ExplosionFactory explosionFactory, final Deferrer deferrer) {
-		super(Family.getFor(Health.class));
+		super(Family.all(Health.class).get());
 		this.deferrer = deferrer;
 		this.explosionFactory = explosionFactory;
 		// Process before ChildPositionSystem
@@ -22,7 +22,7 @@ public class HealthSystem extends IteratingSystem {
 
 	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
-		final Health health = Health.mapper.get(entity);
+		final Health health = Health.mapper.getSafe(entity);
 		if (health.currentHealth <= 0) {
 			deferrer.remove(entity);
 			deferrer.run(() -> explosionFactory.createExplosion(entity));

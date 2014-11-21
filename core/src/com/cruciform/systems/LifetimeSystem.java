@@ -11,13 +11,13 @@ public class LifetimeSystem extends IteratingSystem {
 	private final Deferrer deferrer;
 	
 	public LifetimeSystem(final Deferrer deferrer) {
-		super(Family.getFor(Lifetime.class));
+		super(Family.all(Lifetime.class).get());
 		this.deferrer = deferrer;
 	}
 
 	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
-		final Lifetime lifetime = Lifetime.mapper.get(entity);
+		final Lifetime lifetime = Lifetime.mapper.getSafe(entity);
 		if (!lifetime.tick(deltaTime)) {
 			deferrer.remove(entity);
 		}

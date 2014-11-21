@@ -15,19 +15,19 @@ public class ChildPositionSystem extends IteratingSystem {
 	private final Deferrer deferrer;
 	
 	public ChildPositionSystem(final Deferrer deferrer) {
-		super(Family.getFor(Child.class, Position.class));
+		super(Family.all(Child.class, Position.class).get());
 		this.deferrer = deferrer;
 		this.priority = 5;
 	}
 	
 	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
-		final Child child = Child.mapper.get(entity);
+		final Child child = Child.mapper.getSafe(entity);
 		if (deferrer.entityToBeRemoved(child.parent)) {
 			Log.debug("removing entity");
 			deferrer.remove(entity, RemovalUrgency.UNIMPORTANT);
 		}
-		final Position childPosition = Position.mapper.get(entity);
+		final Position childPosition = Position.mapper.getSafe(entity);
 		final Position parentPosition = Position.mapper.get(child.parent);
 		if (parentPosition == null) {
 			return;

@@ -20,13 +20,13 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 
 	private static final float ACCEL_CONSTANT = 0.0f;
 	private static final float SENSITIVITY_CONSTANT = 240.0f;
-	private PlayerInput playerInput = null;
+	private PlayerInput playerInput = new PlayerInput();
 	private float sensitivity;
 	private float keysSpeed = 480.0f;
 	private final Cruciform game;
 	
 	public InputSystem(final Cruciform game) {
-		super(Family.getFor(PlayerInput.class, Position.class, Renderer.class));
+		super(Family.all(PlayerInput.class, Position.class, Renderer.class).get());
 		this.game = game;
 	}
 
@@ -39,9 +39,9 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 		} else {
 			focusMultiplier = 1.0f;
 		}
-		playerInput = PlayerInput.mapper.get(entity);
-		final Renderer renderer = Renderer.mapper.get(entity);
-		final Position position = Position.mapper.get(entity);
+		playerInput = PlayerInput.mapper.getSafe(entity);
+		final Renderer renderer = Renderer.mapper.getSafe(entity);
+		final Position position = Position.mapper.getSafe(entity);
 		final Rectangle rect = position.bounds.getBoundingRectangle();
 		float x = position.bounds.getX();
 		float y = position.bounds.getY();
@@ -121,9 +121,6 @@ public class InputSystem extends IteratingSystem implements InputProcessor {
 	}
 	
 	private boolean handleInput(InputCode code, boolean down) {
-		if (playerInput == null) {
-			return false;
-		}
 		InputAction action = playerInput.actions.get(code);
 		if (action != null) {
 			action.setFiring(down);

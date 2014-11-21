@@ -1,5 +1,7 @@
 package com.cruciform.systems;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.core.EntitySystem;
@@ -37,7 +39,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	private final NinePatch patch = ImageManager.getPatch(NinePatches.BUTTON_1);
 	
 	public RenderSystem(final Cruciform game, final Batch batch, final BitmapFont font) {
-		this.family = Family.getFor(Position.class, Renderer.class);
+		this.family = Family.all(Position.class, Renderer.class).get();
 		this.batch = batch;
 		this.font = font;
 		this.game = game;
@@ -68,11 +70,11 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		// Adjust to be 1:1 pixel on a 1920x1080 display.
 		final float coolDownBarWidth = Conf.screenWidth/(1920/256.0f);
 		final float coolDownBarHeight = Conf.screenHeight/(1080/128.0f);
-		PlayerInput input = game.getGameState().getPlayer().getComponent(PlayerInput.class);
+		PlayerInput input = PlayerInput.mapper.get(game.getGameState().getPlayer());
 		if (input == null) {
 			return;
 		}
-		Shooter shooter = game.getGameState().getPlayer().getComponent(Shooter.class);
+		Shooter shooter = Shooter.mapper.getSafe(game.getGameState().getPlayer());
 		for (int i = 0; i < shooter.weapons.size(); i++) {
 			final int index = i;
 			Weapon weapon = shooter.weapons.get(i);
@@ -95,8 +97,8 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	private static int BOTTOM = 1;
 	
 	private void processEntity(final Entity entity, final float deltaTime) {
-		final Position position = Position.mapper.get(entity);
-		final Renderer renderer = Renderer.mapper.get(entity);
+		final Position position = Position.mapper.getSafe(entity);
+		final Renderer renderer = Renderer.mapper.getSafe(entity);
 		if (renderer.alpha != 1.0f || renderer.tint != null) {
 			final Color tint = batch.getColor();
 			final float masterR = tint.r;
@@ -187,10 +189,11 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	}
 	
 	@Override
-	public void entityAdded(Entity entity) {
-		final Renderer renderer = Renderer.mapper.get(entity);
-		Array<Entity> entities = entityMap.get(renderer.priority);
-		if (entities == null) {
+	public void entityAdded(@NonNull Entity entity) {
+		final Renderer renderer = Renderer.mapper.getSafe(entity);
+		// This isn't lazy so a new array of entities is wastefully created for each entity.
+		Array<Entity> entities = entityMap.get(renderer.priority, new Array<Entity>());
+		if (entities.size == 0) {
 			entities = new Array<Entity>();
 			entities.ordered = false;
 			entityMap.put(renderer.priority, entities);
@@ -200,11 +203,9 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 	}
 
 	@Override
-	public void entityRemoved(Entity entity) {
-		Renderer renderer = Renderer.mapper.get(entity);
+	public void entityRemoved(@NonNull Entity entity) {
+		Renderer renderer = Renderer.mapper.getSafe(entity);
 		Array<Entity> entities = entityMap.get(renderer.priority);
-		if (entities != null) {
-			entities.removeValue(entity, true);
-		}
+		entities.removeValue(entity, true);
 	}
 }

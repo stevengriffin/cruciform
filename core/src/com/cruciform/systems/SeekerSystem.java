@@ -14,17 +14,17 @@ public class SeekerSystem extends IteratingSystem {
 	private final Cruciform game;
 	
 	public SeekerSystem(final Cruciform game) {
-		super(Family.getFor(Seeker.class, Velocity.class, Position.class));
+		super(Family.all(Seeker.class, Velocity.class, Position.class).get());
 		this.game = game;
 	}
 	
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		Seeker seeker = Seeker.mapper.get(entity);
-		Position position = Position.mapper.get(entity);
-		Velocity velocity = Velocity.mapper.get(entity);
+		final Seeker seeker = Seeker.mapper.getSafe(entity);
+		final Position position = Position.mapper.getSafe(entity);
+		final Velocity velocity = Velocity.mapper.getSafe(entity);
 		final Vector2 bulletPos = position.getCenter();
-		final Vector2 playerPos = Position.mapper.get(game.getGameState().getPlayer()).getCenter();
+		final Vector2 playerPos = Position.mapper.getSafe(game.getGameState().getPlayer()).getCenter();
 		if (bulletPos.angle(playerPos) > 0) {
 			velocity.linear.rotate(seeker.speed*deltaTime);
 		} else {

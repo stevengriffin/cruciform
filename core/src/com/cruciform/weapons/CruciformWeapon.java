@@ -45,9 +45,9 @@ public class CruciformWeapon extends Weapon {
 
 		@Override
 		public Entity mutate(Entity entity, final int index) {
-			final Splitter splitter = Splitter.mapper.get(entity);
-			final Position position = Position.mapper.get(entity);
-			final Renderer renderer = Renderer.mapper.get(entity);
+			final Splitter splitter = Splitter.mapper.getSafe(entity);
+			final Position position = Position.mapper.getSafe(entity);
+			final Renderer renderer = Renderer.mapper.getSafe(entity);
 			renderer.image = ImageManager.CRUCIFORM_WEAPON_CROSS;
 			renderer.customOffset = true;
 			renderer.customXOffset = renderer.image.getRegionWidth()/2;

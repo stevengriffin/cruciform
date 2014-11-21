@@ -18,14 +18,14 @@ public class SplitterSystem extends IteratingSystem {
 	private final Kryo kryo;
 	
 	public SplitterSystem(final Cruciform game) {
-		super(Family.getFor(Splitter.class));
+		super(Family.all(Splitter.class).get());
 		this.engine = game.engine;
 		this.kryo = game.kryo;
 	}
 
 	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
-		final Splitter splitter = Splitter.mapper.get(entity);
+		final Splitter splitter = Splitter.mapper.getSafe(entity);
 		if (splitter.splitOnNextUpdate) {
 			splitter.timesSplit++;
 			splitter.splitOnNextUpdate = false;
@@ -39,7 +39,6 @@ public class SplitterSystem extends IteratingSystem {
 						child.add(kryo.copy(component));
 					}
 				}
-				Lifetime.mapper.get(child).getClass();
 				child = splitter.customSplitBehavior.mutate(child, i);
 				engine.addEntity(child);
 			}

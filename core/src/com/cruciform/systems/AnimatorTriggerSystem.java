@@ -4,8 +4,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.components.Animator;
 import com.cruciform.components.Shooter;
 import com.cruciform.components.team.TeamEnemy;
@@ -17,20 +15,20 @@ public class AnimatorTriggerSystem extends IteratingSystem {
 	private final Deferrer deferrer;
 	
 	public AnimatorTriggerSystem(Deferrer deferrer) {
-		super(Family.getFor(Shooter.class, Animator.class, TeamEnemy.class));
+		super(Family.all(Shooter.class, Animator.class, TeamEnemy.class).get());
 		this.deferrer = deferrer;
 	}
 	
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		final Shooter shooter = Shooter.mapper.get(entity);
-		final Animator animator = Animator.mapper.get(entity);
+		final Shooter shooter = Shooter.mapper.getSafe(entity);
+		final Animator animator = Animator.mapper.getSafe(entity);
 		shooter.weapons.forEach((w) -> {
 			if (w.getJustFired()) {
-				animator.currentAnimation = animator.animations.get(Animator.States.FIRING);
+				animator.currentAnimation = animator.animations.getSafe(Animator.States.FIRING, Animator.NULL_ANIMATION);
 				animator.currentAnimation.setPlayMode(PlayMode.LOOP);
 				deferrer.runIfComplete(
-					() -> animator.currentAnimation = animator.animations.get(Animator.States.IDLE),
+					() -> animator.currentAnimation = animator.animations.getSafe(Animator.States.IDLE, Animator.NULL_ANIMATION),
 					() -> w.getLastTimeFired(), 0.6f);
 			}
 		});

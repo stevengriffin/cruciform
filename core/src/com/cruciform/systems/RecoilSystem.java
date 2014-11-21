@@ -15,16 +15,16 @@ public class RecoilSystem extends IteratingSystem {
 	private static final float RECOIL_MULT = 1;
 	
 	public RecoilSystem() {
-		super(Family.getFor(Child.class, Position.class, Recoil.class));
+		super(Family.all(Child.class, Position.class, Recoil.class).get());
 		// Execute after ChildPositionSystem
 		this.priority = 100;
 	}
 	
 	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
-		final Child child = Child.mapper.get(entity);
-		final Position childPosition = Position.mapper.get(entity);
-		final Recoil childRecoil = Recoil.mapper.get(entity);
+		final Child child = Child.mapper.getSafe(entity);
+		final Position childPosition = Position.mapper.getSafe(entity);
+		final Recoil childRecoil = Recoil.mapper.getSafe(entity);
 		final Position parentPosition = Position.mapper.get(child.parent);
 		final Shooter parentShooter = Shooter.mapper.get(child.parent);
 		if (parentPosition == null || parentShooter == null) {

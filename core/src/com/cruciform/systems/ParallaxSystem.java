@@ -10,13 +10,13 @@ import com.cruciform.utils.Conf;
 public class ParallaxSystem extends IteratingSystem {
 
 	public ParallaxSystem() {
-		super(Family.getFor(Position.class, Parallax.class));
+		super(Family.all(Position.class, Parallax.class).get());
 	}
 	
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		final Position position = Position.mapper.get(entity);
-		final Parallax parallax = Parallax.mapper.get(entity);
+		final Position position = Position.mapper.getSafe(entity);
+		final Parallax parallax = Parallax.mapper.getSafe(entity);
 		// How far parallaxed image can be moved without showing the edges in the play area.
 		final float maxOffset = (position.bounds.getBoundingRectangle().width - 
 				Conf.canonicalPlayWidth)/2;

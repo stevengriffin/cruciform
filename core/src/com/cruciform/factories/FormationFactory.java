@@ -37,7 +37,7 @@ public class FormationFactory {
 			int i = 0;
 			for (int x = left; x <= right; x += increment) {
 				Entity ship = creator.createAt(x, 0, i);
-				Position position = Position.mapper.get(ship);
+				Position position = Position.mapper.getSafe(ship);
 				position.bounds.setPosition(position.bounds.getX(),
 						Conf.canonicalHeight + position.bounds.getBoundingRectangle().height);
 				i++;
@@ -49,7 +49,7 @@ public class FormationFactory {
 			float x) {
 		schedule(() -> {
 			Entity ship = creator.createAt(x, 0);
-			Position position = Position.mapper.get(ship);
+			Position position = Position.mapper.getSafe(ship);
 			position.bounds.setPosition(position.bounds.getX(),
 					Conf.canonicalHeight + position.bounds.getBoundingRectangle().height);
 		}, timeDelay);

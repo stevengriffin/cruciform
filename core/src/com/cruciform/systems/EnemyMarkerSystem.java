@@ -11,15 +11,16 @@ import com.badlogic.gdx.math.Rectangle;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.team.TeamEnemy;
+import com.cruciform.utils.ColorUtils;
 import com.cruciform.utils.Conf;
 
 public class EnemyMarkerSystem extends IteratingSystem {
 
 	private final ShapeRenderer shapeRenderer;
-	private static final Color markerColor = Color.RED;
+	private static final Color markerColor = ColorUtils.getColor(Color.RED);
 	
 	public EnemyMarkerSystem(Batch batch, ShapeRenderer shapeRenderer) {
-		super(Family.getFor(Position.class, Renderer.class, TeamEnemy.class));
+		super(Family.all(Position.class, Renderer.class, TeamEnemy.class).get());
 		this.shapeRenderer = shapeRenderer;
 		this.priority = 170;
 	}
@@ -33,7 +34,7 @@ public class EnemyMarkerSystem extends IteratingSystem {
 	
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		Position position = Position.mapper.get(entity);
+		Position position = Position.mapper.getSafe(entity);
 		shapeRenderer.setColor(markerColor);
 		Rectangle rect = position.bounds.getBoundingRectangle();
 		shapeRenderer.rect(Conf.playToScreenX(rect.x),

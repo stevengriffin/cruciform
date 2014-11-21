@@ -180,7 +180,7 @@ public class EnemyWeaponFactory {
 
 	private EntityMutator createLineMoverBehavior(final float rotationalVelocity, final float bulletSpeed) {
 		return (entity, index) -> {	
-			Position position = Position.mapper.get(entity);
+			Position position = Position.mapper.getSafe(entity);
 
 			LineMover lineMover = new LineMover();
 			lineMover.maxVelocity = Geometry.rotatedVector(position.bounds.getRotation(), bulletSpeed);
@@ -197,9 +197,9 @@ public class EnemyWeaponFactory {
 	 */
 	private EntityMutator createTrackingBehavior() {
 		return (entity, index) -> {	
-			Position position = Position.mapper.get(entity);
+			Position position = Position.mapper.getSafe(entity);
 			final Vector2 bulletPos = position.getCenter();
-			final Vector2 playerPos = Position.mapper.get(gameState.getPlayer()).getCenter();
+			final Vector2 playerPos = Position.mapper.getSafe(gameState.getPlayer()).getCenter();
 			Log.debug("bulletPos: " + bulletPos + " playerPos: " + playerPos);
 			Log.debug("old rot: " + position.bounds.getRotation());
 			position.bounds.rotate(bulletPos.angle(playerPos));
@@ -222,7 +222,7 @@ public class EnemyWeaponFactory {
 	 */
 	private EntityMutator createSpiralingBehavior() {
 		return (entity, index) -> {	
-			Position position = Position.mapper.get(entity);
+			Position position = Position.mapper.getSafe(entity);
 			position.incrementRotation(index*5);
 
 			return entity;
@@ -231,15 +231,15 @@ public class EnemyWeaponFactory {
 	
 	private EntityMutator createRadialSplitBehavior() {
 		return (entity, index) -> {	
-			final LineMover mover = LineMover.mapper.get(entity);
-			final Position position = Position.mapper.get(entity);
+			final LineMover mover = LineMover.mapper.getSafe(entity);
+			final Position position = Position.mapper.getSafe(entity);
 			float rotation = index == 0 ?
 					mover.maxVelocity.angle() - 30: mover.maxVelocity.angle() + 30;
 			position.bounds.setRotation(rotation);
 
 			mover.maxVelocity = Geometry.rotatedVector(rotation, mover.maxVelocity.len());
 
-			final Lifetime lifetime = Lifetime.mapper.get(entity);
+			final Lifetime lifetime = Lifetime.mapper.getSafe(entity);
 			lifetime.setTimeRemaining(1);
 			return entity;
 		};
@@ -267,7 +267,7 @@ public class EnemyWeaponFactory {
 
 				@Override
 				public void run() {
-					LineMover lineMover = LineMover.mapper.get(entity);
+					LineMover lineMover = LineMover.mapper.getSafe(entity);
 					if (index % 2 == 0) {
 						lineMover.maxVelocity.rotate90(1);
 					} else {

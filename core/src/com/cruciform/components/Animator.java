@@ -1,19 +1,24 @@
 package com.cruciform.components;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.utils.ObjectMap;
+import com.cruciform.images.ImageManager;
+import com.cruciform.utils.SafeObjectMap;
 
 public class Animator extends AbstractComponent {
 	public enum States {
 		IDLE,
 		FIRING,
 	}
+
+	@NonNull public static final Animation NULL_ANIMATION =  new Animation(1.0f, ImageManager.BLANK);
 	
-    public static final ComponentMapper<Animator> mapper = ComponentMapper.getFor(Animator.class);
-	public Animation currentAnimation;
-	public ObjectMap<States, Animation> animations = new ObjectMap<>();
+    @NonNull public static final ComponentMapper<Animator> mapper = ComponentMapper.getFor(Animator.class);
+	@NonNull public Animation currentAnimation = NULL_ANIMATION;
+	@NonNull public SafeObjectMap<States, Animation> animations = new SafeObjectMap<>();
 	public float stateTime = 0;
 	
 	public Animator(Entity entity) {

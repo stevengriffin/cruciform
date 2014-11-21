@@ -9,13 +9,13 @@ import com.cruciform.components.Shooter;
 public class ShooterSystem extends IteratingSystem {
 
 	public ShooterSystem() {
-		super(Family.getFor(Position.class, Shooter.class));
+		super(Family.all(Position.class, Shooter.class).get());
 	}
 	
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		Position position = Position.mapper.get(entity);
-		Shooter shooter = Shooter.mapper.get(entity);
+		final Position position = Position.mapper.getSafe(entity);
+		final Shooter shooter = Shooter.mapper.getSafe(entity);
 		shooter.weapons.forEach((w) -> w.update(deltaTime, position));
 	}
 }

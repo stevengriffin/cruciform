@@ -43,7 +43,7 @@ public class SweepWeapon extends Weapon {
 	@Override
 	void handleUpdate(final float dt, final Position firerPos) {
 		if (lastSweepFired != null) {
-			final Position position = Position.mapper.get(lastSweepFired);
+			final Position position = Position.mapper.getSafe(lastSweepFired);
 			float[] vertices = position.bounds.getVertices();
 			vertices[BOTTOM_LEFT] += dt*xChangeSpeed*shotGrowthMultiplier;
 			vertices[BOTTOM_RIGHT] -= dt*xChangeSpeed*shotGrowthMultiplier;
@@ -52,7 +52,7 @@ public class SweepWeapon extends Weapon {
 			//Log.debug("width bottom: " + (vertices[BOTTOM_RIGHT] - vertices[BOTTOM_LEFT]));
 			//Log.debug("width top: " + (vertices[TOP_RIGHT] - vertices[TOP_LEFT]));
 			position.bounds.setVertices(vertices);
-			final Damager damager = Damager.mapper.get(lastSweepFired);
+			final Damager damager = Damager.mapper.getSafe(lastSweepFired);
 			damager.damage = damageNumerator/position.bounds.getBoundingRectangle().width;
 		}
 	}

@@ -9,14 +9,14 @@ import com.cruciform.components.Renderer;
 public class BlinkerSystem extends IteratingSystem {
 
 	public BlinkerSystem() {
-		super(Family.getFor(Blinker.class, Renderer.class));
+		super(Family.all(Blinker.class, Renderer.class).get());
 		this.priority = 50;
 	}
 
 	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
-		final Blinker blinker = Blinker.mapper.get(entity);
-		final Renderer renderer = Renderer.mapper.get(entity);
+		final Blinker blinker = Blinker.mapper.getSafe(entity);
+		final Renderer renderer = Renderer.mapper.getSafe(entity);
 		if (blinker.metro.tick(deltaTime)) {
 			renderer.shouldRender = false;
 		} else {

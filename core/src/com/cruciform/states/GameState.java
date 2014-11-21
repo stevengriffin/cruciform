@@ -1,5 +1,7 @@
 package com.cruciform.states;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
@@ -16,7 +18,7 @@ import com.cruciform.utils.Score;
 
 public class GameState extends State {
 
-	private Entity player;
+	@NonNull private Entity player;
 	public final ShipFactory shipFactory;
 	
 	public GameState(Cruciform game) {
@@ -53,8 +55,8 @@ public class GameState extends State {
 		Gdx.input.setCursorCatched(true);
 		Gdx.input.setInputProcessor(game.inputSystem);
 		Timer.instance().start();
-		if (game.engine.getEntitiesFor(Family.getFor(TeamPlayer.class)).size() == 0) {
-			final Position position = Position.mapper.get(player);
+		if (game.engine.getEntitiesFor(Family.all(TeamPlayer.class).get()).size() == 0) {
+			final Position position = Position.mapper.getSafe(player);
 			final Entity newPlayer = new Entity();
 			newPlayer.add(position);
 			player = shipFactory.createPlayer(newPlayer, false);

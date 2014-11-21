@@ -1,8 +1,11 @@
 package com.cruciform.utils;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 
+@NonNullByDefault
 public class OutOfBoundsHandler {
 	
 	private boolean removeWhenSouth = false;

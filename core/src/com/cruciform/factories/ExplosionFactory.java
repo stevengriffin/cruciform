@@ -63,7 +63,7 @@ public class ExplosionFactory {
 	}
 	
 	public Entity createRocketExplosion(final Entity lastRocketFired) {
-		final Position oldPos = Position.mapper.get(lastRocketFired);
+		final Position oldPos = Position.mapper.getSafe(lastRocketFired);
 		Rectangle rect = oldPos.bounds.getBoundingRectangle();
 		final float x = rect.x + rect.width/2;
 		final float y = rect.y + rect.height;
@@ -104,7 +104,7 @@ public class ExplosionFactory {
 	public Entity createPlayerExplosion(final Entity deadPlayer) {
 		final float frameTime = 0.1f;
 		
-		final Position oldPos = Position.mapper.get(deadPlayer);
+		final Position oldPos = Position.mapper.getSafe(deadPlayer);
 		Rectangle rect = oldPos.bounds.getBoundingRectangle();
 		final float x = rect.x + rect.width/2;
 		final float y = rect.y + rect.height;
@@ -139,7 +139,7 @@ public class ExplosionFactory {
 	public Entity createEnemyExplosion(final Entity deadEnemy) {
 		final float frameTime = 0.1f;
 		
-		final Position oldPos = Position.mapper.get(deadEnemy);
+		final Position oldPos = Position.mapper.getSafe(deadEnemy);
 		Rectangle rect = oldPos.bounds.getBoundingRectangle();
 		final float x = rect.x + rect.width/2;
 		final float y = rect.y + rect.height;
@@ -185,7 +185,7 @@ public class ExplosionFactory {
 	}
 	
 	public Entity createRifleExplosion(final Entity bullet) {
-		final Position oldPos = Position.mapper.get(bullet);
+		final Position oldPos = Position.mapper.getSafe(bullet);
 		final Rectangle rect = oldPos.bounds.getBoundingRectangle();
 		final float x = rect.x;
 		final float y = rect.y;
@@ -218,7 +218,7 @@ public class ExplosionFactory {
 	private final static float SOUL_DROP_SPEED = -300.0f;
 	
 	public void createSoul(final Entity deadEntity) {
-		final Position deadPosition = Position.mapper.get(deadEntity);
+		final Position deadPosition = Position.mapper.getSafe(deadEntity);
 		
 		final Entity entity = new Entity();
 

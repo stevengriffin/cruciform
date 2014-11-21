@@ -1,5 +1,7 @@
 package com.cruciform.components;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Polygon;
@@ -8,9 +10,9 @@ import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
 
 public class Position extends AbstractComponent {
-    public static final ComponentMapper<Position> mapper = ComponentMapper.getFor(Position.class);
-	public Polygon bounds;
-	public OutOfBoundsHandler outOfBoundsHandler = OutOfBoundsHandler.none();
+    @NonNull public static final ComponentMapper<Position> mapper = ComponentMapper.getFor(Position.class);
+	@NonNull public Polygon bounds = Geometry.polyRect(0, 0, 0, 0);
+	@NonNull public OutOfBoundsHandler outOfBoundsHandler = OutOfBoundsHandler.none();
 	/** Set to 1 if this entity faces the top of the screen. **/
 	public int yDirection = -1;
 	

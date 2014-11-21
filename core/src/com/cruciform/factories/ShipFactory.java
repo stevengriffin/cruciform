@@ -1,5 +1,7 @@
 package com.cruciform.factories;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
@@ -51,7 +53,7 @@ public class ShipFactory {
 	    this.weaponFactory = new EnemyWeaponFactory(engine, explosionFactory, gameState);
 	}
 	
-	public Entity createPlayer(final Entity entity, final boolean playIntro) {
+	public @NonNull Entity createPlayer(final Entity entity, final boolean playIntro) {
 		
 		Renderer renderer = new Renderer(entity);
 		renderer.image = ImageManager.PLAYER_SHIP_GOLD_COCKPIT;

@@ -13,14 +13,14 @@ public class MovementSystem extends IteratingSystem {
 	private final Deferrer deferrer;
 	
 	public MovementSystem(Deferrer deferrer) {
-		super(Family.getFor(Position.class, Velocity.class));
+		super(Family.all(Position.class, Velocity.class).get());
 		this.deferrer = deferrer;
 	}
 	
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		Position position = Position.mapper.get(entity);
-		Velocity velocity = Velocity.mapper.get(entity);
+		Position position = Position.mapper.getSafe(entity);
+		Velocity velocity = Velocity.mapper.getSafe(entity);
 		velocity.linear.x = applyDrag(velocity.linear.x, velocity.linearDragX, deltaTime);
 		velocity.linear.y = applyDrag(velocity.linear.y, velocity.linearDragY, deltaTime);
 		position.bounds.translate(velocity.linear.x*deltaTime, velocity.linear.y*deltaTime);

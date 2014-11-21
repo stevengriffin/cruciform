@@ -35,7 +35,7 @@ public class CollisionSystem extends EntitySystem {
 	
 	public CollisionSystem(final Engine engine, final Deferrer deferrer, 
 			final ExplosionFactory explosionFactory) {
-		this.entities = engine.getEntitiesFor(Family.getFor(Collider.class, Position.class));
+		this.entities = engine.getEntitiesFor(Family.all(Collider.class, Position.class).get());
 		this.engine = engine;
 		this.deferrer = deferrer;
 		this.explosionFactory = explosionFactory;
@@ -45,23 +45,26 @@ public class CollisionSystem extends EntitySystem {
 	public void update(final float deltaTime) {
 		for(int i = 0; i < entities.size(); ++i) {
 			final Entity entity = entities.get(i);
-			final Collider collider = Collider.mapper.get(entity);
-			final Position position = Position.mapper.get(entity);
+			final Collider collider = Collider.mapper.getSafe(entity);
+			final Position position = Position.mapper.getSafe(entity);
 			for(Class<? extends Team> team : collider.teamsToCollide) {
 				// Find all entities that possess a team we want to collide with.
 				final ImmutableArray<Entity> entitiesToCollideWith = engine.getEntitiesFor(
-						Family.getFor(Collider.class, Position.class, team));
+						Family.all(Collider.class, Position.class, team).get());
 				for (int j = 0; j < entitiesToCollideWith.size(); ++j) {
 					final Entity other = entitiesToCollideWith.get(j);
 					if (collider.entitiesCollidedWith.contains(other, true)) {
 						continue;
 					}
 					final Position otherPosition = Position.mapper.get(other);
+					if (otherPosition == null) {
+						continue;
+					}
 					if (Intersector.overlapConvexPolygons(position.bounds, otherPosition.bounds)) {
 						collider.entitiesCollidedWith.add(other);
 						performDamagerEvent(entity, other);
-						performSplitterEvent(entity, other);
-						performSplitterEvent(other, entity);
+						performSplitterEvent(entity, other, otherPosition);
+						performSplitterEvent(other, entity, position);
 						performScoreEvent(entity, other);
 						performGrazeEvent(entity, other);
 					}
@@ -96,11 +99,11 @@ public class CollisionSystem extends EntitySystem {
 		deferrer.runIfComplete(() -> renderer.tint = null, () -> health.lastTimeDamaged, 0.2f);  
 	}
 
-	private void performSplitterEvent(final Entity entity, final Entity other) {
+	private void performSplitterEvent(final Entity entity, final Entity other, final Position otherPosition) {
 		final Splitter splitter = Splitter.mapper.get(entity);
 		if (splitter != null && splitter.splitOnCollision) {
 			splitter.splitOnNextUpdate = true;
-			final float newY = Position.mapper.get(other).bounds.getY();
+			final float newY = otherPosition.bounds.getY();
 			if (splitter.collisionY == 0.0f || splitter.collisionY > newY) {
 				splitter.collisionY = newY;
 			}

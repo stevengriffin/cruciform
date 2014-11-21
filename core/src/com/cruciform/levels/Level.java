@@ -1,5 +1,7 @@
 package com.cruciform.levels;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.Cruciform;
@@ -32,7 +34,7 @@ public abstract class Level {
 		waves = new Array<Wave>();
 	}
 	
-	public Entity createAndReturnPlayer() {
+	public @NonNull Entity createAndReturnPlayer() {
 		final Entity player = new Entity();
 		Position.defaultForPlayer(player, Conf.fractionX(0.5f), Conf.canonicalHeight*0.1f);
 		return shipFactory.createPlayer(player, true);

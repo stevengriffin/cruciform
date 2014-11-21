@@ -9,13 +9,13 @@ import com.cruciform.components.Renderer;
 public class AnimatorSystem extends IteratingSystem {
 
 	public AnimatorSystem() {
-		super(Family.getFor(Animator.class, Renderer.class));
+		super(Family.all(Animator.class, Renderer.class).get());
 	}
 	
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		Animator animator = Animator.mapper.get(entity);
-		Renderer renderer = Renderer.mapper.get(entity);
+		Animator animator = Animator.mapper.getSafe(entity);
+		Renderer renderer = Renderer.mapper.getSafe(entity);
 		animator.stateTime += deltaTime;
 		renderer.image = animator.currentAnimation.getKeyFrame(animator.stateTime);
 	}

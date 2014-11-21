@@ -11,13 +11,13 @@ import com.cruciform.weapons.Weapon;
 public class AISystem extends IteratingSystem {
 
 	public AISystem() {
-		super(Family.getFor(Position.class, Shooter.class, AI.class));
+		super(Family.all(Position.class, Shooter.class, AI.class).get());
 	}
 	
 	@Override
 	public void processEntity(Entity entity, float deltaTime) {
-		Position position = Position.mapper.get(entity);
-		Shooter shooter = Shooter.mapper.get(entity);
+		Position position = Position.mapper.getSafe(entity);
+		Shooter shooter = Shooter.mapper.getSafe(entity);
 		for (Weapon weapon : shooter.weapons) {
 			weapon.fire(position);
 		}

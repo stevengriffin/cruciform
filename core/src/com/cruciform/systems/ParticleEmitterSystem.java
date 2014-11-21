@@ -11,7 +11,7 @@ import com.cruciform.utils.Conf;
 
 public class ParticleEmitterSystem extends IteratingSystem implements EntityListener {
 
-	public final static Family family = Family.getFor(ParticleEmitter.class);
+	public final static Family family = Family.all(ParticleEmitter.class).get();
 	
 	public ParticleEmitterSystem() {
 		super(family);
@@ -20,8 +20,8 @@ public class ParticleEmitterSystem extends IteratingSystem implements EntityList
 
 	@Override
 	public void processEntity(final Entity entity, final float deltaTime) {
-		final ParticleEmitter emitter = ParticleEmitter.mapper.get(entity);
-		final Position position = Position.mapper.get(entity);
+		final ParticleEmitter emitter = ParticleEmitter.mapper.getSafe(entity);
+		final Position position = Position.mapper.getSafe(entity);
 		if (!emitter.coolDown.tick(deltaTime)) {
 			emitter.coolDown.fire();
 			final PooledEffect effect = emitter.pool.obtain();
@@ -40,7 +40,7 @@ public class ParticleEmitterSystem extends IteratingSystem implements EntityList
 
 	@Override
 	public void entityRemoved(Entity entity) {
-		final ParticleEmitter particleEmitter = ParticleEmitter.mapper.get(entity);
+		final ParticleEmitter particleEmitter = ParticleEmitter.mapper.getSafe(entity);
 		// Reset all effects
 		for (int i = particleEmitter.effects.size - 1; i >= 0; i--) {
 		    particleEmitter.effects.get(i).free();

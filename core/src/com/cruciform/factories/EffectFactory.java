@@ -127,7 +127,7 @@ public class EffectFactory {
 	}
 	
 	public static Entity createPlayerBody(final Entity player, final Engine engine) {
-		final Polygon playerBounds = Position.mapper.get(player).bounds;
+		final Polygon playerBounds = Position.mapper.getSafe(player).bounds;
 		
 		// Player ship exhaust fumes
 		final Entity body = new Entity();
