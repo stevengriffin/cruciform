@@ -2,6 +2,7 @@ package com.cruciform.factories;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import com.cruciform.Cruciform;
+import com.cruciform.states.MainMenuState;
 import com.cruciform.states.State;
 
 public class StateFactory {
@@ -30,7 +31,7 @@ public class StateFactory {
 			}
 			return result;
 		} catch(Exception e) {
-			return null;
+			return states.get(MainMenuState.class);
 		}
 	}
 	

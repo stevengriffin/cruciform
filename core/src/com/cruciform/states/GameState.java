@@ -37,7 +37,7 @@ public class GameState extends State {
 		// Hack to create a bunch of "looping" backgrounds.
 		for (int i = 0; i < 20; i++) {
 			EffectFactory.createParallaxBackground(
-					game.engine, Position.mapper.get(player), i);
+					game.engine, Position.mapper.getSafe(player), i);
 		}
 	}
 

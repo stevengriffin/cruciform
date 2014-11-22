@@ -48,7 +48,7 @@ public class PathFactory {
 	private Position prepareEntity(final Entity entity) {
 		entity.remove(LineMover.class);
 		entity.remove(Velocity.class);
-		Position position = Position.mapper.get(entity);
+		Position position = Position.mapper.getSafe(entity);
 		return position;
 	}
 }

@@ -59,7 +59,7 @@ public class ExplosionFactory {
 		if (health != null && health.deathExploder != null) {
 			return health.deathExploder.explode(explosionCreator);
 		}
-		return null;
+		return new Entity();
 	}
 	
 	public Entity createRocketExplosion(final Entity lastRocketFired) {

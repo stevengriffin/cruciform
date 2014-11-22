@@ -1,5 +1,7 @@
 package com.cruciform.factories;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
@@ -31,6 +33,7 @@ import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.Priority;
 
+@NonNullByDefault
 public class EffectFactory {
 
 	private static ParticleEffect newParticle(String name) {

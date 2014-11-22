@@ -2,6 +2,8 @@ package com.cruciform.factories;
 
 import java.util.Arrays;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;

@@ -15,7 +15,16 @@ public class Animator extends AbstractComponent {
 	}
 
 	@NonNull public static final Animation NULL_ANIMATION =  new Animation(1.0f, ImageManager.BLANK);
+
+	@SuppressWarnings({ "unused" })
+	private static @NonNull Class<@NonNull Animator> getType() {
+		if (Animator.class == null) {
+			throw new NullPointerException();
+		}
+		return Animator.class;
+	}
 	
+	@NonNull private static final Class<@NonNull Animator> type = Animator.class;
     @NonNull public static final ComponentMapper<Animator> mapper = ComponentMapper.getFor(Animator.class);
 	@NonNull public Animation currentAnimation = NULL_ANIMATION;
 	@NonNull public SafeObjectMap<States, Animation> animations = new SafeObjectMap<>();

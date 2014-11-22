@@ -29,7 +29,7 @@ import com.cruciform.utils.SafeObjectMap;
  * @author Stefan Bachmann
  */
 public final class ComponentType {
-	private static SafeObjectMap<Class<? extends Component>, ComponentType> componentTypes = new SafeObjectMap<>();
+	private static SafeObjectMap<Class<? extends @Nullable Component>, ComponentType> componentTypes = new SafeObjectMap<>();
 	private static int typeIndex = 0;
 
 	private final int index;
@@ -48,7 +48,7 @@ public final class ComponentType {
 	 * @return A ComponentType matching the Component Class
 	 */
 	@SuppressWarnings({ "null", "unused" })
-	public static ComponentType getFor (Class<? extends Component> componentType) {
+	public static ComponentType getFor (Class<? extends @Nullable Component> componentType) {
 		ComponentType type = componentTypes.get(componentType);
 
 		if (type == null) {
