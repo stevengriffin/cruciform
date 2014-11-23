@@ -28,7 +28,7 @@ public class PathFactory {
 			xMove1 = -xMove1;
 			xMove2 = -xMove2;
 		}
-		Position position = prepareEntity(entity);
+		final Position position = prepareEntity(entity);
 		
 		Tween.to(position, PositionAccessor.POSITION_Y, 1.0f)
 		.targetRelative(yMove1*2)

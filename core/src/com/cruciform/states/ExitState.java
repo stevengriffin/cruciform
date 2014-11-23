@@ -1,9 +1,12 @@
 package com.cruciform.states;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
 import com.cruciform.utils.Conf;
 
+@NonNullByDefault
 public class ExitState extends State {
 
 	public ExitState(Cruciform game) {

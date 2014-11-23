@@ -1,7 +1,5 @@
 package com.cruciform.systems;
 
-import org.eclipse.jdt.annotation.Nullable;
-
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -29,13 +27,12 @@ public class SplitterSystem extends IteratingSystem {
 		if (splitter.splitOnNextUpdate) {
 			splitter.timesSplit++;
 			splitter.splitOnNextUpdate = false;
-			final ImmutableArray<@Nullable Component> parentComponents = entity.getComponents();
+			final ImmutableArray<Component> parentComponents = entity.getComponents();
 			for (int i = 0; i < splitter.numberOfNewEntities; i++) {
 				Entity child = new Entity();
 				for (int j = 0; j < parentComponents.size(); j++) {
 					Component component = parentComponents.get(j);
-					if (component != null && 
-							!splitter.componentsToRemoveFromChildren.contains(
+					if (!splitter.componentsToRemoveFromChildren.contains(
 							component.getClass(), false)) {
 						Log.debug("Copying " + component.getClass());
 						child.add(kryo.copy(component));

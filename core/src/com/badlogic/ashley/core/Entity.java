@@ -106,7 +106,7 @@ public class Entity {
 	}
 
 	/** @return immutable collection with all the Entity {@link Component}s. */
-	public ImmutableArray<Component> getComponents () {
+	public ImmutableArray<@NonNull Component> getComponents () {
 		return immutableComponentsArray;
 	}
 
@@ -165,8 +165,7 @@ public class Entity {
 		Class<? extends Component> componentClass = component.getClass();
 
 		for (int i = 0; i < componentsArray.size; ++i) {
-			final Component c = componentsArray.get(i);
-			if (c != null && c.getClass() == componentClass) {
+			if (componentsArray.get(i).getClass() == componentClass) {
 				componentsArray.removeIndex(i);
 				break;
 			}
