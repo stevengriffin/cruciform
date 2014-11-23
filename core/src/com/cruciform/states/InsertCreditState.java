@@ -1,10 +1,13 @@
 package com.cruciform.states;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.ui.StateButton;
 import com.cruciform.utils.Score;
 
+@NonNullByDefault
 public class InsertCreditState extends MenuState {
 
 	public InsertCreditState(Cruciform game) {

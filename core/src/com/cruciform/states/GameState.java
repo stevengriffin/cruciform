@@ -1,6 +1,6 @@
 package com.cruciform.states;
 
-import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
@@ -16,9 +16,10 @@ import com.cruciform.factories.StateFactory;
 import com.cruciform.levels.Level1;
 import com.cruciform.utils.Score;
 
+@NonNullByDefault
 public class GameState extends State {
 
-	@NonNull private Entity player;
+	private Entity player;
 	public final ShipFactory shipFactory;
 	
 	public GameState(Cruciform game) {

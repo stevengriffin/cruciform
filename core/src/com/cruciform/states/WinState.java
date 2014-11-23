@@ -1,5 +1,7 @@
 package com.cruciform.states;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.badlogic.gdx.Gdx;
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
@@ -7,6 +9,7 @@ import com.cruciform.input.StateInputProcessor;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Score;
 
+@NonNullByDefault
 public class WinState extends State {
 	protected final StateInputProcessor processor;
 	

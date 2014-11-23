@@ -1,9 +1,12 @@
 package com.cruciform.states;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.cruciform.Cruciform;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.ui.StateButton;
 
+@NonNullByDefault
 public class MainMenuState extends MenuState {
 
 	public MainMenuState(Cruciform game) {

@@ -1,5 +1,7 @@
 package com.cruciform.states;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,10 +17,10 @@ import com.cruciform.utils.Conf.SettingsProposal;
 import com.esotericsoftware.minlog.Log;
 
 public class SettingsState extends State {
-	private final Stage stage;
-	private final Table table;
+	@NonNull private final Stage stage;
+	@NonNull private final Table table;
 	
-	public SettingsState(final Cruciform game) {
+	public SettingsState(@NonNull final Cruciform game) {
 		super(game);
 	    stage = new Stage(new StretchViewport(Conf.canonicalWidth, Conf.canonicalHeight));
 	    Gdx.input.setInputProcessor(stage);
@@ -101,6 +103,5 @@ public class SettingsState extends State {
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
 	}
 }

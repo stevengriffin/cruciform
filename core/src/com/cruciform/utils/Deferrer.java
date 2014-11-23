@@ -3,6 +3,8 @@ package com.cruciform.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -19,6 +21,7 @@ import com.cruciform.components.team.TeamPlayer;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.states.InsertCreditState;
 
+@NonNullByDefault
 public class Deferrer {
 	
 	public enum RemovalUrgency {

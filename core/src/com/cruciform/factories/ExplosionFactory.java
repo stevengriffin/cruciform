@@ -1,5 +1,7 @@
 package com.cruciform.factories;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -43,7 +45,7 @@ public class ExplosionFactory {
 		this.engine = manager.engine;
 	}
 
-	public Entity createExplosion(final Entity explosionCreator) {
+	public Entity createExplosion(@NonNull final Entity explosionCreator) {
 		final TeamEnemy teamEnemy = TeamEnemy.mapper.get(explosionCreator);
 		if (teamEnemy != null) {
 			for (int i = 0; i < teamEnemy.soulCount; i++) {

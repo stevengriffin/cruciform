@@ -1,5 +1,7 @@
 package com.cruciform.weapons;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.cruciform.audio.AudioManager;
@@ -23,11 +25,11 @@ import com.cruciform.utils.Priority;
 public class CruciformWeapon extends Weapon {
 
 	private final static float COOL_DOWN_TIME = 3.0f;
-	private final static CruciformSplitBehavior CRUCIFORM_SPLIT_BEHAVIOR = new CruciformSplitBehavior();
+	@NonNull private final static CruciformSplitBehavior CRUCIFORM_SPLIT_BEHAVIOR = new CruciformSplitBehavior();
 	private final static float BEAM_WIDTH = 8.0f;
 	private final static float BEAM_HEIGHT = Conf.canonicalPlayWidth*2;
 	
-	public CruciformWeapon(final Engine engine, final Class<? extends Team> team) {
+	public CruciformWeapon(@NonNull final Engine engine, final Class<? extends Team> team) {
 		super(COOL_DOWN_TIME, engine, team, 50.0f, "Cruciform");
 	}
 

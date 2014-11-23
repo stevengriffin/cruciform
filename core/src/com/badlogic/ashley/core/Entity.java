@@ -43,16 +43,16 @@ public class Entity {
 	ComponentOperationHandler componentOperationHandler;
 
 	private Bag<Component> components;
-	private Array<Component> componentsArray;
-	private ImmutableArray<Component> immutableComponentsArray;
+	private Array<@NonNull Component> componentsArray;
+	private ImmutableArray<@NonNull Component> immutableComponentsArray;
 	private Bits componentBits;
 	private Bits familyBits;
 
 	/** Creates an empty Entity. */
 	public Entity () {
 		components = new Bag<Component>();
-		componentsArray = new Array<Component>(false, 16);
-		immutableComponentsArray = new ImmutableArray<Component>(componentsArray);
+		componentsArray = new Array<@NonNull Component>(false, 16);
+		immutableComponentsArray = new ImmutableArray<@NonNull Component>(componentsArray);
 		componentBits = new Bits();
 		familyBits = new Bits();
 		flags = 0;
@@ -101,10 +101,7 @@ public class Entity {
 	/** Removes all the {@link Component}'s from the Entity. */
 	public void removeAll () {
 		while (componentsArray.size > 0) {
-			Component component = componentsArray.get(0);
-			if (component != null) {
-				removeInternal(component.getClass());
-			}
+			removeInternal(componentsArray.get(0).getClass());
 		}
 	}
 

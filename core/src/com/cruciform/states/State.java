@@ -1,5 +1,7 @@
 package com.cruciform.states;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.gdx.Screen;
 import com.cruciform.Cruciform;
 import com.cruciform.Cruciform.GameManager;
@@ -11,12 +13,12 @@ import com.esotericsoftware.minlog.Log;
 
 public abstract class State implements Screen {
 	
-	public final Cruciform game;
-	public final GameManager manager;
-	protected final TextDrawer drawer;
+	@NonNull public final Cruciform game;
+	@NonNull public final GameManager manager;
+	@NonNull protected final TextDrawer drawer;
 	
 	
-	public State(final Cruciform game) {
+	public State(@NonNull final Cruciform game) {
 		this.game = game;
 		this.manager = game.manager;
 		this.drawer = new TextDrawer(manager.batch, manager.fontSmallLight);

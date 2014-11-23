@@ -1,5 +1,7 @@
 package com.cruciform.weapons;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
@@ -28,7 +30,7 @@ public class SweepWeapon extends Weapon {
 	public int shotGrowthMultiplier = 1;
 	private Entity lastSweepFired = null;
 	
-	public SweepWeapon(final float coolDownTime, final Engine engine,
+	public SweepWeapon(final float coolDownTime, @NonNull final Engine engine,
 			final Class<? extends Team> team) {
 		super(coolDownTime, engine, team, 25.0f, "Sweep");
 	}

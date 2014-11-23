@@ -1,5 +1,7 @@
 package com.cruciform.states;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.cruciform.Cruciform;
 import com.cruciform.utils.Conf;
 
+@NonNullByDefault
 public abstract class MenuState extends State {
 	private final Stage stage;
 	private final Table table;
