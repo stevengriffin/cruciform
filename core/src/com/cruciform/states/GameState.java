@@ -27,45 +27,44 @@ public class GameState extends State {
 		Timer.instance().start();
 		Score.init();
 		FormationFactory.reset();
-		game.engine.removeAllEntities();
-		shipFactory = new ShipFactory(game.engine, game.explosionFactory, this);
+		manager.engine.removeAllEntities();
+		shipFactory = new ShipFactory(manager.engine, manager.explosionFactory, this);
 		player = new Level1(game, shipFactory).createAndReturnPlayer();
-		EffectFactory.createLavaOnPlayer(player, game.engine);
-		EffectFactory.createBackground(game.engine);
-		EffectFactory.createForeground(game.engine);
-		EffectFactory.createLavaBurst(game.engine);
+		EffectFactory.createLavaOnPlayer(player, manager.engine);
+		EffectFactory.createBackground(manager.engine);
+		EffectFactory.createForeground(manager.engine);
+		EffectFactory.createLavaBurst(manager.engine);
 		// Hack to create a bunch of "looping" backgrounds.
 		for (int i = 0; i < 20; i++) {
 			EffectFactory.createParallaxBackground(
-					game.engine, Position.mapper.getSafe(player), i);
+					manager.engine, Position.mapper.getSafe(player), i);
 		}
 	}
 
 	@Override
 	public void render(float delta) {
 		Score.update();
-		game.engine.update(delta);
-		game.tweenManager.update(delta);
+		manager.engine.update(delta);
+		manager.tweenManager.update(delta);
 	}
 
 	@Override
 	public void show() {
 		super.show();
-		//game.camera.setToOrtho(false, Conf.screenWidth, Conf.screenHeight);
 		Gdx.input.setCursorCatched(true);
-		Gdx.input.setInputProcessor(game.inputSystem);
+		Gdx.input.setInputProcessor(manager.inputSystem);
 		Timer.instance().start();
-		if (game.engine.getEntitiesFor(Family.all(TeamPlayer.class).get()).size() == 0) {
+		if (manager.engine.getEntitiesFor(Family.all(TeamPlayer.class).get()).size() == 0) {
 			final Position position = Position.mapper.getSafe(player);
 			final Entity newPlayer = new Entity();
 			newPlayer.add(position);
 			player = shipFactory.createPlayer(newPlayer, false);
-			game.deferrer.shieldAndBlink(player, 3.0f);
+			manager.deferrer.shieldAndBlink(player, 3.0f);
 		}
-//		game.uiFactory.createSidePanel(true);
-//		game.uiFactory.createSidePanel(false);
-//		game.uiFactory.createBottomPanel();
-		game.uiFactory.createUIBackground();
+//		manager.uiFactory.createSidePanel(true);
+//		manager.uiFactory.createSidePanel(false);
+//		manager.uiFactory.createBottomPanel();
+		manager.uiFactory.createUIBackground();
 	}
 
 	@Override

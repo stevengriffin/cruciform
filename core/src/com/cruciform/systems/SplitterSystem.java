@@ -8,7 +8,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.cruciform.Cruciform;
 import com.cruciform.components.Splitter;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.minlog.Log;
@@ -18,10 +17,10 @@ public class SplitterSystem extends IteratingSystem {
 	private final Engine engine;
 	private final Kryo kryo;
 	
-	public SplitterSystem(final Cruciform game) {
+	public SplitterSystem(final Engine engine, final Kryo kryo) {
 		super(Family.all(Splitter.class).get());
-		this.engine = game.engine;
-		this.kryo = game.kryo;
+		this.engine = engine;
+		this.kryo = kryo;
 	}
 
 	@Override

@@ -63,7 +63,6 @@ public class SweepWeapon extends Weapon {
 		final Entity entity = new Entity();
 
 		final Renderer renderer = new Renderer(entity);
-		renderer.image = null;
 		renderer.renderAsShape = true;
 		if (team == TeamPlayer.class) {
 			// Render underneath player ship.

@@ -16,6 +16,7 @@
 
 package com.badlogic.ashley.core;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.badlogic.ashley.core.Engine.ComponentOperationHandler;
@@ -39,19 +40,19 @@ public class Entity {
 
 	long uuid;
 	boolean scheduledForRemoval;
-	@Nullable ComponentOperationHandler componentOperationHandler;
+	ComponentOperationHandler componentOperationHandler;
 
-	private Bag<@Nullable Component> components;
-	private Array<@Nullable Component> componentsArray;
-	private ImmutableArray<@Nullable Component> immutableComponentsArray;
+	private Bag<Component> components;
+	private Array<Component> componentsArray;
+	private ImmutableArray<Component> immutableComponentsArray;
 	private Bits componentBits;
 	private Bits familyBits;
 
 	/** Creates an empty Entity. */
 	public Entity () {
-		components = new Bag<@Nullable Component>();
-		componentsArray = new Array<@Nullable Component>(false, 16);
-		immutableComponentsArray = new ImmutableArray<@Nullable Component>(componentsArray);
+		components = new Bag<Component>();
+		componentsArray = new Array<Component>(false, 16);
+		immutableComponentsArray = new ImmutableArray<Component>(componentsArray);
 		componentBits = new Bits();
 		familyBits = new Bits();
 		flags = 0;
@@ -69,7 +70,7 @@ public class Entity {
 	 * Adds a {@link Component} to this Entity. If a {@link Component} of the same type already exists, it'll be replaced.
 	 * @return The Entity for easy chaining
 	 */
-	public Entity add (Component component) {
+	public Entity add (@NonNull Component component) {
 		if (componentOperationHandler != null) {
 			componentOperationHandler.add(this, component);
 		} else {
@@ -83,7 +84,7 @@ public class Entity {
 	 * instance reference.
 	 * @return The removed {@link Component}, or null if the Entity did no contain such a component.
 	 */
-	public @Nullable Component remove (Class<? extends Component> componentClass) {
+	public Component remove (Class<? extends Component> componentClass) {
 		ComponentType componentType = ComponentType.getFor(componentClass);
 		int componentTypeIndex = componentType.getIndex();
 		Component removeComponent = components.get(componentTypeIndex);
@@ -98,7 +99,6 @@ public class Entity {
 	}
 
 	/** Removes all the {@link Component}'s from the Entity. */
-	@SuppressWarnings("null")
 	public void removeAll () {
 		while (componentsArray.size > 0) {
 			Component component = componentsArray.get(0);
@@ -109,7 +109,7 @@ public class Entity {
 	}
 
 	/** @return immutable collection with all the Entity {@link Component}s. */
-	public ImmutableArray<@Nullable Component> getComponents () {
+	public ImmutableArray<Component> getComponents () {
 		return immutableComponentsArray;
 	}
 
@@ -132,7 +132,7 @@ public class Entity {
 	 */
 	@SuppressWarnings({ "unchecked", "null" })
 	@Nullable
-	<T extends @Nullable Component> T getComponent (@Nullable ComponentType componentType) {
+	<T extends Component> T getComponent (ComponentType componentType) {
 		if (componentType == null) { throw new NullPointerException("Component type was null."); }
 		int componentTypeIndex = componentType.getIndex();
 
@@ -175,7 +175,6 @@ public class Entity {
 			}
 		}
 
-		@SuppressWarnings("null")
 		int componentTypeIndex = ComponentType.getIndexFor(component.getClass());
 
 		components.set(componentTypeIndex, component);

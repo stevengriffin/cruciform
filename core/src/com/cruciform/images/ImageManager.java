@@ -3,12 +3,16 @@ package com.cruciform.images;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+@NonNullByDefault
 public class ImageManager {
 	public static final TextureRegion BLANK = newTexture("blank");
 	public static final TextureRegion CRUCIFORM_1 = newTexture("cruciform_weapon1");
@@ -65,7 +69,7 @@ public class ImageManager {
 	}
 
 	private static TextureRegion[] newTextureArray(String prefix, int numberOfTextures) {
-		TextureRegion[] textures = new TextureRegion[numberOfTextures];
+		TextureRegion @NonNull[] textures = new TextureRegion @NonNull[numberOfTextures];
 		for (int i = 1; i <= numberOfTextures; i++) {
 			textures[i - 1] = newTexture(prefix + "_" + i);
 		}

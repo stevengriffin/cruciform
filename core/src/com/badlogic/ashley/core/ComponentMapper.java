@@ -16,6 +16,7 @@
 
 package com.badlogic.ashley.core;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -30,7 +31,7 @@ public final class ComponentMapper<T extends Component> {
 	 * @param componentClass Component class to be retrieved by the mapper.
 	 * @return New instance that provides fast access to the {@link Component} of the specified class.
 	 */
-	public static <T extends Component> ComponentMapper<T> getFor (Class<T> componentClass) {
+	public static <T extends Component> @NonNull ComponentMapper<T> getFor (Class<T> componentClass) {
 		return new ComponentMapper<T>(componentClass);
 	}
 
@@ -41,7 +42,7 @@ public final class ComponentMapper<T extends Component> {
 
 	/** Use for when you're sure you have this component, such as in a system that has it in its family. 
 	 * @return The {@link Component} of the specified class belonging to entity. */
-	public T getSafe (Entity entity) {
+	public @NonNull T getSafe (Entity entity) {
 		@Nullable final T component = entity.getComponent(componentType);
 		if (component == null) { throw new NullPointerException("Entity did not have this component."); }
 		return component;

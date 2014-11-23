@@ -1,5 +1,8 @@
 package com.cruciform.components;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Color;
@@ -7,18 +10,19 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
+import com.cruciform.images.ImageManager;
 import com.cruciform.utils.Priority;
 
 public class Renderer extends AbstractComponent {
-    public static final ComponentMapper<Renderer> mapper = ComponentMapper.getFor(Renderer.class);
-	public TextureRegion image = null;
+    @NonNull public static final ComponentMapper<Renderer> mapper = ComponentMapper.getFor(Renderer.class);
+	@Nullable public TextureRegion image = ImageManager.BLANK;
 	public NinePatch patch = null;
 	public float alpha = 1.0f;
 	public Color tint = null;
 	public float customXOffset = 0;
 	public float customYOffset = 0;
 	public boolean customOffset = false;
-	public Priority priority = new Priority(0); 
+	@NonNull public Priority priority = new Priority(0); 
 	public boolean shouldRender = true;
 	public boolean renderAtPlayCoordinates = true;
 	public boolean renderAsShape = false;
@@ -27,7 +31,7 @@ public class Renderer extends AbstractComponent {
 		super(entity);
 	}
 
-	public static Renderer defaultForBullet(Entity entity, Class<? extends Team> team, TextureRegion image) {
+	public static Renderer defaultForBullet(@NonNull Entity entity, Class<? extends Team> team, @NonNull TextureRegion image) {
 		Renderer renderer = new Renderer(entity);
 		renderer.image = image;
 		if (team == TeamEnemy.class) {
@@ -36,7 +40,7 @@ public class Renderer extends AbstractComponent {
 		return renderer;
 	}
 	
-	public static Renderer defaultForUI(Entity entity, TextureRegion image) {
+	public static Renderer defaultForUI(@NonNull Entity entity, @NonNull TextureRegion image) {
 		Renderer renderer = new Renderer(entity);
 		renderer.customOffset = true;
 		renderer.priority = new Priority(6);

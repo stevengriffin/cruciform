@@ -1,5 +1,6 @@
 package com.cruciform.enemies;
 
+
 public enum EnemyTypes {
 	RADIAL_3PRONG,
 	RADIAL_SPIRALER,

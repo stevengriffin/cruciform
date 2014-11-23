@@ -4,7 +4,7 @@ import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 
 import com.badlogic.ashley.core.Entity;
-import com.cruciform.Cruciform;
+import com.cruciform.Cruciform.GameManager;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
 import com.cruciform.components.Velocity;
@@ -13,10 +13,10 @@ import com.cruciform.utils.Conf;
 
 public class PathFactory {
 	
-	private final Cruciform game;
+	private final GameManager manager;
 	
-	public PathFactory(final Cruciform game) {
-		this.game = game;
+	public PathFactory(final GameManager manager) {
+		this.manager = manager;
 	}
 	
 	public void createBentPath(final Entity entity, boolean reversed) {
@@ -32,7 +32,7 @@ public class PathFactory {
 		
 		Tween.to(position, PositionAccessor.POSITION_Y, 1.0f)
 		.targetRelative(yMove1*2)
-		.start(game.tweenManager);
+		.start(manager.tweenManager);
 		
 		Timeline.createSequence()
 		.delay(1.0f)
@@ -42,7 +42,7 @@ public class PathFactory {
 		.push(Tween.to(position, PositionAccessor.POSITION_XY, 3.0f)
 			.targetRelative(xMove2, yMove2))
 		.repeatYoyo(Tween.INFINITY, 0.3f)
-			.start(game.tweenManager);
+			.start(manager.tweenManager);
 	}
 
 	private Position prepareEntity(final Entity entity) {

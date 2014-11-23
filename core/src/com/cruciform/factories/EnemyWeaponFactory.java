@@ -2,7 +2,7 @@ package com.cruciform.factories;
 
 import java.util.Arrays;
 
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jdt.annotation.NonNull;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -62,19 +62,19 @@ public class EnemyWeaponFactory {
 				tracker.bulletRuleHandler.spanAngle = 60;
 				// Offset the initial bullets
 				tracker.coolDown = CoolDownMetro.asPrefired(1.5f);
-				return new Weapon[] { prong, tracker };
+				return new Weapon @NonNull[] { prong, tracker };
 			case RADIAL_SPIRALER:
-				return new Weapon[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f, 0.0f) };
+				return new Weapon @NonNull[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f, 0.0f) };
 			case RADIAL_SPIRALER_SOLID:
-				return new Weapon[] { createSpiralingRadialWeapon(120, 12, 12, 0.1f, 0.0f) };
+				return new Weapon @NonNull[] { createSpiralingRadialWeapon(120, 12, 12, 0.1f, 0.0f) };
 			case RADIAL_STRAIGHT:
-				return new Weapon[] { createStraightRadialWeapon(480, 3, 30, 0.2f) };
+				return new Weapon @NonNull[] { createStraightRadialWeapon(480, 3, 30, 0.2f) };
 			case RADIAL_SPLITTER:
-				return new Weapon[] { createSplittingRadialWeapon() };
+				return new Weapon @NonNull[] { createSplittingRadialWeapon() };
 			case PENTAGRAM:
-				return new Weapon[] { createPentagramWeapon(480, 20, 0.1f) };
+				return new Weapon @NonNull[] { createPentagramWeapon(480, 20, 0.1f) };
 			default:
-				return new Weapon[] { createRifleWeapon() };
+				return new Weapon @NonNull[] { createRifleWeapon() };
 		}
 	}
 	

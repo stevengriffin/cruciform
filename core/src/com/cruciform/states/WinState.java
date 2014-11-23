@@ -17,7 +17,7 @@ public class WinState extends State {
 
 	@Override
 	public void render(float delta) {
-		game.batch.begin();
+		manager.batch.begin();
 		//super.render(delta);
         
         drawer.drawCentered("You Win!", Conf.screenCenterX, Conf.screenHeight*0.7f);
@@ -25,11 +25,11 @@ public class WinState extends State {
         drawer.drawCentered("Graze: " + Score.getGraze(), Conf.screenCenterX, Conf.screenHeight*0.55f);
         drawer.drawCentered("Credits Used: " + Score.getCreditsUsed(), Conf.screenCenterX, Conf.screenHeight*0.5f);
 		// TODO Make buttons instead
-		final String exitGame = "Exit To Main Menu [ESCAPE]";
-		drawer.drawCentered(exitGame, Conf.screenCenterX, Conf.screenHeight*0.4f);
-		final String newGame = "New Game [SPACE]";
-		drawer.drawCentered(newGame, Conf.screenCenterX, Conf.screenHeight*0.3f);
-        game.batch.end();
+		final String exitmanager = "Exit To Main Menu [ESCAPE]";
+		drawer.drawCentered(exitmanager, Conf.screenCenterX, Conf.screenHeight*0.4f);
+		final String newmanager = "New manager [SPACE]";
+		drawer.drawCentered(newmanager, Conf.screenCenterX, Conf.screenHeight*0.3f);
+        manager.batch.end();
 	}
 
 	@Override

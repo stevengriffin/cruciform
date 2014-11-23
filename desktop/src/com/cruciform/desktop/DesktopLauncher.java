@@ -1,6 +1,5 @@
 package com.cruciform.desktop;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.cruciform.Cruciform;
@@ -19,7 +18,6 @@ public class DesktopLauncher {
 		config.height = 600;
 		config.width = 800;
 		final Cruciform game = new Cruciform();
-		final Application app = new LwjglApplication(game, config);
-		game.application = app;
+		new LwjglApplication(game, config);
 	}
 }

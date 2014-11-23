@@ -1,5 +1,7 @@
 package com.cruciform.weapons;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,7 +35,7 @@ public class RocketWeapon extends Weapon {
 	private Entity lastRocketFired;
 	private int timesFired = -1;
 	
-	public RocketWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory,
+	public RocketWeapon(float coolDownTime, @NonNull Engine engine, ExplosionFactory explosionFactory,
 			Class<? extends Team> team) {
 		super(coolDownTime, engine, team, 100.0f, "Rocket");
 		this.explosionFactory = explosionFactory;
@@ -80,8 +82,8 @@ public class RocketWeapon extends Weapon {
 		position.bounds = Geometry.polyRect(
 				originX, 
 				originY, 
-				renderer.image.getRegionWidth(),
-				renderer.image.getRegionHeight());
+				image.getRegionWidth(),
+				image.getRegionHeight());
 		position.outOfBoundsHandler = OutOfBoundsHandler.all();
 		
 		Velocity velocity = new Velocity();
@@ -124,10 +126,14 @@ public class RocketWeapon extends Weapon {
 	@Override
 	public void setFiring(boolean shouldFire) {
 		super.setFiring(shouldFire);
-		if (!shouldFire && isFastRocket() && Position.mapper.get(lastRocketFired) != null) {
-			explosionFactory.createRocketExplosion(lastRocketFired);
-			engine.removeEntity(lastRocketFired);
-			lastRocketFired.remove(Position.class);
+		if (lastRocketFired != null) {
+			@NonNull final Entity lastRocket = lastRocketFired;
+			if (!shouldFire && isFastRocket() && 
+					Position.mapper.get(lastRocketFired) != null) {
+				explosionFactory.createRocketExplosion(lastRocket);
+				engine.removeEntity(lastRocket);
+				lastRocketFired.remove(Position.class);
+			}
 		}
 	}
 	

@@ -1,5 +1,7 @@
 package com.cruciform.weapons;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cruciform.audio.AudioManager;
@@ -10,15 +12,15 @@ import com.cruciform.utils.Conf;
 
 public class RadialWeapon extends Weapon {
 
-	private final TextureRegion bulletImage;
+	@NonNull private final TextureRegion bulletImage;
 	public float volume = 0.05f;
 	public final BulletRuleHandler bulletRuleHandler;
 	private final CoolDownRuleHandler coolDownRuleHandler; 
 	
-	public RadialWeapon(float coolDownTime, Engine engine,
+	public RadialWeapon(float coolDownTime, @NonNull Engine engine,
 			BulletRuleHandler ruleHandler,
 			CoolDownRuleHandler coolDownRuleHandler,
-			TextureRegion bulletImage) {
+			@NonNull TextureRegion bulletImage) {
 		super(coolDownTime, engine, TeamEnemy.class, BulletRuleHandler.DAMAGE_TO_INSTAKILL_PLAYER, "Radial");
 		this.bulletRuleHandler = ruleHandler;
 		this.coolDownRuleHandler = coolDownRuleHandler;

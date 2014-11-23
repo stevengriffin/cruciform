@@ -16,14 +16,17 @@ public class WaveSystem extends EntitySystem {
 	private final ImmutableArray<Entity> enemyBullets;
 	
 	public WaveSystem(final Engine engine) {
-		enemies = engine.getEntitiesFor(Family.getFor(TeamEnemy.class));
-		enemyBullets = engine.getEntitiesFor(Family.getFor(TeamEnemyBullet.class));
+		enemies = engine.getEntitiesFor(Family.all(TeamEnemy.class).get());
+		enemyBullets = engine.getEntitiesFor(Family.all(TeamEnemyBullet.class).get());
 	}
 
 	@Override
 	public void update(float deltaTime) {
 		if (enemies.size() == 0 && enemyBullets.size() == 0 && FormationFactory.allTasksFinished()) {
-			Level.getCurrentLevel().createNextWave();
+			Level currentLevel = Level.getCurrentLevel();
+			if (currentLevel != null) {
+				currentLevel.createNextWave();
+			}
 		}
 	}
 	

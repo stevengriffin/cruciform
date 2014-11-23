@@ -1,7 +1,5 @@
 package com.cruciform.factories;
 
-import org.eclipse.jdt.annotation.NonNullByDefault;
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
@@ -33,7 +31,6 @@ import com.cruciform.utils.CoolDownMetro;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.Priority;
 
-@NonNullByDefault
 public class EffectFactory {
 
 	private static ParticleEffect newParticle(String name) {
@@ -61,7 +58,7 @@ public class EffectFactory {
 		final Renderer renderer = new Renderer(exhaust);
 		renderer.image = ImageManager.PLAYER_SHIP_EXHAUST[0];
 		renderer.customXOffset = -32.5f;
-		renderer.customYOffset = -renderer.image.getRegionHeight();
+		renderer.customYOffset = -ImageManager.PLAYER_SHIP_EXHAUST[0].getRegionHeight();
 		renderer.customOffset = true;
 		// Render above background and below player bullets
 		renderer.priority = new Priority(-4);
@@ -96,7 +93,7 @@ public class EffectFactory {
 		final Renderer renderer = new Renderer(exhaustCross);
 		renderer.image = ImageManager.PLAYER_EXHAUST_CROSS[0];
 		renderer.customXOffset = xOffset;
-		renderer.customYOffset = -renderer.image.getRegionHeight()-10;
+		renderer.customYOffset = -ImageManager.PLAYER_EXHAUST_CROSS[0].getRegionHeight()-10;
 		renderer.customOffset = true;
 		// Render above background and below enemy bullets but above exhaust and player ship
 		renderer.priority = new Priority(2);
@@ -120,8 +117,8 @@ public class EffectFactory {
 		
 		final Renderer renderer = new Renderer(glow);
 		renderer.image = ImageManager.PLAYER_EXHAUST_GLOW;
-		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
-		renderer.customYOffset = -renderer.image.getRegionHeight();
+		renderer.customXOffset = -ImageManager.PLAYER_EXHAUST_GLOW.getRegionWidth()/2;
+		renderer.customYOffset = -ImageManager.PLAYER_EXHAUST_GLOW.getRegionHeight();
 		renderer.customOffset = true;
 		// Render above background and below enemy bullets but above exhaust and player ship
 		renderer.priority = new Priority(2);
@@ -221,8 +218,8 @@ public class EffectFactory {
 		renderer.priority = new Priority(99);
 		renderer.image = ImageManager.BURST_LAVA[0];
 		renderer.customOffset = true;
-		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
-		renderer.customYOffset = -renderer.image.getRegionHeight()/2;
+		renderer.customXOffset = -ImageManager.BURST_LAVA[0].getRegionWidth()/2;
+		renderer.customYOffset = -ImageManager.BURST_LAVA[0].getRegionHeight()/2;
 		renderer.renderAtPlayCoordinates = true;
 		
 		final float frameTime = 0.05f;
@@ -250,8 +247,8 @@ public class EffectFactory {
 		renderer.priority = new Priority(99);
 		renderer.image = ImageManager.BLANK;
 		renderer.customOffset = true;
-		renderer.customXOffset = -renderer.image.getRegionWidth()/2;
-		renderer.customYOffset = -renderer.image.getRegionHeight()/2;
+		renderer.customXOffset = -ImageManager.BLANK.getRegionWidth()/2;
+		renderer.customYOffset = -ImageManager.BLANK.getRegionHeight()/2;
 		renderer.renderAtPlayCoordinates = true;
 		
 		final ParticleEmitter emitter = new ParticleEmitter(entity);
@@ -342,8 +339,9 @@ public class EffectFactory {
 		
 		final Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(0,
-				-Conf.fractionY(0.7f) + renderer.image.getRegionHeight()*index,
-				renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+				-Conf.fractionY(0.7f) + ImageManager.PARALLAX_BG_LVL1_1.getRegionHeight()*index,
+				ImageManager.PARALLAX_BG_LVL1_1.getRegionWidth(),
+				ImageManager.PARALLAX_BG_LVL1_1.getRegionHeight());
 
 		final LineMover mover = new LineMover();
 		mover.accelerates = false;

@@ -12,11 +12,11 @@ public class MainMenuState extends MenuState {
 
 	@Override
 	public void render(float delta) {
-		game.batch.begin();
+		manager.batch.begin();
 		super.render(delta);
 		// Comment out super.render and uncomment this line to test mouse input lag
-		//game.batch.draw(ImageManager.get(Picture.PLAYER_SHIP_1), Gdx.input.getX(), 1080 - Gdx.input.getY());
-        game.batch.end();
+		//manager.batch.draw(ImageManager.get(Picture.PLAYER_SHIP_1), Gdx.input.getX(), 1080 - Gdx.input.getY());
+        manager.batch.end();
 	}
 
 	@Override

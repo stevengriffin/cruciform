@@ -1,12 +1,11 @@
 package com.cruciform.factories;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -53,7 +52,7 @@ public class ShipFactory {
 	    this.weaponFactory = new EnemyWeaponFactory(engine, explosionFactory, gameState);
 	}
 	
-	public @NonNull Entity createPlayer(final Entity entity, final boolean playIntro) {
+	public Entity createPlayer(final Entity entity, final boolean playIntro) {
 		
 		Renderer renderer = new Renderer(entity);
 		renderer.image = ImageManager.PLAYER_SHIP_GOLD_COCKPIT;
@@ -139,12 +138,13 @@ public class ShipFactory {
 		Entity entity = new Entity();
 		
 		Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.GHOST_1;
+		final TextureRegion image = ImageManager.GHOST_1;
+		renderer.image = image;
 		
 		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, 
-				renderer.image.getRegionWidth(),
-				renderer.image.getRegionHeight());
+				image.getRegionWidth(),
+				image.getRegionHeight());
 		position.yDirection = -1;
 		position.outOfBoundsHandler = OutOfBoundsHandler.south();
 		

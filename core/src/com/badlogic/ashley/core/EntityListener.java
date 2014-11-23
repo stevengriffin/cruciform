@@ -16,10 +16,13 @@
 
 package com.badlogic.ashley.core;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * Gets notified of {@link Entity} related events.
  * @author David Saltares
  */
+@NonNullByDefault
 public interface EntityListener {
 	/**
 	 * Called whenever an {@link Entity} is added to {@link Engine} or a specific {@link Family} See

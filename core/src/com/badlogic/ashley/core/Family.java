@@ -16,6 +16,7 @@
 
 package com.badlogic.ashley.core;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.badlogic.gdx.utils.Bits;
@@ -80,7 +81,7 @@ public class Family {
 	 */
 	@SafeVarargs
 	@Deprecated
-	public static Family getFor (@Nullable Class<@Nullable ? extends Component>... componentTypes) {
+	public static Family getFor (Class<? extends Component>... componentTypes) {
 		return getFor(ComponentType.getBitsFor(componentTypes), zeroBits, zeroBits);
 	}
 
@@ -96,7 +97,6 @@ public class Family {
 	 * @return The family
 	 * @deprecated Use builder functionality instead ({@link Family#all}, {@link Family#one}, {@link Family#exclude})
 	 */
-	@SuppressWarnings({ "null", "unused" })
 	@Deprecated
 	public static Family getFor (Bits all, Bits one, Bits exclude) {
 		String hash = getFamilyHash(all, one, exclude);
@@ -114,7 +114,7 @@ public class Family {
 	 * @return A Builder singleton instance to get a family
 	 */
 	@SafeVarargs
-	public static Builder all (@Nullable Class<@Nullable ? extends Component>... componentTypes) {
+	public static Builder all (Class<? extends Component>... componentTypes) {
 		return builder.reset().all(componentTypes);
 	}
 
@@ -123,7 +123,7 @@ public class Family {
 	 * @return A Builder singleton instance to get a family
 	 */
 	@SafeVarargs
-	public static Builder one (@Nullable Class<@Nullable ? extends Component>... componentTypes) {
+	public static Builder one (Class<? extends Component>... componentTypes) {
 		return builder.reset().one(componentTypes);
 	}
 
@@ -132,7 +132,7 @@ public class Family {
 	 * @return A Builder singleton instance to get a family
 	 */
 	@SafeVarargs
-	public static Builder exclude (@Nullable Class<@Nullable ? extends Component>... componentTypes) {
+	public static Builder exclude ( Class< ? extends Component>... componentTypes) {
 		return builder.reset().exclude(componentTypes);
 	}
 
@@ -157,7 +157,7 @@ public class Family {
 		 * @return A Builder singleton instance to get a family
 		 */
 		@SafeVarargs
-		public final Builder all (@Nullable Class<@Nullable ? extends Component>... componentTypes) {
+		public final Builder all ( Class< ? extends Component>... componentTypes) {
 			all = ComponentType.getBitsFor(componentTypes);
 			return this;
 		}
@@ -167,7 +167,7 @@ public class Family {
 		 * @return A Builder singleton instance to get a family
 		 */
 		@SafeVarargs
-		public final Builder one (@Nullable Class<@Nullable ? extends Component>... componentTypes) {
+		public final Builder one ( Class< ? extends Component>... componentTypes) {
 			one = ComponentType.getBitsFor(componentTypes);
 			return this;
 		}
@@ -177,14 +177,13 @@ public class Family {
 		 * @return A Builder singleton instance to get a family
 		 */
 		@SafeVarargs
-		public final Builder exclude (@Nullable Class<@Nullable ? extends Component>... componentTypes) {
+		public final Builder exclude ( Class< ? extends Component>... componentTypes) {
 			exclude = ComponentType.getBitsFor(componentTypes);
 			return this;
 		}
 
 		/** @return A family for the configured component types */
-		@SuppressWarnings({ "null", "unused" })
-		public Family get () {
+		public @NonNull Family get () {
 			String hash = getFamilyHash(all, one, exclude);
 			Family family = families.get(hash);
 			if (family == null) {

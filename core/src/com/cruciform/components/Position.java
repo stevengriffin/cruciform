@@ -10,7 +10,7 @@ import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
 
 public class Position extends AbstractComponent {
-    @NonNull public static final ComponentMapper<Position> mapper = ComponentMapper.getFor(Position.class);
+    public static final ComponentMapper<Position> mapper = ComponentMapper.getFor(Position.class);
 	@NonNull public Polygon bounds = Geometry.polyRect(0, 0, 0, 0);
 	@NonNull public OutOfBoundsHandler outOfBoundsHandler = OutOfBoundsHandler.none();
 	/** Set to 1 if this entity faces the top of the screen. **/
@@ -20,7 +20,7 @@ public class Position extends AbstractComponent {
 		super(entity);
 	}
 
-	public static Position defaultForBullet(Entity entity, float x, float y, float height, float width,
+	public static @NonNull Position defaultForBullet(Entity entity, float x, float y, float height, float width,
 			float rotation) {
 		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, height, width);
@@ -29,7 +29,7 @@ public class Position extends AbstractComponent {
 		return position;
 	}
 
-	public static Position defaultForPlayer(final Entity entity, final float x, final float y) {
+	public static @NonNull Position defaultForPlayer(final Entity entity, final float x, final float y) {
 		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, 5, 5);
 		position.yDirection = 1;

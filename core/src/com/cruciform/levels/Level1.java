@@ -1,5 +1,8 @@
 package com.cruciform.levels;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.Cruciform;
@@ -9,12 +12,13 @@ import com.cruciform.factories.PathFactory;
 import com.cruciform.factories.ShipFactory;
 import com.cruciform.utils.Conf;
 
+@NonNullByDefault
 public class Level1 extends Level {
 	
 	public Level1(final Cruciform game, final ShipFactory shipFactory) {
 		super(game, shipFactory);
-		final PathFactory pathFactory = new PathFactory(game);
-		this.waves = new Array<Level.Wave>(new Level.Wave[] { 
+		final PathFactory pathFactory = new PathFactory(game.manager);
+		this.waves = new Array<Level.Wave>(new Level.@NonNull Wave[] { 
 				
 				() -> (FormationFactory.createSingularShip(
                 (x, y) -> {

@@ -2,6 +2,7 @@ package com.cruciform.states;
 
 import com.badlogic.gdx.Screen;
 import com.cruciform.Cruciform;
+import com.cruciform.Cruciform.GameManager;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.factories.StateFactory;
 import com.cruciform.utils.Conf;
@@ -11,12 +12,14 @@ import com.esotericsoftware.minlog.Log;
 public abstract class State implements Screen {
 	
 	public final Cruciform game;
+	public final GameManager manager;
 	protected final TextDrawer drawer;
 	
 	
 	public State(final Cruciform game) {
 		this.game = game;
-		this.drawer = new TextDrawer(game.batch, game.fontSmallLight);
+		this.manager = game.manager;
+		this.drawer = new TextDrawer(manager.batch, manager.fontSmallLight);
 		AudioManager.initMusic(this.getClass());
 	}
 	
@@ -36,7 +39,7 @@ public abstract class State implements Screen {
 	
 	@Override
 	public void show() {
-		game.camera.setToOrtho(false, Conf.screenWidth, Conf.screenHeight);
+		manager.camera.setToOrtho(false, Conf.screenWidth, Conf.screenHeight);
 		Class<? extends State> runtimeClass = this.getClass();
 		Log.debug(runtimeClass.toString());
 		AudioManager.resumeMusic(runtimeClass);

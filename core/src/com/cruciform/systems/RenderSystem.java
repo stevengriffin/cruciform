@@ -1,6 +1,7 @@
 package com.cruciform.systems;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
@@ -56,7 +57,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		}
 		font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(),
 				Conf.fractionXLeftUI(0.1f), Conf.screenHeight*0.95f);
-		game.fontLarge.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
+		game.manager.fontLarge.draw(batch, "Score: " + Score.getScore() + " Multiplier: " + Score.getMultiplier(),
 				Conf.fractionXLeftUI(0.1f), Conf.screenHeight*0.9f);
 		font.draw(batch, "Graze: " + Score.getGraze(),
 				Conf.fractionXLeftUI(0.1f), Conf.screenHeight*0.85f);
@@ -129,7 +130,7 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		if (renderer.patch != null) {
 			drawPatch(renderer.patch, position, renderer.renderAtPlayCoordinates);
 		}
-		if (!renderer.shouldRender || renderer.image == null) {
+		if (!renderer.shouldRender) {
 			return;
 		}
 		if (renderer.customOffset) {
@@ -148,8 +149,9 @@ public class RenderSystem extends EntitySystem implements EntityListener {
 		}
 	}
 	
-	private void draw(TextureRegion region, float x, float y, float rotation,
+	private void draw(@Nullable TextureRegion region, float x, float y, float rotation,
 			boolean renderAtPlayCoordinates) {
+		if (region == null) { return; }
 		if (renderAtPlayCoordinates) {
 			batch.draw(region, Conf.playToScreenX(x),
 					Conf.playToScreenY(y), 0, 0, 

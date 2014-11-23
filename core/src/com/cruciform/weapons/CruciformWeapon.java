@@ -50,8 +50,8 @@ public class CruciformWeapon extends Weapon {
 			final Renderer renderer = Renderer.mapper.getSafe(entity);
 			renderer.image = ImageManager.CRUCIFORM_WEAPON_CROSS;
 			renderer.customOffset = true;
-			renderer.customXOffset = renderer.image.getRegionWidth()/2;
-			renderer.customYOffset = -renderer.image.getRegionHeight()/2;
+			renderer.customXOffset = ImageManager.CRUCIFORM_WEAPON_CROSS.getRegionWidth()/2;
+			renderer.customYOffset = -ImageManager.CRUCIFORM_WEAPON_CROSS.getRegionHeight()/2;
 			renderer.priority = new Priority(-1);
 			renderer.patch = ImageManager.getPatch(NinePatches.CRUCIFORM_WEAPON_BEAM_HORIZONTAL);
 			position.bounds.rotate(90.0f);

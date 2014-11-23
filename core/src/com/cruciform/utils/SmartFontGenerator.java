@@ -1,5 +1,9 @@
 package com.cruciform.utils;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.NonNullByDefault;
+import org.eclipse.jdt.annotation.Nullable;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
@@ -13,6 +17,7 @@ import com.badlogic.gdx.graphics.glutils.PixmapTextureData;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+@NonNullByDefault
 public class SmartFontGenerator {
 	private static final String TAG = "SmartFontGenerator";
 	private boolean forceGeneration;
@@ -65,6 +70,10 @@ public class SmartFontGenerator {
 
 			font = generateFontWriteFiles(fontName, fontFile, fontSize, pageSize, pageSize);
 		}
+		if (font == null) {
+			// If we couldn't generate a font, return the default LibGdx font.
+			return new BitmapFont();
+		}
 		return font;
 	}
 
@@ -74,16 +83,18 @@ public class SmartFontGenerator {
 	 * @param fontFile
 	 * @param fontSize
 	 */
-	private BitmapFont generateFontWriteFiles(String fontName, FileHandle fontFile, int fontSize, int pageWidth, int pageHeight) {
+	@NonNullByDefault({}) 
+	private @NonNull BitmapFont generateFontWriteFiles(@NonNull String fontName, @NonNull FileHandle fontFile,
+			int fontSize, int pageWidth, int pageHeight) {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 
 		PixmapPacker packer = new PixmapPacker(pageWidth, pageHeight, Pixmap.Format.RGBA8888, 2, false);
 		@SuppressWarnings("deprecation")
 		FreeTypeFontGenerator.FreeTypeBitmapFontData fontData = generator.generateData(fontSize, FreeTypeFontGenerator.DEFAULT_CHARS, false, packer);
-		Array<PixmapPacker.Page> pages = packer.getPages();
+		final Array<PixmapPacker.Page> pages = packer.getPages();
 		TextureRegion[] texRegions = new TextureRegion[pages.size];
 		for (int i=0; i<pages.size; i++) {
-			PixmapPacker.Page p = pages.get(i);
+			final PixmapPacker.Page p = pages.get(i);
 			Texture tex = new Texture(new PixmapTextureData(p.getPixmap(), p.getPixmap().getFormat(), false, false, true)) {
 				@Override
 				public void dispose () {
@@ -115,7 +126,7 @@ public class SmartFontGenerator {
 		BitmapFontWriter.writeFont(font.getData(), pageRefs, fontFile, new BitmapFontWriter.FontInfo(fontName, fontSize), 1, 1);
 	}
 
-	private FileHandle getFontFile(String filename) {
+	private @Nullable FileHandle getFontFile(String filename) {
 		return Gdx.files.local(generatedFontDir + filename);
 	}
 

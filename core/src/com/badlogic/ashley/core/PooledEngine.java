@@ -140,7 +140,6 @@ public class PooledEngine extends Engine {
 			this.maxSize = 0;
 		}
 
-		@SuppressWarnings({ "unused", "null" })
 		public <T> T obtain (Class<T> type) {
 			ReflectionPool pool = pools.get(type);
 
@@ -154,7 +153,6 @@ public class PooledEngine extends Engine {
 			return result;
 		}
 
-		@SuppressWarnings({ "null", "unused" })
 		public void free (Object object) {
 			ReflectionPool pool = pools.get(object.getClass());
 

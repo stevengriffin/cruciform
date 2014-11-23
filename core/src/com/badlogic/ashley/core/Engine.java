@@ -19,6 +19,7 @@ package com.badlogic.ashley.core;
 import java.util.Comparator;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.badlogic.ashley.signals.Listener;
@@ -42,6 +43,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
  * </ul>
  * @author Stefan Bachmann
  */
+@NonNullByDefault
 public class Engine {
 	private static SystemComparator comparator = new SystemComparator();
 
@@ -399,10 +401,7 @@ public class Engine {
 				}
 				break;
 			case Remove:
-				final Class<? extends Component> componentClass = operation.componentClass;
-				if (componentClass != null) {
-					operation.entity.removeInternal(componentClass);
-				}
+				operation.entity.removeInternal(operation.componentClass);
 				break;
 			}
 
@@ -425,14 +424,15 @@ public class Engine {
 		}
 	}
 
+	@NonNullByDefault({})
 	static class ComponentOperationHandler {
-		private Engine engine;
+		@NonNull private Engine engine;
 
-		public ComponentOperationHandler (Engine engine) {
+		public ComponentOperationHandler (@NonNull Engine engine) {
 			this.engine = engine;
 		}
 
-		public void add (Entity entity, Component component) {
+		public void add (@NonNull Entity entity, @NonNull Component component) {
 			if (engine.updating) {
 				ComponentOperation operation = engine.componentOperationsPool.obtain();
 				operation.makeAdd(entity, component);
@@ -442,7 +442,7 @@ public class Engine {
 			}
 		}
 
-		public void remove (Entity entity, Class<? extends Component> componentClass) {
+		public void remove (@NonNull Entity entity, Class<? extends Component> componentClass) {
 			if (engine.updating) {
 				ComponentOperation operation = engine.componentOperationsPool.obtain();
 				operation.makeRemove(entity, componentClass);
@@ -453,6 +453,7 @@ public class Engine {
 		}
 	}
 
+	@NonNullByDefault({})
 	private static class ComponentOperation {
 		public enum Type {
 			Add, Remove,
@@ -462,7 +463,7 @@ public class Engine {
 		public Type type = Type.Add;
 		public Entity entity = NULL_ENTITY;
 		@Nullable public Component component;
-		@Nullable public Class<? extends Component> componentClass;
+		public Class<? extends Component> componentClass;
 		
 		public void makeAdd (Entity entity, Component component) {
 			this.type = Type.Add;
@@ -471,7 +472,7 @@ public class Engine {
 			this.componentClass = null;
 		}
 
-		public void makeRemove (Entity entity, Class<? extends Component> componentClass) {
+		public void makeRemove (@NonNull Entity entity, Class<? extends Component> componentClass) {
 			this.type = Type.Remove;
 			this.entity = entity;
 			this.component = null;

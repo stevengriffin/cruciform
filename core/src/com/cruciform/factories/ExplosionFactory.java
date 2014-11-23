@@ -3,6 +3,7 @@ package com.cruciform.factories;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -37,11 +38,9 @@ public class ExplosionFactory {
 	}
 
 	private final Engine engine;
-	private final Cruciform game;
 	
-	public ExplosionFactory(final Cruciform game) {
-		this.engine = game.engine;
-		this.game = game;
+	public ExplosionFactory(final Cruciform.GameManager manager) {
+		this.engine = manager.engine;
 	}
 
 	public Entity createExplosion(final Entity explosionCreator) {
@@ -74,7 +73,7 @@ public class ExplosionFactory {
 		renderer.image = ImageManager.ROCKET_EXPLOSION;
 
 		final Position position = new Position(entity);
-		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+		position.bounds = Geometry.polyRect(x, y, ImageManager.ROCKET_EXPLOSION.getRegionWidth(), ImageManager.ROCKET_EXPLOSION.getRegionHeight());
 	
 		final Lifetime lifetime = new Lifetime(entity);
 		lifetime.setTimeRemaining(0.5f);
@@ -112,13 +111,14 @@ public class ExplosionFactory {
 		final Entity entity = new Entity();
 		
 		final Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.PLAYER_EXPLOSION[0];
+		final TextureRegion image = ImageManager.PLAYER_EXPLOSION[0];
+		renderer.image = image;
 
 		final Animator animator = new Animator(entity);
 		animator.currentAnimation = new Animation(frameTime, ImageManager.PLAYER_EXPLOSION);
 		
 		final Position position = new Position(entity);
-		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+		position.bounds = Geometry.polyRect(x, y, image.getRegionWidth(), image.getRegionHeight());
 	
 		final SoundEffect soundEffect = new SoundEffect();
 		soundEffect.sound = AudioManager.get(Noise.CRUCIFORM);
@@ -147,13 +147,14 @@ public class ExplosionFactory {
 		final Entity entity = new Entity();
 		
 		final Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.PENTAGRAM_EXPLOSION[0];
+		final TextureRegion image = ImageManager.PENTAGRAM_EXPLOSION[0];
+		renderer.image = image;
 
 		final Animator animator = new Animator(entity);
 		animator.currentAnimation = new Animation(frameTime, ImageManager.PENTAGRAM_EXPLOSION);
 		
 		final Position position = new Position(entity);
-		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+		position.bounds = Geometry.polyRect(x, y, image.getRegionWidth(), image.getRegionHeight());
 	
 		final SoundEffect soundEffect = new SoundEffect();
 		soundEffect.sound = AudioManager.get(Noise.ENEMY_SCREAM);
@@ -193,10 +194,11 @@ public class ExplosionFactory {
 		final Entity entity = new Entity();
 		
 		final Renderer renderer = new Renderer(entity);
-		renderer.image = ImageManager.RIFLE_MUZZLE_FLASH;
+		final TextureRegion image = ImageManager.RIFLE_MUZZLE_FLASH;
+		renderer.image = image;
 
 		final Position position = new Position(entity);
-		position.bounds = Geometry.polyRect(x, y, renderer.image.getRegionWidth(), renderer.image.getRegionHeight());
+		position.bounds = Geometry.polyRect(x, y, image.getRegionWidth(), image.getRegionHeight());
 		position.bounds.setRotation(MathUtils.random(0, 360));
 		
 		final Lifetime lifetime = new Lifetime(entity);
@@ -222,13 +224,14 @@ public class ExplosionFactory {
 		
 		final Entity entity = new Entity();
 
-		final Renderer renderer = Renderer.defaultForBullet(entity, TeamSoul.class,
-				ImageManager.SOUL);
+		final TextureRegion image = ImageManager.SOUL;
+		Renderer.defaultForBullet(entity, TeamSoul.class,
+				image);
 
 		Position.defaultForBullet(entity,
 				deadPosition.bounds.getX(), deadPosition.bounds.getY(),
-				renderer.image.getRegionWidth(),
-				renderer.image.getRegionHeight(),
+				image.getRegionWidth(),
+				image.getRegionHeight(),
 				0);
 
 		final Velocity velocity = new Velocity();

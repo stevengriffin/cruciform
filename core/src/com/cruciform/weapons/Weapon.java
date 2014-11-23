@@ -1,5 +1,7 @@
 package com.cruciform.weapons;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.cruciform.components.Position;
@@ -9,7 +11,7 @@ import com.cruciform.utils.CoolDownMetro;
 
 public abstract class Weapon implements InputAction {
 	public CoolDownMetro coolDown;
-	Engine engine;
+	@NonNull final Engine engine;
 	final Class<? extends Team> team;
 	private boolean shouldFire = false;
 	private boolean justFired = false;
@@ -17,7 +19,7 @@ public abstract class Weapon implements InputAction {
 	public final String name;
 	public final float damage;
 	
-	public Weapon(final float coolDownTime, final Engine engine, final Class<? extends Team> team,
+	public Weapon(final float coolDownTime, @NonNull final Engine engine, final Class<? extends Team> team,
 			final float damage, final String name) {
 		coolDown = new CoolDownMetro(coolDownTime);
 		this.engine = engine;

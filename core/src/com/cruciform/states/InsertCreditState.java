@@ -21,9 +21,9 @@ public class InsertCreditState extends MenuState {
 
 	@Override
 	public void render(final float delta) {
-		game.batch.begin();
+		manager.batch.begin();
 		super.render(delta);
-        game.batch.end();
+        manager.batch.end();
 	}
 
 	@Override

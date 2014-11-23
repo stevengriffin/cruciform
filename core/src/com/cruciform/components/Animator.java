@@ -1,7 +1,5 @@
 package com.cruciform.components;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,20 +12,11 @@ public class Animator extends AbstractComponent {
 		FIRING,
 	}
 
-	@NonNull public static final Animation NULL_ANIMATION =  new Animation(1.0f, ImageManager.BLANK);
+	public static final Animation NULL_ANIMATION =  new Animation(1.0f, ImageManager.BLANK);
 
-	@SuppressWarnings({ "unused" })
-	private static @NonNull Class<@NonNull Animator> getType() {
-		if (Animator.class == null) {
-			throw new NullPointerException();
-		}
-		return Animator.class;
-	}
-	
-	@NonNull private static final Class<@NonNull Animator> type = Animator.class;
-    @NonNull public static final ComponentMapper<Animator> mapper = ComponentMapper.getFor(Animator.class);
-	@NonNull public Animation currentAnimation = NULL_ANIMATION;
-	@NonNull public SafeObjectMap<States, Animation> animations = new SafeObjectMap<>();
+    public static final ComponentMapper<Animator> mapper = ComponentMapper.getFor(Animator.class);
+	public Animation currentAnimation = NULL_ANIMATION;
+	public SafeObjectMap<States, Animation> animations = new SafeObjectMap<>();
 	public float stateTime = 0;
 	
 	public Animator(Entity entity) {

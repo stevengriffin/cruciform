@@ -1,5 +1,7 @@
 package com.cruciform.weapons;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,7 +30,7 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 	}
 
 	public Array<Entity> createBullets(final float originX, final float originY, 
-			final TextureRegion image, final Class<? extends Team> team) {
+			@NonNull final TextureRegion image, final Class<? extends Team> team) {
 		incrementPattern();
 		Array<Entity> bullets = constructDefaultBullets(originX, originY,
 				image, team);
@@ -38,7 +40,7 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 
 	/** Evenly distribute default bullets across span. **/
 	private Array<Entity> constructDefaultBullets(final float originX,
-			final float originY, final TextureRegion image,
+			final float originY, @NonNull final TextureRegion image,
 			final Class<? extends Team> team) {
 		Array<Entity> bullets = new Array<>();
 		final float rotationIncrement = calculateRotationIncrement();
@@ -46,12 +48,12 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 				rotation += rotationIncrement) {
 			final Entity entity = new Entity();
 
-			final Renderer renderer = Renderer.defaultForBullet(entity, team, image);
+			Renderer.defaultForBullet(entity, team, image);
 
 			Position.defaultForBullet(entity,
 					originX, originY,
-					renderer.image.getRegionWidth(),
-					renderer.image.getRegionHeight(),
+					image.getRegionWidth(),
+					image.getRegionHeight(),
 					rotation);
 			
 			final Velocity velocity = new Velocity();

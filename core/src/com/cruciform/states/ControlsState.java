@@ -15,7 +15,7 @@ public class ControlsState extends State {
 
 	@Override
 	public void render(float delta) {
-		game.batch.begin();
+		manager.batch.begin();
 		//super.render(delta);
         
         drawer.drawCentered("Controls", Conf.screenCenterX, Conf.screenHeight*0.7f);
@@ -27,9 +27,9 @@ public class ControlsState extends State {
         drawer.drawCentered("Fire sweep: X", Conf.screenCenterX, Conf.screenHeight*0.35f);
         drawer.drawCentered("Focus: Left Shift", Conf.screenCenterX, Conf.screenHeight*0.3f);
 		// TODO Make buttons instead
-		final String exitGame = "Exit To Main Menu [ESCAPE]";
-		drawer.drawCentered(exitGame, Conf.screenCenterX, Conf.screenHeight*0.25f);
-        game.batch.end();
+		final String exitmanager = "Exit To Main Menu [ESCAPE]";
+		drawer.drawCentered(exitmanager, Conf.screenCenterX, Conf.screenHeight*0.25f);
+        manager.batch.end();
 	}
 
 	@Override

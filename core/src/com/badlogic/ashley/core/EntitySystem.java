@@ -16,10 +16,13 @@
 
 package com.badlogic.ashley.core;
 
+import org.eclipse.jdt.annotation.NonNullByDefault;
+
 /**
  * Abstract class for processing sets of {@link Entity} objects.
  * @author Stefan Bachmann
  */
+@NonNullByDefault
 public abstract class EntitySystem {
 	/** Use this to set the priority of the system. Lower means it'll get executed first. */
 	public int priority;

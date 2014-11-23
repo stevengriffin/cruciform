@@ -1,5 +1,7 @@
 package com.cruciform.weapons;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,7 +26,7 @@ import com.cruciform.utils.Priority;
 
 public class RifleWeapon extends Weapon {
 
-	private static final TextureRegion RIFLE_BULLET_IMAGE = ImageManager.RIFLE_BULLET;
+	@NonNull private static final TextureRegion RIFLE_BULLET_IMAGE = ImageManager.RIFLE_BULLET;
 	private final ExplosionFactory explosionFactory;
 	private float currentRecoil = 0.0f;
 	public float rotationalVelocity = 0;
@@ -43,7 +45,7 @@ public class RifleWeapon extends Weapon {
 	private final float coolDownTime;
 	private CoolDownMetro recoilGap = new CoolDownMetro(recoilGapTime);
 	
-	public RifleWeapon(float coolDownTime, Engine engine, ExplosionFactory explosionFactory,
+	public RifleWeapon(float coolDownTime, @NonNull Engine engine, ExplosionFactory explosionFactory,
 			Class<? extends Team> team) {
 		super(coolDownTime, engine, team, 10.0f, "Rifle");
 		this.coolDownTime = coolDownTime;
@@ -85,10 +87,10 @@ public class RifleWeapon extends Weapon {
 			renderer.priority = new Priority(-1);
 		}
 		
-		final Position position = Position.defaultForBullet(entity,
+		@NonNull final Position position = Position.defaultForBullet(entity,
 				originX, originY,
-				renderer.image.getRegionWidth(),
-				renderer.image.getRegionHeight(),
+				RIFLE_BULLET_IMAGE.getRegionWidth(),
+				RIFLE_BULLET_IMAGE.getRegionHeight(),
 				-currentRecoil*directionX*directionY);
 		
 		final Velocity velocity = new Velocity();
