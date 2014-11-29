@@ -30,7 +30,7 @@ public class WinState extends State {
 		// TODO Make buttons instead
 		final String exitmanager = "Exit To Main Menu [ESCAPE]";
 		drawer.drawCentered(exitmanager, Conf.screenCenterX, Conf.screenHeight*0.4f);
-		final String newmanager = "New manager [SPACE]";
+		final String newmanager = "New Game [SPACE]";
 		drawer.drawCentered(newmanager, Conf.screenCenterX, Conf.screenHeight*0.3f);
         manager.batch.end();
 	}

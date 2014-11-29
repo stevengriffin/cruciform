@@ -8,7 +8,7 @@ import com.esotericsoftware.minlog.Log;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		// Debug
-		Log.set(Log.LEVEL_DEBUG);
+//		Log.set(Log.LEVEL_DEBUG);
 		
 		final LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.vSyncEnabled = false;
