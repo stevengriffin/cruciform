@@ -52,7 +52,7 @@ public class GameState extends State {
 	@Override
 	public void show() {
 		super.show();
-		Gdx.input.setCursorCatched(true);
+		Gdx.input.setCursorCatched(false);
 		Gdx.input.setInputProcessor(manager.inputSystem);
 		Timer.instance().start();
 		if (manager.engine.getEntitiesFor(Family.all(TeamPlayer.class).get()).size() == 0) {

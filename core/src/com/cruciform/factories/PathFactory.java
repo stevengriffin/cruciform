@@ -2,18 +2,17 @@ package com.cruciform.factories;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.eclipse.jdt.annotation.Nullable;
 
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenPath;
+import aurelienribon.tweenengine.TweenPaths;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.cruciform.Cruciform.GameManager;
@@ -35,54 +34,60 @@ public class PathFactory {
 		createPathFromSVG("svg_test");
 	}
 
-	private static class PathElement {
+	private static class Waypoint {
+		public static final Waypoint EMPTY = new Waypoint(TweenPaths.linear, Vector2.Zero);
+		private final TweenPath pathType;
+		private final Vector2 location;
+		
+		public Waypoint(TweenPath pathType, Vector2 location) {
+			this.pathType = pathType;
+			this.location = location;
+		}
+		
+		public TweenPath getPathType() {
+			return pathType;
+		}
 
-		private final String id;
-		private final String path;
-		
-		public PathElement(@Nullable String id, @Nullable String path) {
-			this.id = id != null ? id : "";
-			this.path = path != null ? path : "";
+		public Vector2 getLocation() {
+			return location;
 		}
-		
-		@Override
-		public int hashCode() {
-			if (id.equals("")) {
-				return super.hashCode();
-			} else {
-				return id.hashCode();
-			}
-		}
-		
-		@Override
-		public boolean equals(@Nullable Object other) {
-			final PathElement element = (PathElement) other;
-			if (element != null) {
-				return element.hashCode() == this.hashCode();
-			} else {
-				return false;
-			}
-		}
-		
-		@Override
-		public String toString() {
-			return path;
-		}
+
 	}
 	
 	public void createPathFromSVG(String fileName) {
 		try {
-			Element root = reader.parse(Gdx.files.internal("paths/" + fileName + ".svg"));
+			final Element root = reader.parse(Gdx.files.internal("paths/" + fileName + ".svg"));
 			// For some reason the method returns duplicates, so remove them.
-			Array<Element> array = new Array<Element>(true, 5, Element.class);
+			final Array<Element> array = new Array<Element>(true, 5, Element.class);
 			array.addAll(root.getChildrenByNameRecursively("path"));
-			List<PathElement> pathElements = 
-					Arrays.asList(array.toArray())
-					.stream()
-					.map((e) -> { return new PathElement(e.get("id", ""), e.get("d", "")); })
-					.distinct()
-					.collect(Collectors.toList());
-			pathElements.forEach((element) -> System.out.println(element.toString()));
+			Arrays.asList(array.toArray())
+			.stream()
+			.map((e) -> (e.get("d", "")))
+			.distinct()
+			.map((path) -> {
+				System.out.println(path);
+				final Array<Waypoint> waypoints = new Array<Waypoint>();
+				final String[] words = path.split("\\p{Space}");
+				for (int i = 0; i < words.length; ++i) {
+					Waypoint currentPoint = Waypoint.EMPTY;
+					final String[] data = words[i].split(",");
+					if (data.length == 2) {
+						// Process as coordinates
+						if (currentPoint == Waypoint.EMPTY) {
+							throw new GdxRuntimeException("Parse error in SVG path, expected " + 
+									"coordinate to be preceded by tag.");
+						} else {
+						}
+					} else if (data.length == 1){
+						// Process as tag
+					} else {
+						throw new GdxRuntimeException("Parse error in SVG path, expected data " +
+								"to have length 1 or 2 but got " + data.length + ".");
+					}
+
+				}
+				return waypoints;
+			});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
