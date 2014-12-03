@@ -1,25 +1,95 @@
 package com.cruciform.factories;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.eclipse.jdt.annotation.Nullable;
+
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 import com.cruciform.Cruciform.GameManager;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Position;
 import com.cruciform.components.Velocity;
 import com.cruciform.tweening.PositionAccessor;
+import com.cruciform.tweening.VectorAccessor;
 import com.cruciform.utils.Conf;
 
 public class PathFactory {
 	
 	private final GameManager manager;
+	private final XmlReader reader;
 	
 	public PathFactory(final GameManager manager) {
 		this.manager = manager;
+		this.reader = new XmlReader();
+		createPathFromSVG("svg_test");
+	}
+
+	private static class PathElement {
+
+		private final String id;
+		private final String path;
+		
+		public PathElement(@Nullable String id, @Nullable String path) {
+			this.id = id != null ? id : "";
+			this.path = path != null ? path : "";
+		}
+		
+		@Override
+		public int hashCode() {
+			if (id.equals("")) {
+				return super.hashCode();
+			} else {
+				return id.hashCode();
+			}
+		}
+		
+		@Override
+		public boolean equals(@Nullable Object other) {
+			final PathElement element = (PathElement) other;
+			if (element != null) {
+				return element.hashCode() == this.hashCode();
+			} else {
+				return false;
+			}
+		}
+		
+		@Override
+		public String toString() {
+			return path;
+		}
 	}
 	
-	public void createBentPath(final Entity entity, boolean reversed) {
+	public void createPathFromSVG(String fileName) {
+		try {
+			Element root = reader.parse(Gdx.files.internal("paths/" + fileName + ".svg"));
+			// For some reason the method returns duplicates, so remove them.
+			Array<Element> array = new Array<Element>(true, 5, Element.class);
+			array.addAll(root.getChildrenByNameRecursively("path"));
+			List<PathElement> pathElements = 
+					Arrays.asList(array.toArray())
+					.stream()
+					.map((e) -> { return new PathElement(e.get("id", ""), e.get("d", "")); })
+					.distinct()
+					.collect(Collectors.toList());
+			pathElements.forEach((element) -> System.out.println(element.toString()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public Entity createBentPath(final Entity entity, boolean reversed) {
 		float xMove1 = -Conf.fractionX(0.3f);
 		float yMove1 = -Conf.fractionY(0.1f);
 		float xMove2 = Conf.fractionX(0.4f);
@@ -43,8 +113,27 @@ public class PathFactory {
 			.targetRelative(xMove2, yMove2))
 		.repeatYoyo(Tween.INFINITY, 0.3f)
 			.start(manager.tweenManager);
+		return entity;
 	}
 
+	public Entity createLurchingPath(final Entity entity) {
+		// Make sure the LineMover has been added to the entity.
+		manager.engine.processComponentOperations();
+		final Vector2 maxV = LineMover.mapper.getSafe(entity).maxVelocity;
+		final Vector2 v = Velocity.mapper.getSafe(entity).linear;
+		entity.remove(LineMover.class);
+		
+		Timeline.createSequence()
+		.push(Tween.to(v, VectorAccessor.VECTOR_XY, 0.2f)
+		.targetRelative(maxV.x, maxV.y))
+		.pushPause(0.4f)
+		.push(Tween.to(v, VectorAccessor.VECTOR_XY, 0.2f)
+				.target(0, 0))
+		.repeat(Tween.INFINITY, 0.3f)
+		.start(manager.tweenManager);
+		return entity;
+	}
+	
 	private Position prepareEntity(final Entity entity) {
 		entity.remove(LineMover.class);
 		entity.remove(Velocity.class);

@@ -49,7 +49,8 @@ public class ShipFactory {
 			GameState gameState) {
 		this.engine = engine;
 		this.explosionFactory = explosionFactory;
-	    this.weaponFactory = new EnemyWeaponFactory(engine, explosionFactory, gameState);
+	    this.weaponFactory = new EnemyWeaponFactory(engine, explosionFactory, gameState, 
+	    		new PathFactory(gameState.manager));
 	}
 	
 	public Entity createPlayer(final Entity entity, final boolean playIntro) {
@@ -89,7 +90,7 @@ public class ShipFactory {
 			mover.accelerates = false;
 			mover.maxVelocity = new Vector2(0, 1000);
 			entity.add(mover);
-
+			
 			entity.add(new Velocity());
 			// Move ship back towards center of screen after awhile.
 			Timer.schedule(new Task() {

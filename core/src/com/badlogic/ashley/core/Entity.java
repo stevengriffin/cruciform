@@ -70,7 +70,7 @@ public class Entity {
 	 * Adds a {@link Component} to this Entity. If a {@link Component} of the same type already exists, it'll be replaced.
 	 * @return The Entity for easy chaining
 	 */
-	public Entity add (@NonNull Component component) {
+	public @NonNull Entity add (@NonNull Component component) {
 		if (componentOperationHandler != null) {
 			componentOperationHandler.add(this, component);
 		} else {

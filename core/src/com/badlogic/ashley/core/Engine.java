@@ -388,7 +388,7 @@ public class Engine {
 		entityOperations.clear();
 	}
 
-	private void processComponentOperations () {
+	public void processComponentOperations () {
 		int numOperations = componentOperations.size;
 
 		for (int i = 0; i < numOperations; ++i) {

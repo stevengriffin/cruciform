@@ -1,11 +1,12 @@
 package com.cruciform.factories;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 
 import com.badlogic.gdx.utils.ObjectMap;
 import com.cruciform.Cruciform;
-import com.cruciform.states.MainMenuState;
 import com.cruciform.states.State;
 
 @NonNullByDefault({})
@@ -27,16 +28,32 @@ public class StateFactory {
 	
 	private static State getOrCreate(final Class<? extends State> state, @NonNull final Cruciform game,
 			final boolean shouldRenew) {
-		try {
-			State result = shouldRenew ? null : states.get(state);
-			if (result == null) {
+		State result = shouldRenew ? null : states.get(state);
+		if (result == null) {
+			try {
 				result = state.getConstructor(Cruciform.class).newInstance(game);
-				states.put(state, result);
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			return result;
-		} catch(Exception e) {
-			return states.get(MainMenuState.class);
+			states.put(state, result);
 		}
+		return result;
 	}
-	
+
 }

@@ -36,7 +36,7 @@ import com.cruciform.utils.Geometry;
 public class ExplosionFactory {
 	
 	public interface Exploder {
-		Entity explode(final Entity explosionCreator);
+		Entity explode(@NonNull final Entity explosionCreator);
 	}
 
 	private final Engine engine;

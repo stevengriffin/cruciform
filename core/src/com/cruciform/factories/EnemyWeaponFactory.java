@@ -34,13 +34,15 @@ public class EnemyWeaponFactory {
 
 	private final Engine engine;
 	private final ExplosionFactory explosionFactory;
+	private final PathFactory pathFactory;
 	private final GameState gameState;
 	private static final float ANGLE_DOWN = 270;
 	
 	public EnemyWeaponFactory(final Engine engine, final ExplosionFactory explosionFactory,
-			final GameState gameState) {
+			final GameState gameState, PathFactory pathFactory) {
 		this.engine = engine;
 		this.explosionFactory = explosionFactory;
+		this.pathFactory = pathFactory;
 		this.gameState = gameState;
 	}
 	
@@ -63,6 +65,11 @@ public class EnemyWeaponFactory {
 				// Offset the initial bullets
 				tracker.coolDown = CoolDownMetro.asPrefired(1.5f);
 				return new Weapon @NonNull[] { prong, tracker };
+			case RADIAL_LURCHER:
+				return new Weapon @NonNull[] {
+						createLurchingRadialWeapon(480, 3, 30, 0.2f),
+						createSpiralingRadialWeapon(120, 12, 12, 0.1f, 0.0f)
+				};
 			case RADIAL_SPIRALER:
 				return new Weapon @NonNull[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f, 0.0f) };
 			case RADIAL_SPIRALER_SOLID:
@@ -86,6 +93,14 @@ public class EnemyWeaponFactory {
 		rifle.reloadTime = 3.0f;
 		rifle.rotationalVelocity = 60.0f;
 		return rifle;
+	}
+	
+	private RadialWeapon createLurchingRadialWeapon(float bulletSpeed, int patternMax,
+			int spokes, float coolDown) {
+		final RadialWeapon radial = createStraightRadialWeapon(bulletSpeed, patternMax,
+				spokes, coolDown);
+		radial.bulletRuleHandler.addRule((entity, i) -> pathFactory.createLurchingPath(entity));
+		return radial;
 	}
 	
 	private RadialWeapon createStraightRadialWeapon(float bulletSpeed, int patternMax,
@@ -182,15 +197,13 @@ public class EnemyWeaponFactory {
 
 	private EntityMutator createLineMoverBehavior(final float rotationalVelocity, final float bulletSpeed) {
 		return (entity, index) -> {	
-			Position position = Position.mapper.getSafe(entity);
+			final Position position = Position.mapper.getSafe(entity);
 
-			LineMover lineMover = new LineMover();
+			final LineMover lineMover = new LineMover();
 			lineMover.maxVelocity = Geometry.rotatedVector(position.bounds.getRotation(), bulletSpeed);
 			lineMover.maxRotationalVelocity = rotationalVelocity;
 			lineMover.accelerates = false;
-			entity.add(lineMover);
-
-			return entity;
+			return entity.add(lineMover);
 		};
 	}
 	

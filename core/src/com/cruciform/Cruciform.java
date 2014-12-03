@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.cruciform.components.Collider;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
@@ -51,6 +52,7 @@ import com.cruciform.systems.ShooterSystem;
 import com.cruciform.systems.SplitterSystem;
 import com.cruciform.systems.WaveSystem;
 import com.cruciform.tweening.PositionAccessor;
+import com.cruciform.tweening.VectorAccessor;
 import com.cruciform.ui.StateButton;
 import com.cruciform.utils.Conf;
 import com.cruciform.utils.Deferrer;
@@ -159,6 +161,7 @@ public class Cruciform extends Game {
 
 			// Tweening
 			Tween.registerAccessor(Position.class, new PositionAccessor());
+			Tween.registerAccessor(Vector2.class, new VectorAccessor());
 			tweenManager = new TweenManager();
 		}
 		

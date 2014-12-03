@@ -101,5 +101,10 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 			}
 		}
 	}
+
 	
+	@Override
+	public String toString() {
+		return "BulletRuleHandler, # of rules in index 0: " + map.get(0).size;
+	}
 }
