@@ -2,6 +2,11 @@ package com.cruciform.factories;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.eclipse.jdt.annotation.NonNull;
 
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
@@ -52,46 +57,68 @@ public class PathFactory {
 			return location;
 		}
 
+		@Override
+		public String toString() {
+			return "Waypoint [pathType=" + pathType + ", location=" + location
+					+ "]";
+		}
 	}
 	
 	public void createPathFromSVG(String fileName) {
-		try {
-			final Element root = reader.parse(Gdx.files.internal("paths/" + fileName + ".svg"));
-			// For some reason the method returns duplicates, so remove them.
-			final Array<Element> array = new Array<Element>(true, 5, Element.class);
-			array.addAll(root.getChildrenByNameRecursively("path"));
-			Arrays.asList(array.toArray())
-			.stream()
-			.map((e) -> (e.get("d", "")))
-			.distinct()
-			.map((path) -> {
-				System.out.println(path);
-				final Array<Waypoint> waypoints = new Array<Waypoint>();
-				final String[] words = path.split("\\p{Space}");
-				for (int i = 0; i < words.length; ++i) {
-					Waypoint currentPoint = Waypoint.EMPTY;
-					final String[] data = words[i].split(",");
-					if (data.length == 2) {
-						// Process as coordinates
-						if (currentPoint == Waypoint.EMPTY) {
-							throw new GdxRuntimeException("Parse error in SVG path, expected " + 
-									"coordinate to be preceded by tag.");
-						} else {
-						}
-					} else if (data.length == 1){
-						// Process as tag
-					} else {
-						throw new GdxRuntimeException("Parse error in SVG path, expected data " +
-								"to have length 1 or 2 but got " + data.length + ".");
-					}
+		final Element root = findRootOfSVGFile(fileName);
+		final Array<Element> array = new Array<Element>(true, 5, Element.class);
+		array.addAll(root.getChildrenByNameRecursively("path"));
+		Stream<Element> stream = Arrays.asList(array.toArray()).stream();
+		final List<Array<Waypoint>> paths = 
+				stream.map(e -> (e.get("d", "")))
+				.distinct()
+				.map(PathFactory::parsePath)
+				.collect(Collectors.toList());
+		paths.forEach(waypoints -> (waypoints.forEach(System.out::println)));
+	}
 
-				}
-				return waypoints;
-			});
+	private Element findRootOfSVGFile(String fileName) {
+		try {
+			return reader.parse(Gdx.files.internal("paths/" + fileName + ".svg"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new GdxRuntimeException("Could not parse SVG file " + fileName);
 		}
+	}
+	
+	private static Array<Waypoint> parsePath(String path) {
+		System.out.println(path);
+		final Array<Waypoint> waypoints = new Array<Waypoint>();
+		final String[] words = path.split("\\p{Space}");
+		@NonNull TweenPath currentTag = TweenPaths.linear;
+		for (int i = 0; i < words.length; ++i) {
+			final String[] data = words[i].split(",");
+			if (data.length == 2) {
+				// Process as coordinates
+				waypoints.add(new Waypoint(currentTag,
+						new Vector2(Float.parseFloat(data[0]),
+								Float.parseFloat(data[1]))));
+			} else if (data.length == 1) {
+				currentTag = processTag(data[0]);
+			} else {
+				throw new GdxRuntimeException("Parse error in SVG path, expected data " +
+						"to have length 1 or 2 but got " + data.length + ".");
+			}
+		}
+		return waypoints;
+	}
+
+	/**
+	 * See http://www.w3.org/TR/SVG/paths.html.
+	 * m = moveto relative
+	 * z = close the current subpath
+	 * c = curve relative
+	 */
+	private static TweenPath processTag(String tagName) {
+		System.out.println(tagName);
+		if (tagName.equals("c")) {
+			return TweenPaths.catmullRom;
+		}
+		return TweenPaths.linear;
 	}
 	
 	public Entity createBentPath(final Entity entity, boolean reversed) {

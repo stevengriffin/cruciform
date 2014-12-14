@@ -1,0 +1,23 @@
+                        1
+                        |
+                        2
+                        |
+                        3
+                        |
+                        4
+                       / \
+score large # of         bronze star each level in base game
+points in base game
+        |                   |
+score larger #           silver star
+        |                   |
+score largest #          gold star
+                \          /
+                 complete all lower challenges
+                     |
+                 one cc base game and one path of all lower challenges
+
+keep track of whether started at beginning of game
+keep track of credits used this level
+
+"insert credit" -> "Sign away a fraction of your soul to fight on?"
