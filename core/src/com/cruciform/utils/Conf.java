@@ -19,7 +19,9 @@ public class Conf {
 	private static final String PREFERENCES_NAME = "com.cruciform.settings";
 	public static final int canonicalWidth = 1920;
 	public static final int canonicalHeight = 1080;
+	/** 900 **/
 	public static final int canonicalPlayWidth = (int) (canonicalHeight/1.2f);
+	/** 1026 **/
 	public static final int canonicalPlayHeight = (int) (canonicalHeight*0.95f);
 	
 	// Derived settings

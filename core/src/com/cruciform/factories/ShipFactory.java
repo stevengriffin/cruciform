@@ -50,7 +50,7 @@ public class ShipFactory {
 		this.engine = engine;
 		this.explosionFactory = explosionFactory;
 	    this.weaponFactory = new EnemyWeaponFactory(engine, explosionFactory, gameState, 
-	    		new PathFactory(gameState.manager));
+	    		gameState.manager.pathFactory);
 	}
 	
 	public Entity createPlayer(final Entity entity, final boolean playIntro) {

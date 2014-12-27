@@ -21,6 +21,7 @@ import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.components.Splitter;
 import com.cruciform.factories.ExplosionFactory;
+import com.cruciform.factories.PathFactory;
 import com.cruciform.factories.UIFactory;
 import com.cruciform.serialization.ColliderSerializer;
 import com.cruciform.serialization.RendererSerializer;
@@ -72,6 +73,7 @@ public class Cruciform extends Game {
 		public final OrthographicCamera camera;
 		public final Engine engine;
 		public final ExplosionFactory explosionFactory;
+		public final PathFactory pathFactory;
 		public final UIFactory uiFactory;
 		public final ShapeRenderer shapeRenderer;
 		public final Deferrer deferrer;
@@ -94,10 +96,9 @@ public class Cruciform extends Game {
 			StateButton.init(game);
 
 			// Fonts
-
-			SmartFontGenerator fontGen = new SmartFontGenerator();
+			final SmartFontGenerator fontGen = new SmartFontGenerator();
 			fontGen.setReferenceScreenWidth(1920);
-			FileHandle fontFile = Gdx.files.local("fonts/opera-lyrics-smooth.ttf");
+			final FileHandle fontFile = Gdx.files.local("fonts/opera-lyrics-smooth.ttf");
 			if (fontFile == null) {
 				// The font file was deleted. Use the default LibGdx font instead.
 				fontSmall = new BitmapFont();
@@ -124,11 +125,18 @@ public class Cruciform extends Game {
 			// Entity engine
 			engine = new Engine();
 
+			// Tweening
+			Tween.registerAccessor(Position.class, new PositionAccessor());
+			Tween.registerAccessor(Vector2.class, new VectorAccessor());
+			Tween.setWaypointsLimit(30);
+			tweenManager = new TweenManager();
+			
 			// Factories
 			deferrer = new Deferrer(engine, game);
 			uiFactory = new UIFactory(engine);
 			explosionFactory = new ExplosionFactory(this);
-
+			pathFactory = new PathFactory(this, tweenManager);
+			
 			// Systems
 			final RenderSystem renderSystem = new RenderSystem(game, batch, fontSmall);
 			engine.addSystem(renderSystem);
@@ -158,11 +166,6 @@ public class Cruciform extends Game {
 			engine.addSystem(new SeekerSystem(game));
 			engine.addSystem(new WaveSystem(engine));
 			engine.addSystem(new HealthSystem(explosionFactory, deferrer));
-
-			// Tweening
-			Tween.registerAccessor(Position.class, new PositionAccessor());
-			Tween.registerAccessor(Vector2.class, new VectorAccessor());
-			tweenManager = new TweenManager();
 		}
 		
 	}

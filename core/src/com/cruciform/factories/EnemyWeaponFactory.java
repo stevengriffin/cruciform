@@ -80,11 +80,19 @@ public class EnemyWeaponFactory {
 				return new Weapon @NonNull[] { createSplittingRadialWeapon() };
 			case PENTAGRAM:
 				return new Weapon @NonNull[] { createPentagramWeapon(480, 20, 0.1f) };
+			case ZIGZAG:
+				return new Weapon @NonNull[] { createZigZagWeapon() };
 			default:
 				return new Weapon @NonNull[] { createRifleWeapon() };
 		}
 	}
 	
+	private Weapon createZigZagWeapon() {
+		final RadialWeapon radial = createStraightRadialWeapon(480, 3, 30, 0.2f);
+		pathFactory.straightTestPath.producePathRules(radial.bulletRuleHandler);
+		return radial;
+	}
+
 	private Weapon createRifleWeapon() {
 		RifleWeapon rifle = new RifleWeapon(0.4f, engine, explosionFactory, TeamEnemy.class);
 		rifle.volume = 0.0f;

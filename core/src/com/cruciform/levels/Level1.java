@@ -15,10 +15,17 @@ import com.cruciform.utils.Conf;
 @NonNullByDefault
 public class Level1 extends Level {
 	
-	public Level1(final Cruciform game, final ShipFactory shipFactory) {
+	public Level1(final Cruciform game, final ShipFactory shipFactory, PathFactory pathFactory) {
 		super(game, shipFactory);
-		final PathFactory pathFactory = new PathFactory(game.manager);
 		this.waves = new Array<Level.Wave>(new Level.@NonNull Wave[] { 
+				
+				() -> (FormationFactory.createSingularShip(
+                (x, y) -> {
+                	Entity entity = shipFactory.createEnemy(x, y, EnemyTypes.ZIGZAG);
+                	pathFactory.createBentPath(entity, false);
+                	return entity;
+                },
+				2.0f, Conf.fractionX(0.5f))),
 				
 				() -> (FormationFactory.createSingularShip(
                 (x, y) -> {

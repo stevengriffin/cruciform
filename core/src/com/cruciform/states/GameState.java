@@ -30,7 +30,7 @@ public class GameState extends State {
 		FormationFactory.reset();
 		manager.engine.removeAllEntities();
 		shipFactory = new ShipFactory(manager.engine, manager.explosionFactory, this);
-		player = new Level1(game, shipFactory).createAndReturnPlayer();
+		player = new Level1(game, shipFactory, manager.pathFactory).createAndReturnPlayer();
 		EffectFactory.createLavaOnPlayer(player, manager.engine);
 		EffectFactory.createBackground(manager.engine);
 		EffectFactory.createForeground(manager.engine);
@@ -52,7 +52,7 @@ public class GameState extends State {
 	@Override
 	public void show() {
 		super.show();
-		Gdx.input.setCursorCatched(false);
+		Gdx.input.setCursorCatched(true);
 		Gdx.input.setInputProcessor(manager.inputSystem);
 		Timer.instance().start();
 		if (manager.engine.getEntitiesFor(Family.all(TeamPlayer.class).get()).size() == 0) {
