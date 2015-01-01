@@ -8,9 +8,7 @@ import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNull;
 
-import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 import aurelienribon.tweenengine.TweenPath;
 import aurelienribon.tweenengine.TweenPaths;
@@ -75,6 +73,7 @@ public class SVGPathParser {
 		}
 		
 		public void producePathRules(BulletRuleHandler handler) {
+			// TODO
 			handler.addRule((entity, index) -> {
 //				if (index >= paths.size()) {
 //					return entity;
