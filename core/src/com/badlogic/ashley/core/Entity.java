@@ -43,16 +43,16 @@ public class Entity {
 	ComponentOperationHandler componentOperationHandler;
 
 	private Bag<Component> components;
-	private Array<@NonNull Component> componentsArray;
-	private ImmutableArray<@NonNull Component> immutableComponentsArray;
+	private Array<Component> componentsArray;
+	private ImmutableArray<Component> immutableComponentsArray;
 	private Bits componentBits;
 	private Bits familyBits;
 
 	/** Creates an empty Entity. */
 	public Entity () {
 		components = new Bag<Component>();
-		componentsArray = new Array<@NonNull Component>(false, 16);
-		immutableComponentsArray = new ImmutableArray<@NonNull Component>(componentsArray);
+		componentsArray = new Array<Component>(false, 16);
+		immutableComponentsArray = new ImmutableArray<Component>(componentsArray);
 		componentBits = new Bits();
 		familyBits = new Bits();
 		flags = 0;
@@ -106,7 +106,7 @@ public class Entity {
 	}
 
 	/** @return immutable collection with all the Entity {@link Component}s. */
-	public ImmutableArray<@NonNull Component> getComponents () {
+	public ImmutableArray<Component> getComponents () {
 		return immutableComponentsArray;
 	}
 

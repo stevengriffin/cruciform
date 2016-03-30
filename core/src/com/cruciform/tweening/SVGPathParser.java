@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.cruciform.components.Position;
 import com.cruciform.factories.PathFactory;
+import com.cruciform.utils.CollectionUtils;
 import com.cruciform.weapons.BulletRuleHandler;
 
 public class SVGPathParser {
@@ -97,9 +98,9 @@ public class SVGPathParser {
 		final Element root = findRootOfSVGFile(fileName);
 		final Array<Element> array = new Array<Element>(true, 5, Element.class);
 		array.addAll(root.getChildrenByNameRecursively("path"));
-		Stream<Element> stream = Arrays.asList(array.toArray()).stream();
 		final List<Array<Waypoint>> paths = 
-				stream.map(e -> (e.get("d", "")))
+				CollectionUtils.toStream(array)
+				.map(e -> (e.get("d", "")))
 				.map(SVGPathParser::parsePath)
 				.collect(Collectors.toList());
 		paths.forEach(waypoints -> (waypoints.forEach(System.out::println)));

@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.cruciform.Cruciform;
 import com.cruciform.states.State;
 
-@NonNullByDefault({})
 public class StateFactory {
 
 	private static ObjectMap<Class<? extends State>, State> states = new ObjectMap<>();

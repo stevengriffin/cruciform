@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -50,12 +49,12 @@ public class UIManager {
 	    }
 	    final Label nameLabel = new Label(setting.name, labelStyle);
 	    final Label valueLabel = new Label(String.format(FORMAT_FLOAT, initialValue), labelStyle);
-	    valueLabel.setAlignment(Align.center);
+	    valueLabel.setAlignment(com.badlogic.gdx.utils.Align.center);
 	    final SliderStyle sliderStyle = new SliderStyle();
 	    sliderStyle.background = UIManager.sliderPatch;
 	    sliderStyle.knob = UIManager.patchUp;
-	    assert setting.min != null && setting.max != null;
-	    final Slider slider = new Slider(setting.min, setting.max, 0.05f, false, sliderStyle);
+	    assert setting.hasMinMax();
+	    final Slider slider = new Slider(setting.getMin(), setting.getMax(), 0.05f, false, sliderStyle);
 	    slider.setValue(initialValue); 
 	    slider.setSize(500, 8);
 	    slider.addListener(new ChangeListener() {
@@ -80,7 +79,7 @@ public class UIManager {
 	
 	public static void addDropDown(final Table table, final Array<String> choices,
 			final DropDownSetter setter, final int currentIndex,
-			final String title) {
+			final String title, float leftPad) {
 	    final Label titleLabel = new Label(title, labelStyle);
 	    final SelectBoxStyle style = new SelectBoxStyle();
 	    style.font = font;
@@ -101,7 +100,7 @@ public class UIManager {
 			}
 	    });
 	    table.add(titleLabel);
-	    table.row();
+	    table.row().padLeft(leftPad);
 	    table.add(dropDown);
 	}
 	

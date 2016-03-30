@@ -21,3 +21,24 @@ keep track of whether started at beginning of game
 keep track of credits used this level
 
 "insert credit" -> "Sign away a fraction of your soul to fight on?"
+
+Boss Ideas:
+
+The Crone
+The Mother
+The Maiden
+The Trinity
+Ache
+The Sabbat (fatigue)
+The Horned God
+Insomn
+Equinox
+Imbolc
+Beltane
+Lughnasadh
+Samhain
+Ostara
+Litha
+Mabon
+
+I saw in the distance a great clock with one hand broken, forever trying to tick forward. And along its edge sorrow had been carved.

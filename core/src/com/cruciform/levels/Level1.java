@@ -1,6 +1,5 @@
 package com.cruciform.levels;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 
 import com.badlogic.ashley.core.Entity;
@@ -17,15 +16,15 @@ public class Level1 extends Level {
 	
 	public Level1(final Cruciform game, final ShipFactory shipFactory, PathFactory pathFactory) {
 		super(game, shipFactory);
-		this.waves = new Array<Level.Wave>(new Level.@NonNull Wave[] { 
+		this.waves = new Array<Level.Wave>(new Level.Wave[] { 
 				
-				() -> (FormationFactory.createSingularShip(
-                (x, y) -> {
-                	Entity entity = shipFactory.createEnemy(x, y, EnemyTypes.ZIGZAG);
-                	pathFactory.createBentPath(entity, false);
-                	return entity;
-                },
-				2.0f, Conf.fractionX(0.5f))),
+//				() -> (FormationFactory.createSingularShip(
+//                (x, y) -> {
+//                	Entity entity = shipFactory.createEnemy(x, y, EnemyTypes.ZIGZAG);
+//                	pathFactory.createBentPath(entity, false);
+//                	return entity;
+//                },
+//				2.0f, Conf.fractionX(0.5f))),
 				
 				() -> (FormationFactory.createSingularShip(
                 (x, y) -> {
@@ -74,7 +73,6 @@ public class Level1 extends Level {
 				() -> (FormationFactory.createBroadFormation(
 				(x, y, i) -> shipFactory.createEnemy(x, y, EnemyTypes.RADIAL_SPIRALER_SOLID),
 				1.0f, 3, Conf.fractionX(0.1f), Conf.fractionX(0.9f))),
-				
 				
 				() -> (FormationFactory.createSingularShip(
                 (x, y) -> {

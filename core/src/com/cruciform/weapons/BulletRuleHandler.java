@@ -29,20 +29,20 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 		this.engine = engine;
 	}
 
-	public Array<@NonNull Entity> createBullets(final float originX, final float originY, 
+	public Array<Entity> createBullets(final float originX, final float originY, 
 			@NonNull final TextureRegion image, final Class<? extends Team> team) {
 		incrementPattern();
-		Array<@NonNull Entity> bullets = constructDefaultBullets(originX, originY,
+		Array<Entity> bullets = constructDefaultBullets(originX, originY,
 				image, team);
 		mutateBullets(bullets);
 		return bullets;
 	}
 
 	/** Evenly distribute default bullets across span. **/
-	private Array<@NonNull Entity> constructDefaultBullets(final float originX,
+	private Array<Entity> constructDefaultBullets(final float originX,
 			final float originY, @NonNull final TextureRegion image,
 			final Class<? extends Team> team) {
-		Array<@NonNull Entity> bullets = new Array<>();
+		Array<Entity> bullets = new Array<>();
 		final float rotationIncrement = calculateRotationIncrement();
 		for (float rotation = originAngle; rotation <= originAngle + spanAngle;
 				rotation += rotationIncrement) {
@@ -91,7 +91,7 @@ public class BulletRuleHandler extends AbstractRuleHandler<EntityMutator> {
 		}
 	}
 
-	private void mutateBullets(Array<@NonNull Entity> bullets) {
+	private void mutateBullets(Array<Entity> bullets) {
 		Array<EntityMutator> rules = map.get(pattern.getIndex());
 		if (rules != null) {
 			for (int i = 0; i < bullets.size; i++) {

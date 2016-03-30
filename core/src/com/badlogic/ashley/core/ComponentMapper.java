@@ -31,7 +31,7 @@ public final class ComponentMapper<T extends Component> {
 	 * @param componentClass Component class to be retrieved by the mapper.
 	 * @return New instance that provides fast access to the {@link Component} of the specified class.
 	 */
-	public static <T extends Component> @NonNull ComponentMapper<T> getFor (Class<T> componentClass) {
+	public static <T extends Component> ComponentMapper<T> getFor (Class<T> componentClass) {
 		return new ComponentMapper<T>(componentClass);
 	}
 

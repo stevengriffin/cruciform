@@ -303,7 +303,6 @@ public class Engine {
 		notifying = false;
 	}
 
-	@SuppressWarnings("null")
 	private void notifyFamilyListenersAdd (Family family, Entity entity) {
 		SnapshotArray<EntityListener> listeners = familyListeners.get(family);
 
@@ -319,7 +318,6 @@ public class Engine {
 		}
 	}
 
-	@SuppressWarnings("null")
 	private void notifyFamilyListenersRemove (Family family, Entity entity) {
 		SnapshotArray<EntityListener> listeners = familyListeners.get(family);
 
@@ -424,7 +422,6 @@ public class Engine {
 		}
 	}
 
-	@NonNullByDefault({})
 	static class ComponentOperationHandler {
 		@NonNull private Engine engine;
 
@@ -453,7 +450,6 @@ public class Engine {
 		}
 	}
 
-	@NonNullByDefault({})
 	private static class ComponentOperation {
 		public enum Type {
 			Add, Remove,

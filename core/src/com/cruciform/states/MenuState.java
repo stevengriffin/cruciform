@@ -13,12 +13,12 @@ import com.cruciform.utils.Conf;
 
 @NonNullByDefault
 public abstract class MenuState extends State {
-	private final Stage stage;
-	private final Table table;
+	protected final Stage stage;
+	protected final Table table;
 	
 	public MenuState(final Cruciform game) {
 		super(game);
-		Viewport viewport = new ScreenViewport();
+		final Viewport viewport = new ScreenViewport(game.manager.camera);
 	    stage = new Stage(viewport);
 	    Gdx.input.setInputProcessor(stage);
 		

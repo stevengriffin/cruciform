@@ -11,11 +11,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;
 import com.cruciform.images.ImageManager;
+import com.cruciform.utils.Conf;
 import com.cruciform.utils.Priority;
 
 public class Renderer extends AbstractComponent {
     @NonNull public static final ComponentMapper<Renderer> mapper = ComponentMapper.getFor(Renderer.class);
-	@Nullable public TextureRegion image = ImageManager.BLANK;
+	@NonNull public TextureRegion image = ImageManager.BLANK;
 	public NinePatch patch = null;
 	public float alpha = 1.0f;
 	public Color tint = null;
@@ -43,6 +44,7 @@ public class Renderer extends AbstractComponent {
 	public static Renderer defaultForUI(@NonNull Entity entity, @NonNull TextureRegion image) {
 		Renderer renderer = new Renderer(entity);
 		renderer.customOffset = true;
+		renderer.customXOffset = Conf.playLeft - Conf.canonicalPlayLeft;
 		renderer.priority = new Priority(6);
 		renderer.image = image;
 		return renderer;

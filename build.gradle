@@ -15,7 +15,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = 'Cruciform'
-        gdxVersion = '1.4.2-SNAPSHOT'
+        gdxVersion = '1.7.1-SNAPSHOT'
         roboVMVersion = '0.0.14'
     }
 

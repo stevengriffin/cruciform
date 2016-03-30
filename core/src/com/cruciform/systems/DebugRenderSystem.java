@@ -44,8 +44,7 @@ public class DebugRenderSystem extends IteratingSystem {
 		shapeRenderer.setColor(debugColor);
 		// Quick hack for drawing sweep
 		if (Log.DEBUG || (renderer.renderAsShape && renderer.shouldRender)) {
-			@SuppressWarnings("null")
-			@NonNull final float @NonNull[] vertices = position.bounds.getTransformedVertices();
+			@NonNull final float[] vertices = position.bounds.getTransformedVertices();
 			draw(vertices, renderer.renderAtPlayCoordinates);
 		}
 	}

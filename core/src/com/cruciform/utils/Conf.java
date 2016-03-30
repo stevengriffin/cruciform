@@ -23,6 +23,8 @@ public class Conf {
 	public static final int canonicalPlayWidth = (int) (canonicalHeight/1.2f);
 	/** 1026 **/
 	public static final int canonicalPlayHeight = (int) (canonicalHeight*0.95f);
+	public static final int canonicalPlayRight = calculatePlayRight(canonicalWidth, canonicalPlayWidth);
+	public static final int canonicalPlayLeft = canonicalPlayRight - canonicalPlayWidth;
 	
 	// Derived settings
 	public static int playWidth;
@@ -42,15 +44,17 @@ public class Conf {
 
 	public static class Setting<T> {
 		public final String name;
-		@Nullable private T value = null;
-		@Nullable public final T min;
-		@Nullable public final T max;
-		@NonNull private final T defaultValue;
+		private T value;
+		private final T min;
+		private final T max;
+		private final T defaultValue;
+		private boolean hasMinMax;
 		
 		public Setting(final String name, @NonNull final T defaultValue) {
 			this.name = name;
-			this.min = null;
-			this.max = null;
+			this.min = defaultValue;
+			this.max = defaultValue;
+			this.hasMinMax = false;
 			this.defaultValue = defaultValue;
 		}
 		
@@ -58,6 +62,7 @@ public class Conf {
 			this.name = name;
 			this.min = min;
 			this.max = max;
+			this.hasMinMax = true;
 			this.defaultValue = defaultValue;
 		}
 	
@@ -71,6 +76,18 @@ public class Conf {
 			} else {
 				return this.defaultValue;
 			}
+		}
+		
+		public T getMin() {
+			return min;
+		}
+		
+		public T getMax() {
+			return max;
+		}
+		
+		public boolean hasMinMax() {
+			return hasMinMax;
 		}
 	}
 	
@@ -149,12 +166,16 @@ public class Conf {
 		Log.debug("sF: " + scaleFactor);
 		screenCenterX = screenWidth/2;
 		playWidth = (int)(screenHeight / 1.2f);
-		// Need at least 0.25 of width on the right.
-		playRight = Math.min(screenWidth - (screenWidth - playWidth)/2, (int) (screenWidth*0.75f));
+		playRight = calculatePlayRight(screenWidth, playWidth);
 		playLeft = playRight - playWidth;
 		playCenter = (playLeft + playRight) / 2;
 		playBottom = fractionY(0.05f);
 		Log.debug("pw: " + playWidth + " pr: " + playRight + " pl: " + playLeft + " pc: " + playCenter + " pb: " + playBottom);
+	}
+
+	/** Need at least 0.25 of width on the right. **/
+	private static int calculatePlayRight(int cScreenWidth, int cPlayWidth) {
+		return Math.min(cScreenWidth - (cScreenWidth - cPlayWidth)/2, (int) (cScreenWidth*0.75f));
 	}
 	
 	public static int fractionX(float fraction) {

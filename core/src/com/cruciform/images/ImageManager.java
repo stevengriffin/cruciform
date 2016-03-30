@@ -69,7 +69,7 @@ public class ImageManager {
 	}
 
 	private static TextureRegion[] newTextureArray(String prefix, int numberOfTextures) {
-		TextureRegion @NonNull[] textures = new TextureRegion @NonNull[numberOfTextures];
+		TextureRegion[] textures = new TextureRegion[numberOfTextures];
 		for (int i = 1; i <= numberOfTextures; i++) {
 			textures[i - 1] = newTexture(prefix + "_" + i);
 		}

@@ -64,26 +64,26 @@ public class EnemyWeaponFactory {
 				tracker.bulletRuleHandler.spanAngle = 60;
 				// Offset the initial bullets
 				tracker.coolDown = CoolDownMetro.asPrefired(1.5f);
-				return new Weapon @NonNull[] { prong, tracker };
+				return new Weapon[] { prong, tracker };
 			case RADIAL_LURCHER:
-				return new Weapon @NonNull[] {
+				return new Weapon[] {
 						createLurchingRadialWeapon(480, 3, 30, 0.2f),
 						createSpiralingRadialWeapon(120, 12, 12, 0.1f, 0.0f)
 				};
 			case RADIAL_SPIRALER:
-				return new Weapon @NonNull[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f, 0.0f) };
+				return new Weapon[] { createSpiralingRadialWeapon(480, 3, 30, 0.2f, 0.0f) };
 			case RADIAL_SPIRALER_SOLID:
-				return new Weapon @NonNull[] { createSpiralingRadialWeapon(120, 12, 12, 0.1f, 0.0f) };
+				return new Weapon[] { createSpiralingRadialWeapon(120, 12, 12, 0.1f, 0.0f) };
 			case RADIAL_STRAIGHT:
-				return new Weapon @NonNull[] { createStraightRadialWeapon(480, 3, 30, 0.2f) };
+				return new Weapon[] { createStraightRadialWeapon(480, 3, 30, 0.2f) };
 			case RADIAL_SPLITTER:
-				return new Weapon @NonNull[] { createSplittingRadialWeapon() };
+				return new Weapon[] { createSplittingRadialWeapon() };
 			case PENTAGRAM:
-				return new Weapon @NonNull[] { createPentagramWeapon(480, 20, 0.1f) };
+				return new Weapon[] { createPentagramWeapon(480, 20, 0.1f) };
 			case ZIGZAG:
-				return new Weapon @NonNull[] { createZigZagWeapon() };
+				return new Weapon[] { createZigZagWeapon() };
 			default:
-				return new Weapon @NonNull[] { createRifleWeapon() };
+				return new Weapon[] { createRifleWeapon() };
 		}
 	}
 	
