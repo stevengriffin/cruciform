@@ -3,9 +3,7 @@ package com.cruciform.factories;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -25,6 +23,7 @@ import com.cruciform.enemies.EnemyTypes;
 import com.cruciform.images.ImageManager;
 import com.cruciform.input.InputCode;
 import com.cruciform.states.GameState;
+import com.cruciform.systems.AnimatorSystem;
 import com.cruciform.utils.Geometry;
 import com.cruciform.utils.OutOfBoundsHandler;
 import com.cruciform.utils.Priority;
@@ -138,24 +137,20 @@ public class ShipFactory {
 	public Entity createEnemy(float x, float y, EnemyTypes type) {
 		Entity entity = new Entity();
 		
+		Animator animator = new Animator(entity);
+		animator.animations = AnimatorSystem.enemyAnimations.get(type);
+		animator.currentAnimation = animator.animations.get(Animator.States.IDLE);
+		animator.currentAnimation.setPlayMode(PlayMode.LOOP);
+
 		Renderer renderer = new Renderer(entity);
-		final TextureRegion image = ImageManager.GHOST_1;
-		renderer.image = image;
+		renderer.image = animator.currentAnimation.getKeyFrame(animator.stateTime);
 		
 		Position position = new Position(entity);
 		position.bounds = Geometry.polyRect(x, y, 
-				image.getRegionWidth(),
-				image.getRegionHeight());
+				renderer.image.getRegionWidth(),
+				renderer.image.getRegionHeight());
 		position.yDirection = -1;
 		position.outOfBoundsHandler = OutOfBoundsHandler.south();
-		
-		final Animator animator = new Animator(entity);
-		animator.animations.put(Animator.States.IDLE,
-				new Animation(0.125f, ImageManager.GHOST_1));
-		animator.animations.put(Animator.States.FIRING,
-				new Animation(0.125f, ImageManager.GHOST_1_FIRING));
-		animator.currentAnimation = animator.animations.get(Animator.States.IDLE);
-		animator.currentAnimation.setPlayMode(PlayMode.LOOP);
 		
 		LineMover lineMover = new LineMover();
 		lineMover.maxVelocity = new Vector2(0.0f, -100.0f);

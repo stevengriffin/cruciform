@@ -3,7 +3,6 @@ package com.cruciform.images;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 
 import com.badlogic.gdx.Gdx;
@@ -11,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.cruciform.enemies.EnemyTypes;
 
 @NonNullByDefault
 public class ImageManager {
@@ -38,6 +38,7 @@ public class ImageManager {
 	public static final TextureRegion BG_PIXEL_PARTICLE_EFFECT = newTexture("bg_pixel_particle_effect");
 	public static final TextureRegion GHOST_1 = newTexture("ghost_1");
 	public static final TextureRegion GHOST_1_FIRING = newTexture("ghost_1_firing");
+	public static final TextureRegion[] PENTAHORROR = newTextureArrayKrita("pentahorror/pentahorror", 6);
 	
 	public static final TextureRegion[] BURST_LAVA = newTextureArray("burst_lava", 4);
 	public static final TextureRegion[] LAVA_ON_PLAYER = newTextureArray("lava_on_player", 5);
@@ -49,7 +50,7 @@ public class ImageManager {
 	public static final TextureRegion[] PLAYER_EXHAUST_CROSS = newTextureArray("player_exhaust_cross", 3);
 
 	private static Map<NinePatches, NinePatch> ninePatchMap = new HashMap<>();
-
+	
 	static {
 		ninePatchMap.put(NinePatches.BUTTON_1, newNinePatch("button1"));
 		ninePatchMap.put(NinePatches.CRUCIFORM_WEAPON_BEAM_VERTICAL,
@@ -69,9 +70,26 @@ public class ImageManager {
 	}
 
 	private static TextureRegion[] newTextureArray(String prefix, int numberOfTextures) {
+		return newTextureArrayWithOffset(prefix + "_", numberOfTextures, 1);
+	}
+	
+	/** Krita animations are exported as name0000.png. **/
+	private static TextureRegion[] newTextureArrayKrita(String prefix, int numberOfTextures) {
+		if (numberOfTextures < 10) {
+			return newTextureArrayWithOffset(prefix + "000", numberOfTextures, 0);
+		} else if (numberOfTextures < 100) {
+			return newTextureArrayWithOffset(prefix + "00", numberOfTextures, 0);
+		} else if (numberOfTextures < 1000) {
+			return newTextureArrayWithOffset(prefix + "0", numberOfTextures, 0);
+		} else {
+			return newTextureArrayWithOffset(prefix, numberOfTextures, 0);
+		}
+	}
+	
+	private static TextureRegion[] newTextureArrayWithOffset(String prefix, int numberOfTextures, int offset) {
 		TextureRegion[] textures = new TextureRegion[numberOfTextures];
-		for (int i = 1; i <= numberOfTextures; i++) {
-			textures[i - 1] = newTexture(prefix + "_" + i);
+		for (int i = 0; i < numberOfTextures; i++) {
+			textures[i] = newTexture(prefix + (i + offset));
 		}
 		return textures;
 	}

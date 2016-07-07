@@ -13,6 +13,23 @@ import com.cruciform.utils.Conf;
 
 @NonNullByDefault
 public class Level1 extends Level {
+
+	/* Lore
+	 * Although the Naphil wish it forgotten,
+	 * in those days also the angels worked at sacred sculpture
+	 * and from their unskilled hands were born gravely imperfect beings
+	 * to whom immortality was an eternal curse.
+	 * For their flaws, the sun-warmed kingdoms cast out these children
+	 * and in everlasting torment they wander deeply in the earth.
+	 * 
+	 * One we called Ache:
+	 * for from deep in his head issued an agony
+	 * terrible beyond all the sum of man's fire and teeth and hate.
+	 * Such was his pain that each day with his long hands he tore through his eyes and into his skull
+	 * rending the stuff within until all that was hurt and all that was he receded to dimness.
+	 * But each day his head would form anew, and so too would the ache.
+	 */
+	
 	
 	public Level1(final Cruciform game, final ShipFactory shipFactory, PathFactory pathFactory) {
 		super(game, shipFactory);
