@@ -27,16 +27,21 @@ public class AnimatorSystem extends IteratingSystem {
 		pentahorrorAnimations.put(Animator.States.IDLE,
 				new Animation(0.167f, ImageManager.PENTAHORROR));
 		pentahorrorAnimations.put(Animator.States.FIRING,
-				new Animation(0.167f, ImageManager.PENTAHORROR));
+				new Animation(0.167f, ImageManager.PENTAHORROR_FIRING));
+		
+		SafeObjectMap<States, Animation> splitterAnimations = new SafeObjectMap<>();
+		splitterAnimations.put(Animator.States.IDLE,
+				new Animation(0.167f, ImageManager.SPLITTER));
+		//pentahorrorAnimations.put(Animator.States.FIRING,
+		//		new Animation(0.167f, ImageManager.PENTAHORROR_FIRING));
 		
 		enemyAnimations.put(EnemyTypes.PENTAGRAM, pentahorrorAnimations);
 		enemyAnimations.put(EnemyTypes.RADIAL_3PRONG, ghostAnimations);
 		enemyAnimations.put(EnemyTypes.RADIAL_LURCHER, ghostAnimations);
 		enemyAnimations.put(EnemyTypes.RADIAL_SPIRALER, ghostAnimations);
 		enemyAnimations.put(EnemyTypes.RADIAL_SPIRALER_SOLID, ghostAnimations);
-		enemyAnimations.put(EnemyTypes.RADIAL_SPLITTER, ghostAnimations);
+		enemyAnimations.put(EnemyTypes.RADIAL_SPLITTER, splitterAnimations);
 		enemyAnimations.put(EnemyTypes.RADIAL_STRAIGHT, ghostAnimations);
-		enemyAnimations.put(EnemyTypes.RADIAL_SPLITTER, ghostAnimations);
 	}
 	
 	public AnimatorSystem() {

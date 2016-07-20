@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.cruciform.enemies.EnemyTypes;
 
 @NonNullByDefault
 public class ImageManager {
@@ -39,7 +38,8 @@ public class ImageManager {
 	public static final TextureRegion GHOST_1 = newTexture("ghost_1");
 	public static final TextureRegion GHOST_1_FIRING = newTexture("ghost_1_firing");
 	public static final TextureRegion[] PENTAHORROR = newTextureArrayKrita("pentahorror/pentahorror", 6);
-	
+	public static final TextureRegion[] PENTAHORROR_FIRING = newTextureArrayKrita("pentahorror_firing/pentahorror_firing", 6);
+	public static final TextureRegion[] SPLITTER = newTextureArrayKrita("splitter/splitter", 8);
 	public static final TextureRegion[] BURST_LAVA = newTextureArray("burst_lava", 4);
 	public static final TextureRegion[] LAVA_ON_PLAYER = newTextureArray("lava_on_player", 5);
 	public static final TextureRegion[] PENTAGRAM_EXPLOSION =
@@ -59,37 +59,47 @@ public class ImageManager {
 				newNinePatch("cruciform_weapon_beam_horizontal"));
 	}
 
-	private static Texture instantiateTexture(String name) {
-		Texture texture = new Texture(Gdx.files.internal("images/" + name + ".png"), true);
+	/** fileType has dot, e.g. ".png". **/
+	private static Texture instantiateTexture(String name, String fileType) {
+		Texture texture = new Texture(Gdx.files.internal("images/" + name + fileType), true);
 		texture.setFilter(TextureFilter.MipMap, TextureFilter.Linear);
 		return texture;
+	}
+	
+	/** Instantiates texture using default image fileType, ".png". **/
+	private static Texture instantiateTexture(String name) {
+		return instantiateTexture(name, ".png");
 	}
 
 	private static TextureRegion newTexture(String name) {
 		return new TextureRegion(instantiateTexture(name));
 	}
 
-	private static TextureRegion[] newTextureArray(String prefix, int numberOfTextures) {
-		return newTextureArrayWithOffset(prefix + "_", numberOfTextures, 1);
+	private static TextureRegion newTexture(String name, String fileType) {
+		return new TextureRegion(instantiateTexture(name, fileType));
 	}
 	
-	/** Krita animations are exported as name0000.png. **/
+	private static TextureRegion[] newTextureArray(String prefix, int numberOfTextures) {
+		return newTextureArrayWithOffset(prefix + "_", ".png", numberOfTextures, 1);
+	}
+	
+	/** Krita animations are exported as name0000.tga. **/
 	private static TextureRegion[] newTextureArrayKrita(String prefix, int numberOfTextures) {
 		if (numberOfTextures < 10) {
-			return newTextureArrayWithOffset(prefix + "000", numberOfTextures, 0);
+			return newTextureArrayWithOffset(prefix + "000", ".tga", numberOfTextures, 0);
 		} else if (numberOfTextures < 100) {
-			return newTextureArrayWithOffset(prefix + "00", numberOfTextures, 0);
+			return newTextureArrayWithOffset(prefix + "00", ".tga", numberOfTextures, 0);
 		} else if (numberOfTextures < 1000) {
-			return newTextureArrayWithOffset(prefix + "0", numberOfTextures, 0);
+			return newTextureArrayWithOffset(prefix + "0", ".tga", numberOfTextures, 0);
 		} else {
-			return newTextureArrayWithOffset(prefix, numberOfTextures, 0);
+			return newTextureArrayWithOffset(prefix, ".tga", numberOfTextures, 0);
 		}
 	}
 	
-	private static TextureRegion[] newTextureArrayWithOffset(String prefix, int numberOfTextures, int offset) {
+	private static TextureRegion[] newTextureArrayWithOffset(String prefix, String fileType, int numberOfTextures, int offset) {
 		TextureRegion[] textures = new TextureRegion[numberOfTextures];
 		for (int i = 0; i < numberOfTextures; i++) {
-			textures[i] = newTexture(prefix + (i + offset));
+			textures[i] = newTexture(prefix + (i + offset), fileType);
 		}
 		return textures;
 	}

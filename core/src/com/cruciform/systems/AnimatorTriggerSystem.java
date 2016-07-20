@@ -24,7 +24,7 @@ public class AnimatorTriggerSystem extends IteratingSystem {
 		final Shooter shooter = Shooter.mapper.getSafe(entity);
 		final Animator animator = Animator.mapper.getSafe(entity);
 		shooter.weapons.forEach((w) -> {
-			if (w.getJustFired()) {
+			if (w.getJustFired() && animator.animations.containsKey(Animator.States.FIRING)) {
 				animator.currentAnimation = animator.animations.getSafe(Animator.States.FIRING, Animator.NULL_ANIMATION);
 				animator.currentAnimation.setPlayMode(PlayMode.LOOP);
 				deferrer.runIfComplete(
