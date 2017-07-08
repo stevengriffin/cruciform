@@ -92,7 +92,27 @@ public class SVGPathParser {
 			}, 1);
 		}
 	}
-	
+
+	/**
+	 * Parses an inkscape SVG file as a path for an entity.
+	 * SVG files are set up as XML, so we use libGDX's XML reader
+	 * to get the data.
+	 * An SVG path looks like this:
+	 * 
+	 *     <path
+	 *		   style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+	 *		   d="M 211.42857,194.57143 210,391.71429"
+	 *		   id="path3100"
+	 *		   inkscape:connector-curvature="0"
+	 *		   transform="translate(0,26.362183)"
+     *  	   sodipodi:nodetypes="cc"
+     *     />
+     *
+     * The coordinates of the waypoints are in the "d=" line.
+     * "<path .../>" is an XML element, and "d=" is an XML attribute.
+     * We grab all the "d=" attributes and manually parse their strings
+     * into WaypointPaths.
+	 */
 	public @NonNull WaypointPath createPathFromSVG(String fileName) {
 		System.out.println("creating path from svg " + fileName);
 		final Element root = findRootOfSVGFile(fileName);

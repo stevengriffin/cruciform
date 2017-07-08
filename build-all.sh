@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Note: make a new jar with Eclipse -> Export -> Runnable Jar on Cruciform-desktop folder.
+
 # Pack all jars with jdk 8 for users without jdk 8 installed.
 java -jar packr.jar packr-config-linux64.json
 java -jar packr.jar packr-config-linux32.json
