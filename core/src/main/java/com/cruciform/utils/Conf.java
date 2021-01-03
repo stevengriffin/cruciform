@@ -167,9 +167,12 @@ public class Conf {
 //		screenHeight = 1080;
 //		screenWidth = 1440;
 //		screenHeight = 900;
+		screenWidth = 2560;
+		screenHeight = 1440;
 		if (fullScreen) {
 			Graphics.Monitor primary = Gdx.graphics.getPrimaryMonitor();
 			Graphics.DisplayMode[] modes = Gdx.graphics.getDisplayModes();
+			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 			//Gdx.graphics.setFullscreenMode()
 			// TODO reimplement old display set
 			//Gdx.graphics.setDisplayMode(screenWidth, screenHeight, fullScreen);
