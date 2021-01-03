@@ -2,9 +2,9 @@ package com.cruciform.systems;
 
 
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogicmods.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Family;
+import com.badlogicmods.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

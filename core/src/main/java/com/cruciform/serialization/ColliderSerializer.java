@@ -1,6 +1,6 @@
 package com.cruciform.serialization;
 
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.components.Collider;
 import com.esotericsoftware.kryo.Kryo;

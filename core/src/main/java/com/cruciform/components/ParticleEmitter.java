@@ -1,7 +1,7 @@
 package com.cruciform.components;
 
-import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.badlogic.gdx.utils.Array;

@@ -1,6 +1,6 @@
 package com.cruciform.components;
 
-import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.ComponentMapper;
 import com.cruciform.utils.Metro;
 
 public class Blinker extends AbstractComponent {

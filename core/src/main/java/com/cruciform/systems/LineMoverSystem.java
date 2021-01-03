@@ -1,8 +1,8 @@
 package com.cruciform.systems;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogicmods.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Family;
+import com.badlogicmods.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.MathUtils;
 import com.cruciform.components.LineMover;
 import com.cruciform.components.Velocity;

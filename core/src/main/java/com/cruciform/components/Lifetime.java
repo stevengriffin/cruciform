@@ -1,7 +1,7 @@
 package com.cruciform.components;
 
-import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.Entity;
 import com.cruciform.utils.CoolDownMetro;
 
 public class Lifetime extends AbstractComponent {

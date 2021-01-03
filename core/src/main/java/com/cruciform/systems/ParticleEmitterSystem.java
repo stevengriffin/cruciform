@@ -1,9 +1,9 @@
 package com.cruciform.systems;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntityListener;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogicmods.ashley.core.Entity;
+import com.badlogicmods.ashley.core.EntityListener;
+import com.badlogicmods.ashley.core.Family;
+import com.badlogicmods.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.cruciform.components.ParticleEmitter;
 import com.cruciform.components.Position;

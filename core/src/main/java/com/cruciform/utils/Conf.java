@@ -95,6 +95,7 @@ public class Conf {
 	}
 	
 	public static class SettingsProposal {
+		public final Setting<Boolean> settingsInitialized = new Setting<Boolean>("Settings Initialized", true);
 		public final Setting<Float> volume = new Setting<Float>("Volume", 1.0f, 0.0f, 1.0f);
 		public final Setting<Integer> screenWidth = new Setting<Integer>("Screen Width",
 				new Integer(Gdx.graphics.getWidth()));
@@ -116,6 +117,9 @@ public class Conf {
 		public static SettingsProposal fromPersistedSettings() {
 			final Preferences preferences = Gdx.app.getPreferences(PREFERENCES_NAME);
 			final SettingsProposal proposal = new SettingsProposal();
+			if (!preferences.getBoolean(proposal.settingsInitialized.name)) {
+				return proposal;
+			}
 			proposal.volume.set(preferences.getFloat(proposal.volume.name));
 			proposal.screenWidth.set(preferences.getInteger(proposal.screenWidth.name));
 			proposal.screenHeight.set(preferences.getInteger(proposal.screenHeight.name));
@@ -138,6 +142,7 @@ public class Conf {
 		public void persist() {
 			syncWithCurrentSettings();
 			final Preferences preferences = Gdx.app.getPreferences(PREFERENCES_NAME);
+			preferences.putBoolean(this.settingsInitialized.name, this.settingsInitialized.get());
 			preferences.putFloat(this.volume.name, this.volume.get());
 			preferences.putInteger(this.screenWidth.name, this.screenWidth.get());
 			preferences.putInteger(this.screenHeight.name, this.screenHeight.get());
@@ -169,7 +174,7 @@ public class Conf {
 			// TODO reimplement old display set
 			//Gdx.graphics.setDisplayMode(screenWidth, screenHeight, fullScreen);
 		} else {
-			Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
+			//Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
 		}
 		final float oldScaleFactor = scaleFactor;
 		scaleFactor = ((float) screenHeight)/canonicalHeight;

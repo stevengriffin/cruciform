@@ -2,7 +2,7 @@ package com.cruciform.levels;
 
 
 
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.Cruciform;
 import com.cruciform.enemies.EnemyTypes;

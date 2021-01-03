@@ -1,8 +1,8 @@
 package com.cruciform.components;
 
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Component;
+import com.badlogicmods.ashley.core.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractComponent extends Component {

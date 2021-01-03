@@ -2,8 +2,8 @@ package com.cruciform.states;
 
 
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
+import com.badlogicmods.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.cruciform.Cruciform;

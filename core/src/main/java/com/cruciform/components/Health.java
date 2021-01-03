@@ -1,6 +1,6 @@
 package com.cruciform.components;
 
-import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.ComponentMapper;
 import com.cruciform.factories.ExplosionFactory.Exploder;
 
 public class Health extends AbstractComponent {

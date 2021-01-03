@@ -2,7 +2,7 @@ package com.cruciform.utils;
 
 
 
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Entity;
 
 
 public interface EntityMutator {

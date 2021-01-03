@@ -3,10 +3,10 @@ package com.cruciform.systems;
 
 
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntityListener;
-import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
+import com.badlogicmods.ashley.core.Entity;
+import com.badlogicmods.ashley.core.EntityListener;
+import com.badlogicmods.ashley.core.EntitySystem;
+import com.badlogicmods.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;

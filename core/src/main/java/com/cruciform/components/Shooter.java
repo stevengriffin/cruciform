@@ -3,7 +3,7 @@ package com.cruciform.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.ComponentMapper;
 import com.cruciform.weapons.Weapon;
 
 public class Shooter extends AbstractComponent {

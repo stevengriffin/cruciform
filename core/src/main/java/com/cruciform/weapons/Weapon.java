@@ -2,7 +2,7 @@ package com.cruciform.weapons;
 
 
 
-import com.badlogic.ashley.core.Engine;
+import com.badlogicmods.ashley.core.Engine;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.cruciform.components.Position;
 import com.cruciform.components.team.Team;

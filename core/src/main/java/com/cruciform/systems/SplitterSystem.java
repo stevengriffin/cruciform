@@ -1,11 +1,11 @@
 package com.cruciform.systems;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogicmods.ashley.core.Component;
+import com.badlogicmods.ashley.core.Engine;
+import com.badlogicmods.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Family;
+import com.badlogicmods.ashley.systems.IteratingSystem;
+import com.badlogicmods.ashley.utils.ImmutableArray;
 import com.cruciform.components.Splitter;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.minlog.Log;

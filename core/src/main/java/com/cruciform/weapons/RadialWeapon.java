@@ -2,7 +2,7 @@ package com.cruciform.weapons;
 
 
 
-import com.badlogic.ashley.core.Engine;
+import com.badlogicmods.ashley.core.Engine;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;

@@ -4,7 +4,7 @@ import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
 
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.cruciform.Cruciform.GameManager;
 import com.cruciform.components.LineMover;

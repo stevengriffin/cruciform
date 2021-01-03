@@ -1,7 +1,7 @@
 package com.cruciform.components;
 
-import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cruciform.images.ImageManager;

@@ -1,6 +1,6 @@
 package com.cruciform.factories;
 
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Entity;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.cruciform.components.Position;

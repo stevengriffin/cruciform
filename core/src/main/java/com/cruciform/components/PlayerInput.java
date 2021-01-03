@@ -3,7 +3,7 @@ package com.cruciform.components;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.ComponentMapper;
 import com.cruciform.input.InputAction;
 import com.cruciform.input.InputCode;
 

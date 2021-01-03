@@ -3,8 +3,8 @@ package com.cruciform.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.Entity;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.components.team.Team;
 import com.cruciform.components.team.TeamEnemy;

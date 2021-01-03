@@ -1,7 +1,7 @@
 package com.cruciform.factories;
 
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Engine;
+import com.badlogicmods.ashley.core.Entity;
 import com.cruciform.components.Position;
 import com.cruciform.components.Renderer;
 import com.cruciform.images.ImageManager;

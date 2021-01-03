@@ -1,7 +1,7 @@
 package com.cruciform.components;
 
-import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.Entity;
 
 public class Parallax extends AbstractComponent {
     public static final ComponentMapper<Parallax> mapper = ComponentMapper.getFor(Parallax.class);

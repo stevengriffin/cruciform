@@ -2,8 +2,8 @@ package com.cruciform.weapons;
 
 
 
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Engine;
+import com.badlogicmods.ashley.core.Entity;
 import com.cruciform.audio.AudioManager;
 import com.cruciform.audio.Noise;
 import com.cruciform.components.Collider;

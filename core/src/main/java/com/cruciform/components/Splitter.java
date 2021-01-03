@@ -1,7 +1,7 @@
 package com.cruciform.components;
 
-import com.badlogic.ashley.core.Component;
-import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.Component;
+import com.badlogicmods.ashley.core.ComponentMapper;
 import com.badlogic.gdx.utils.Array;
 import com.cruciform.utils.EntityMutator;
 

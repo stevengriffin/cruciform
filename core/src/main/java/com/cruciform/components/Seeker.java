@@ -1,6 +1,6 @@
 package com.cruciform.components;
 
-import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogicmods.ashley.core.ComponentMapper;
 
 public class Seeker extends AbstractComponent {
     public static final ComponentMapper<Seeker> mapper = ComponentMapper.getFor(Seeker.class);

@@ -2,9 +2,9 @@ package com.cruciform.systems;
 
 
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogicmods.ashley.core.Entity;
+import com.badlogicmods.ashley.core.Family;
+import com.badlogicmods.ashley.systems.IteratingSystem;
 import com.cruciform.components.Child;
 import com.cruciform.components.Renderer;
 import org.jetbrains.annotations.Nullable;
