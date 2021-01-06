@@ -44,7 +44,7 @@ public class Renderer extends AbstractComponent {
 	public static Renderer defaultForUI(@NotNull Entity entity, @NotNull TextureRegion image) {
 		Renderer renderer = new Renderer(entity);
 		renderer.customOffset = true;
-		renderer.customXOffset = Conf.playLeft - Conf.canonicalPlayLeft;
+		renderer.customXOffset = 0; //Conf.playLeft - Conf.canonicalPlayLeft;
 		renderer.priority = new Priority(6);
 		renderer.image = image;
 		return renderer;

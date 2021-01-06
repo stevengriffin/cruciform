@@ -3,6 +3,15 @@
 gradle-app.setting
 build/
 
+## Distribution
+out-*/
+cruciform-jar.zip
+cruciform-linux32.zip
+cruciform-linux64.zip
+cruciform-mac.zip
+cruciform-windows.zip
+
+
 ## Java:
 *.class
 *.war

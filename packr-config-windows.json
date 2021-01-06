@@ -1,12 +1,17 @@
 {
-    "platform": "windows",
-    "jdk": "/usr/lib/jvm/jdk-8-windows-64.zip",
+    "platform": "windows64",
+    "jdk": "java-8-openjdk-windows-x64.zip",
     "executable": "cruciform",
-    "appjar": "out-jar/cruciform.jar",
-    "mainclass": "com/cruciform/desktop/DesktopLauncher",
+    "classpath": [
+        "out-jar/cruciform.jar"
+    ],
+    "mainclass": "com.cruciform.lwjgl3.Lwjgl3Launcher",
     "vmargs": [
        "-Xmx1G"
     ],
     "minimizejre": "minimizejre",
-    "outdir": "out-windows"
+    "output": "out-windows",
+    "resources": [
+        "assets"
+    ]
 }
