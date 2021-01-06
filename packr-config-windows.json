@@ -1,6 +1,6 @@
 {
     "platform": "windows64",
-    "jdk": "java-8-openjdk-windows-x64.zip",
+    "jdk": "/usr/lib/jvm/java-8-openjdk-windows-x64.zip",
     "executable": "cruciform",
     "classpath": [
         "out-jar/cruciform.jar"
