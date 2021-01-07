@@ -23,6 +23,7 @@ public abstract class MenuState extends State {
 	    Gdx.input.setInputProcessor(stage);
 		
 		table = new Table();
+		table.setDebug(true);
 	    table.setFillParent(true);
 	    table.center();
 	    stage.addActor(table);
@@ -50,7 +51,21 @@ public abstract class MenuState extends State {
 		stage.getViewport().update(Conf.screenWidth, Conf.screenHeight, true);
 		super.show();
 	}
-	
+
+	@Override
+	public void resize(int width, int height) {
+		if (width != Conf.screenWidth || height != Conf.screenHeight) {
+			final Conf.SettingsProposal proposal = Conf.SettingsProposal.fromCurrentSettings();
+			proposal.screenWidth.set(width);
+			proposal.screenHeight.set(height);
+			if (proposal.persist()) {
+				stage.getViewport().update(Conf.screenWidth, Conf.screenHeight, true);
+			}
+		} else {
+			stage.getViewport().update(Conf.screenWidth, Conf.screenHeight, true);
+		}
+	}
+
 	@Override
 	public void dispose() {
 	    stage.dispose();

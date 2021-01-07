@@ -6,6 +6,7 @@ package com.cruciform.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.utils.Array;
 import com.cruciform.images.ImageManager;
 import com.esotericsoftware.minlog.Log;
 import org.jetbrains.annotations.NotNull;
@@ -128,19 +129,29 @@ public class Conf {
 			return proposal;
 		}
 	
-		public void syncWithCurrentSettings() {
+		public boolean syncWithCurrentSettings() {
 			//Log.debug("vol: " + Conf.volume + " this.vol: " + this.volume.get());
 			Log.debug(this.volume.get().getClass().toString());
 			Conf.volume = this.volume.get();
+			final int oldScreenWidth = Conf.screenWidth;
+			final int oldScreenHeight = Conf.screenHeight;
+			final boolean oldFullscreen = Conf.fullScreen;
 			Conf.screenWidth = this.screenWidth.get();
 			Conf.screenHeight = this.screenHeight.get();
 			Conf.fullScreen = this.fullScreen.get();
 			Conf.mouseSensitivity = this.mouseSensitivity.get();
-			setResolution();
+			// Try to set the resolution. Revert resolution settings on failure.
+			if (!setResolution()) {
+				Conf.screenWidth = oldScreenWidth;
+				Conf.screenHeight = oldScreenHeight;
+				Conf.fullScreen = oldFullscreen;
+				return false;
+			}
+			return true;
 		}
 		
-		public void persist() {
-			syncWithCurrentSettings();
+		public boolean persist() {
+			final boolean success = syncWithCurrentSettings();
 			final Preferences preferences = Gdx.app.getPreferences(PREFERENCES_NAME);
 			preferences.putBoolean(this.settingsInitialized.name, this.settingsInitialized.get());
 			preferences.putFloat(this.volume.name, this.volume.get());
@@ -149,47 +160,51 @@ public class Conf {
 			preferences.putBoolean(this.fullScreen.name, this.fullScreen.get());
 			preferences.putFloat(this.mouseSensitivity.name, this.mouseSensitivity.get());
 			preferences.flush();
+			return success;
 		}
 	}
 	
-	public static void loadSettings() {
-		SettingsProposal.fromPersistedSettings().syncWithCurrentSettings();
+	public static boolean loadSettings() {
+		return SettingsProposal.fromPersistedSettings().syncWithCurrentSettings();
 	}
 
-	public static void saveSettings() {
-		SettingsProposal.fromCurrentSettings().persist();
+	public static boolean saveSettings() {
+		return SettingsProposal.fromCurrentSettings().persist();
 	}
 	
-	public static void setResolution() {
+	public static boolean setResolution() {
+		final boolean success;
 		Log.debug("Setting res to " + screenWidth + " x " + screenHeight);
 		// TODO delete
 //		screenWidth = 1920;
 //		screenHeight = 1080;
 //		screenWidth = 1440;
 //		screenHeight = 900;
-		screenWidth = 2560;
-		screenHeight = 1440;
+//		screenWidth = 2560;
+//		screenHeight = 1440;
 		if (fullScreen) {
-			Graphics.Monitor primary = Gdx.graphics.getPrimaryMonitor();
-			Graphics.DisplayMode[] modes = Gdx.graphics.getDisplayModes();
-			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-			//Gdx.graphics.setFullscreenMode()
-			// TODO reimplement old display set
-			//Gdx.graphics.setDisplayMode(screenWidth, screenHeight, fullScreen);
+			final Array<Graphics.DisplayMode> modes = getSortedDisplayModes();
+			final int modeChoiceIndex = computeCurrentModeChoiceIndex(modes);
+			success = Gdx.graphics.setFullscreenMode(modes.get(modeChoiceIndex));
 		} else {
-			//Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
+			success = Gdx.graphics.setWindowedMode(screenWidth, screenHeight);
 		}
-		final float oldScaleFactor = scaleFactor;
-		scaleFactor = ((float) screenHeight)/canonicalHeight;
-		ImageManager.scalePatches(scaleFactor/oldScaleFactor);
-		Log.debug("sF: " + scaleFactor);
-		screenCenterX = screenWidth/2;
-		playWidth = (int)(screenHeight / 1.2f);
-		playRight = calculatePlayRight(screenWidth, playWidth);
-		playLeft = playRight - playWidth;
-		playCenter = (playLeft + playRight) / 2;
-		playBottom = fractionY(0.05f);
-		Log.debug("pw: " + playWidth + " pr: " + playRight + " pl: " + playLeft + " pc: " + playCenter + " pb: " + playBottom);
+		if (success) {
+			final float oldScaleFactor = scaleFactor;
+			scaleFactor = ((float) screenHeight) / canonicalHeight;
+			ImageManager.scalePatches(scaleFactor / oldScaleFactor);
+			Log.debug("sF: " + scaleFactor);
+			screenCenterX = screenWidth / 2;
+			playWidth = (int) (screenHeight / 1.2f);
+			playRight = calculatePlayRight(screenWidth, playWidth);
+			playLeft = playRight - playWidth;
+			playCenter = (playLeft + playRight) / 2;
+			playBottom = fractionY(0.05f);
+			Log.debug("pw: " + playWidth + " pr: " + playRight + " pl: " + playLeft + " pc: " + playCenter + " pb: " + playBottom);
+		} else {
+			Log.error("Setting resolution failed!");
+		}
+		return success;
 	}
 
 	/** Need at least 0.25 of width on the right. **/
@@ -215,5 +230,40 @@ public class Conf {
 	public static float playToScreenY(float y) {
 		return y*Conf.scaleFactor + Conf.playBottom + GameCamera.getY();
 	}
-	
+
+	public static Array<String> convertModesToStrings(final Array<Graphics.DisplayMode> modes) {
+		return CollectionUtils.toStream(modes)
+				.map(Graphics.DisplayMode::toString)
+				.collect(CollectionUtils.toArray());
+	}
+
+	public static int computeCurrentModeChoiceIndex(final Array<Graphics.DisplayMode> modes) {
+		int currentModeChoiceIndex = modes.size - 1;
+		for (int i = 0; i < modes.size; i++) {
+			final Graphics.DisplayMode m = modes.get(i);
+			if (m.width == Conf.screenWidth && m.height == Conf.screenHeight) {
+				// TODO not correct due to multiple hz settings for one resolution.
+				currentModeChoiceIndex = i;
+			}
+		}
+		return currentModeChoiceIndex;
+	}
+
+	public static Array<Graphics.DisplayMode> getSortedDisplayModes() {
+		final Array<Graphics.DisplayMode> modes = new Array<>(Gdx.graphics.getDisplayModes());
+		modes.sort((mode1, mode2) -> {
+			if (mode1.width > mode2.width) {
+				return 1;
+			} else if (mode2.width > mode1.width) {
+				return -1;
+			} else if (mode1.height > mode2.height) {
+				return 1;
+			} else if (mode2.height > mode1.height) {
+				return -1;
+			} else {
+				return 0;
+			}
+		});
+		return modes;
+	}
 }

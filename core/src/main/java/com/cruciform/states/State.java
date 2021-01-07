@@ -50,7 +50,7 @@ public abstract class State implements Screen {
 	/** States do not currently support resizing. */
 	@Override
 	public void resize(int width, int height) {
-	
+
 	}
 	
 	@Override
